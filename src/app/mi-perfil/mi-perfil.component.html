@@ -1,0 +1,39 @@
+<p>mi-perfil works!</p>
+
+<div class="mi-perfil-container">
+    <h2>Mi Perfil</h2>
+    <div class="perfil-info">
+      <img [src]="usuario.imagenPerfil" alt="Imagen de perfil" />
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+    </div>
+    
+    <!-- Sección para especialistas: Mostrar y agregar horarios -->
+    <div class="mis-horarios" *ngIf="usuario.horarios">
+      <h3>Mis Horarios</h3>
+      <ul>
+        <li *ngFor="let horario of usuario.horarios">
+          <strong>{{ horario.especialidad }}</strong>: Días: {{ horario.dias.join(', ') }} - Horas: {{ horario.horas.join(', ') }}
+        </li>
+      </ul>
+      
+      <h4>Agregar Nuevo Horario</h4>
+      <form [formGroup]="horarioForm" (ngSubmit)="agregarHorario()">
+        <div class="form-group">
+          <label for="especialidad">Especialidad</label>
+          <input id="especialidad" type="text" formControlName="especialidad" placeholder="Ej: Cardiología" />
+        </div>
+        <div class="form-group">
+          <label for="dias">Días (separados por coma)</label>
+          <input id="dias" type="text" formControlName="dias" placeholder="Ej: Lunes, Miércoles" />
+        </div>
+        <div class="form-group">
+          <label for="horas">Horas (separadas por coma)</label>
+          <input id="horas" type="text" formControlName="horas" placeholder="Ej: 09:00, 10:00" />
+        </div>
+        <button type="submit" [disabled]="horarioForm.invalid">Agregar Horario</button>
+      </form>
+    </div>
+  </div>
+  

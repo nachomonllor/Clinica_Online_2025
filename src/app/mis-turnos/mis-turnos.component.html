@@ -1,10 +1,8 @@
-<p>mis-turnos works!</p>
-
 
 <div class="mis-turnos-container">
     <h2>Mis Turnos</h2>
   
-    <!-- Filtro único, sin combobox: utiliza un input de texto -->
+    <!-- Filtro único sin combobox -->
     <div class="filter-container">
       <input 
         type="text" 
@@ -14,7 +12,64 @@
       />
     </div>
   
-    <!-- Lista de turnos -->
+    <!-- Listado de turnos con acciones -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Especialidad</th>
+          <th>Especialista</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let turno of filteredTurnos">
+          <td>{{ turno.id }}</td>
+          <td>{{ turno.fecha }}</td>
+          <td>{{ turno.hora }}</td>
+          <td>{{ turno.especialidad }}</td>
+          <td>{{ turno.especialista }}</td>
+          <td>{{ turno.estado }}</td>
+          <td>
+            <!-- Cancelar turno: visible si el turno NO está realizado -->
+            <button *ngIf="turno.estado !== 'realizado'" (click)="cancelarTurno(turno)">Cancelar turno</button>
+  
+            <!-- Ver reseña: visible si hay reseña cargada -->
+            <button *ngIf="turno.resena" (click)="verResena(turno)">Ver reseña</button>
+  
+            <!-- Completar encuesta: visible si el turno está realizado y tiene reseña -->
+            <button *ngIf="turno.estado === 'realizado' && turno.resena" (click)="completarEncuesta(turno)">Completar encuesta</button>
+  
+            <!-- Calificar atención: visible si el turno está realizado -->
+            <button *ngIf="turno.estado === 'realizado'" (click)="calificarAtencion(turno)">Calificar atención</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p *ngIf="filteredTurnos.length === 0">No se encontraron turnos.</p>
+  </div>
+  
+
+
+
+<!-- <div class="mis-turnos-container">
+    <h2>Mis Turnos</h2>
+  
+
+    <div class="filter-container">
+      <input 
+        type="text" 
+        placeholder="Filtra por especialidad o especialista" 
+        [(ngModel)]="filterTerm" 
+        (ngModelChange)="onFilterChange()"
+      />
+    </div>
+  
+
     <table>
       <thead>
         <tr>
@@ -36,7 +91,7 @@
       </tbody>
     </table>
   
-    <!-- Mensaje si no hay resultados -->
+
     <p *ngIf="filteredTurnos.length === 0">No se encontraron turnos.</p>
   </div>
-  
+   -->

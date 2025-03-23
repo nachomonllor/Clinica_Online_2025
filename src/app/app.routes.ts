@@ -3,6 +3,8 @@ import { LoginPacienteComponent } from './login-paciente/login-paciente.componen
 import { RegistroPacienteComponent } from './registro-paciente/registro-paciente.component';
 import { UsuariosAdminComponent } from './usuarios-admin/usuarios-admin.component';
 import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
+import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especialista.component';
+import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -10,6 +12,8 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroPacienteComponent },
   { path: 'usuario-admin', component: UsuariosAdminComponent},
   { path: 'turno', component: MisTurnosComponent},
+  { path: 'turno-especialista', component: TurnosEspecialistaComponent },
+  { path: 'solicitar-turno', component: SolicitarTurnoComponent},
   { path: '**', redirectTo: 'login' } // Ruta comodín para redirigir a login en rutas no definidas
 ];
 

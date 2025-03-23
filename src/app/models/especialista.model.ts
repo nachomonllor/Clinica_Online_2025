@@ -1,5 +1,6 @@
 // models/especialista.model.ts
 export interface Especialista {
+    id: number,
     nombre: string;
     apellido: string;
     edad: number;

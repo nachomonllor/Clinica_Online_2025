@@ -1,4 +1,3 @@
-
 .mis-turnos-container {
     width: 80%;
     margin: 1rem auto;
@@ -33,6 +32,13 @@
   
       th {
         background-color: #f2f2f2;
+      }
+  
+      button {
+        margin: 0.2rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        cursor: pointer;
       }
     }
   
