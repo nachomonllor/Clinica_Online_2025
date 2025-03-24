@@ -1,19 +1,7 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-usuarios-admin',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './usuarios-admin.component.html',
-//   styleUrl: './usuarios-admin.component.css'
-// })
-// export class UsuariosAdminComponent {
-
-// }
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 export type Perfil = 'Paciente' | 'Especialista' | 'Administrador';
 
@@ -115,4 +103,11 @@ export class UsuariosAdminComponent implements OnInit {
       usuario.activo = !usuario.activo;
     }
   }
+
+  descargarExcel(): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.usuarios);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Usuarios': worksheet }, SheetNames: ['Usuarios'] };
+    XLSX.writeFile(workbook, 'usuarios.xlsx');
+  }
+
 }

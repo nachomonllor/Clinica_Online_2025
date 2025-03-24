@@ -27,6 +27,8 @@
             <button *ngIf="usuario.perfil === 'Especialista'" (click)="toggleActivo(usuario)">
               {{ usuario.activo ? 'Inhabilitar' : 'Habilitar' }}
             </button>
+
+            
           </td>
         </tr>
       </tbody>
@@ -94,6 +96,11 @@
           <img [src]="imagenPreview" alt="Imagen de Perfil" />
         </div>
       </div>
+
+      <div>
+            <button (click)="descargarExcel()">Descargar Excel de Usuarios</button>
+       </div>
+
   
       <button type="submit" [disabled]="usuarioForm.invalid">Crear Usuario</button>
     </form>

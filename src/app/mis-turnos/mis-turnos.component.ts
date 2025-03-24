@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Turno } from '../models/turno.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FiltroTurnosPipe } from "../filtro-turnos.pipe";
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FiltroTurnosPipe],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css'
 })
@@ -16,6 +17,7 @@ export class MisTurnosComponent implements OnInit {
   turnos: Turno[] = [];
   filteredTurnos: Turno[] = [];
   filterTerm: string = '';
+searchText: any;
 
   constructor() {}
 

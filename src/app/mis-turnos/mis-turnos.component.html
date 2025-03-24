@@ -51,6 +51,21 @@
     </table>
   
     <p *ngIf="filteredTurnos.length === 0">No se encontraron turnos.</p>
+
+    <!-- Input para buscar en todos los campos del turno -->
+    <input type="text" placeholder="Buscar turno..." [(ngModel)]="searchText" />
+
+    <!-- Uso del pipe para filtrar turnos -->
+    <table>
+    <tr *ngFor="let turno of turnos | filtroTurnos:searchText">
+        <!-- Resto de columnas -->
+        <td>{{ turno.id }}</td>
+        <td>{{ turno.fecha }}</td>
+        <!-- ... -->
+    </tr>
+    </table>
+
+
   </div>
   
 
