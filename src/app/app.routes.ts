@@ -7,6 +7,7 @@ import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especi
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
 
+
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPacienteComponent },
