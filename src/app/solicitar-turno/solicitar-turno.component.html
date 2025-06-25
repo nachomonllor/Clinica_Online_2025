@@ -1,58 +1,83 @@
-<div class="solicitar-turno-container">
+
+<div class="solicitar-turno-page">
+  <div class="turno-card">
     <h2>Solicitar Turno</h2>
-    <form [formGroup]="turnoForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="especialidad">Especialidad</label>
-        <select id="especialidad" formControlName="especialidad">
-          <option value="">Seleccione especialidad</option>
-          <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label for="especialista">Especialista</label>
-        <select id="especialista" formControlName="especialista">
-          <option value="">Seleccione especialista</option>
-          <!-- Se muestran solo los especialistas que coincidan con la especialidad seleccionada -->
-          
-          
-          
-          <!-- <option *ngFor="let esp of especialistas" 
-            [value]="esp.nombre" *ngIf="esp.especialidad === turnoForm.get('especialidad')?.value">
-            {{ esp.nombre }}
-          </option> -->
 
-          <ng-container *ngFor="let esp of especialistas">
-            <option *ngIf="esp.especialidad === turnoForm.get('especialidad')?.value" [value]="esp.nombre">
-              {{ esp.nombre }}
-            </option>
-          </ng-container>
-          
+    <!-- 1) Especialidad -->
+    <div class="form-group">
+      <label>Especialidad</label>
+      <div class="pill-group">
+        <button
+          type="button"
+          class="pill"
+          *ngFor="let esp of especialidades"
+          [class.active]="turnoForm.value.especialidad === esp"
+          (click)="turnoForm.get('especialidad')!.setValue(esp)">
+          {{ esp }}
+        </button>
+      </div>
+    </div>
 
+    <!-- 2) Especialista -->
+    <div class="form-group" *ngIf="turnoForm.value.especialidad">
+      <label>Especialista</label>
+      <div class="pill-group">
+        <button
+          type="button"
+          class="pill"
+          *ngFor="let e of especialistasFiltrados"
+          [class.active]="turnoForm.value.especialista === e.nombre"
+          (click)="selectEspecialista(e)">
+          {{ e.nombre }}
+        </button>
+      </div>
+    </div>
 
-        </select>
+    <!-- 3) Detalle visual -->
+    <div class="especialista-detail" *ngIf="selectedEspecialista">
+      <img
+        [src]="selectedEspecialista.imagenPerfil"
+        [alt]="selectedEspecialista.nombre"
+      />
+      <span>{{ selectedEspecialista.nombre }}</span>
+    </div>
+
+    <!-- 4) Fechas (como pills) -->
+    <div class="form-group" *ngIf="selectedEspecialista">
+      <label>Fecha</label>
+      <div class="pill-group">
+        <button
+          type="button"
+          class="pill"
+          *ngFor="let d of availableDates"
+          [class.active]="turnoForm.value.fecha === d"
+          (click)="selectDate(d)">
+          {{ d }}
+        </button>
       </div>
-  
-      <div class="form-group">
-        <label for="fecha">Fecha del Turno</label>
-        <select id="fecha" formControlName="fecha">
-          <option value="">Seleccione fecha</option>
-          <option *ngFor="let date of availableDates" [value]="date">{{ date }}</option>
-        </select>
+    </div>
+
+    <!-- 5) Horarios (como pills) -->
+    <div class="form-group" *ngIf="turnoForm.value.fecha">
+      <label>Hora</label>
+      <div class="pill-group">
+        <button
+          type="button"
+          class="pill"
+          *ngFor="let t of availableTimes"
+          [class.active]="turnoForm.value.horario === t"
+          (click)="selectTime(t)">
+          {{ t }}
+        </button>
       </div>
-  
-      <div class="form-group">
-        <label for="horario">Horario</label>
-        <input id="horario" type="text" formControlName="horario" placeholder="Ej: 09:00 AM - 10:00 AM" />
-      </div>
-  
-      <!-- Campo para Administrador: seleccionar el paciente -->
-      <div class="form-group" *ngIf="isAdmin">
-        <label for="paciente">Paciente</label>
-        <input id="paciente" type="text" formControlName="paciente" placeholder="Ingrese el nombre del paciente" />
-      </div>
-  
-      <button type="submit" [disabled]="turnoForm.invalid">Solicitar Turno</button>
-    </form>
+    </div>
+
+    <!-- 6) Botón Confirmar -->
+    <button
+      class="btn-primary"
+      (click)="onSubmit()"
+      [disabled]="turnoForm.invalid">
+      Confirmar Turno
+    </button>
   </div>
-  
+</div>
