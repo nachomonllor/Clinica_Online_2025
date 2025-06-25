@@ -1,0 +1,60 @@
+<div class="welcome-page">
+  <header class="header">
+    <div class="logo">
+      <img src="/assets/logo.JPG" alt="Clínica OnLine logo" />
+      <div class="text">
+        <h1>Clínica OnLine</h1>
+        <small>Especialistas en Salud</small>
+      </div>
+    </div>
+    <button class="btn-register" (click)="goToRegister()">Registrarse</button>
+  </header>
+
+  <div class="hero">
+    <!-- Imagen de fondo como <img> -->
+    <img class="hero-img" src="/assets/hero-bg.jpg" alt="Fondo clínico" />
+
+    <!-- Capa semitransparente -->
+    <div class="overlay"></div>
+
+    <!-- Tarjeta de login -->
+    <div class="auth-card">
+      <h2>Iniciar sesión</h2>
+
+      <div class="icons-row">
+        <img src="/assets/icons/doctor1.JPG" alt="Médico 1" />
+        <img src="/assets/icons/doctor2.JPG" alt="Médico 2" />
+        <img src="/assets/icons/healthcare.JPG" alt="Salud" />
+        <img src="/assets/icons/team.JPG" alt="Equipo" />
+        <img src="/assets/icons/nurse.JPG" alt="Enfermera" />
+        <img src="/assets/icons/therapist.JPG" alt="Terapeuta" />
+     </div>
+
+      <form (ngSubmit)="goToLogin()" #loginForm="ngForm">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          [(ngModel)]="email"
+          placeholder="tucorreo@ejemplo.com"
+        />
+
+        <label for="password">Contraseña</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          [(ngModel)]="password"
+          placeholder="••••••••"
+        />
+
+        <button class="btn-login" type="submit" [disabled]="loginForm.invalid">
+          Iniciar sesión
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
