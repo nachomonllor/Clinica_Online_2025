@@ -68,10 +68,6 @@
 
           <button mat-button color="primary" (click)="confirmarAceptar(t)" *ngIf="t.estado==='pendiente'"> Aceptar </button>
 
-          <!-- button mat-button (click)="finalizarTurno(t)" *ngIf="t.estado==='aceptado'">
-            Finalizar
-          </button -->
-
           <button mat-button (click)="confirmarFinalizar(t)" *ngIf="t.estado==='aceptado'"> Finalizar </button>
 
           <button mat-button (click)="verResena(t)" *ngIf="t.resena">
