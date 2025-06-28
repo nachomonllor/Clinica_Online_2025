@@ -1,25 +1,48 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule }               from '@angular/common';
+import { Component, OnInit }         from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule }    from '@angular/material/card';
+import { MatButtonModule }  from '@angular/material/button';
+import { MatIconModule }    from '@angular/material/icon';
+import { MatInputModule }   from '@angular/material/input';
+import { MatTableModule }   from '@angular/material/table';
 import { TurnoEspecialista } from '../models/turno-especialista.model';
- 
+
 @Component({
   selector: 'app-turnos-especialista',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    // Material
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatTableModule,
+  ],
   templateUrl: './turnos-especialista.component.html',
-  styleUrl: './turnos-especialista.component.css'
+  styleUrls: ['./turnos-especialista.component.css']
 })
 
 export class TurnosEspecialistaComponent implements OnInit {
+
   turnos: TurnoEspecialista[] = [];
   filteredTurnos: TurnoEspecialista[] = [];
   filterTerm: string = '';
 
-  constructor() { }
+  // <-- columnas que se quieran mostrar
+  displayedColumns: string[] = ['id','fecha','hora','especialidad','paciente','estado','acciones'];
+
+  // Ahora dataSource apunta a un array simple
+  dataSource: TurnoEspecialista[] = [];
 
   ngOnInit(): void {
-    // Datos simulados para turnos asignados
     this.turnos = [
       { id: 1, fecha: '2025-03-30', hora: '09:00', especialidad: 'Cardiología', paciente: 'María Gómez', estado: 'pendiente' },
       { id: 2, fecha: '2025-04-01', hora: '10:00', especialidad: 'Dermatología', paciente: 'Luis Rodríguez', estado: 'aceptado' },
@@ -27,19 +50,22 @@ export class TurnosEspecialistaComponent implements OnInit {
       { id: 4, fecha: '2025-04-05', hora: '08:30', especialidad: 'Cardiología', paciente: 'Carlos Pérez', estado: 'realizado', resena: 'Consulta satisfactoria.' }
     ];
     this.filteredTurnos = this.turnos;
+    this.dataSource = this.filteredTurnos; // <-- asignamos dataSource
   }
 
   onFilterChange(): void {
     const term = this.filterTerm.trim().toLowerCase();
-    if (term) {
-      this.filteredTurnos = this.turnos.filter(turno =>
-        turno.especialidad.toLowerCase().includes(term) ||
-        turno.paciente.toLowerCase().includes(term)
-      );
-    } else {
-      this.filteredTurnos = this.turnos;
-    }
+    this.filteredTurnos = term
+      ? this.turnos.filter(t =>
+          t.especialidad.toLowerCase().includes(term) ||
+          t.paciente.toLowerCase().includes(term)
+        )
+      : this.turnos;
+    this.dataSource = this.filteredTurnos; // <-- volvemos a asignar
   }
+
+  //  // Para vincular con el input de filtrado
+   filterText: string = '';
 
   cancelarTurno(turno: TurnoEspecialista): void {
     if (confirm(`¿Estás seguro de cancelar el turno ${turno.id}?`)) {
@@ -80,4 +106,9 @@ export class TurnosEspecialistaComponent implements OnInit {
   verResena(turno: TurnoEspecialista): void {
     alert(`Reseña del turno ${turno.id}: ${turno.resena}`);
   }
+  
+  clearFilter() {
+    this.filterText = '';
+  }
+
 }

@@ -24,16 +24,11 @@ export interface Usuario {
 }
 
 @Component({
-  // selector: 'app-usuarios-admin',
-  // templateUrl: './usuarios-admin.component.html',
-  // styleUrls: ['./usuarios-admin.component.scss']
-
   selector: 'app-usuarios-admin',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './usuarios-admin.component.html',
   styleUrl: './usuarios-admin.component.css'
-
 })
 export class UsuariosAdminComponent implements OnInit {
   usuarios: Usuario[] = [];
