@@ -62,10 +62,22 @@
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let t">
           <!-- por ejemplo: -->
-          <button mat-button color="warn" (click)="cancelarTurno(t)" *ngIf="t.estado==='pendiente'">Cancelar</button>
-          <button mat-button color="primary" (click)="aceptarTurno(t)" *ngIf="t.estado==='pendiente'">Aceptar</button>
-          <button mat-button (click)="finalizarTurno(t)" *ngIf="t.estado==='aceptado'">Finalizar</button>
-          <button mat-button (click)="verResena(t)" *ngIf="t.resena">Ver reseña</button>
+          <!-- button mat-button color="warn" (click)="cancelarTurno(t)" *ngIf="t.estado==='pendiente'">Cancelar</button -->
+
+          <button mat-button color="warn" (click)="confirmarCancelar(t)" *ngIf="t.estado==='pendiente'"> Cancelar </button>
+
+          <button mat-button color="primary" (click)="confirmarAceptar(t)" *ngIf="t.estado==='pendiente'"> Aceptar </button>
+
+          <!-- button mat-button (click)="finalizarTurno(t)" *ngIf="t.estado==='aceptado'">
+            Finalizar
+          </button -->
+
+          <button mat-button (click)="confirmarFinalizar(t)" *ngIf="t.estado==='aceptado'"> Finalizar </button>
+
+          <button mat-button (click)="verResena(t)" *ngIf="t.resena">
+            Ver reseña
+          </button>
+
         </td>
       </ng-container>
 
