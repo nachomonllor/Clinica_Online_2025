@@ -15,14 +15,15 @@ export const routes: Routes = [
    { path: 'welcome', component: WelcomeComponent },
 
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginPacienteComponent },
+  { path: 'login-paciente', component: LoginPacienteComponent },
+  
   { path: 'registro', component: RegistroPacienteComponent },
   { path: 'usuario-admin', component: UsuariosAdminComponent},
   { path: 'turno', component: MisTurnosComponent},
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
   { path: 'solicitar-turno', component: SolicitarTurnoComponent},
   { path: 'historia-clinica', component: HistoriaClinicaComponent},
-  { path: '**', redirectTo: 'login' } // Ruta comodín para redirigir a login en rutas no definidas
+  { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
 
 ];
 
