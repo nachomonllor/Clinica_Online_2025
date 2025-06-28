@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -76,16 +77,46 @@ export class HistoriaClinicaComponent implements OnInit {
     this.datosDinamicos.removeAt(index);
   }
 
-  // Enviar la historia clínica
-  onSubmit(): void {
+  // // Enviar la historia clínica
+  // onSubmit(): void {
+  //   if (this.historiaForm.valid) {
+  //     const historia: HistoriaClinica = this.historiaForm.value;
+  //     console.log('Historia clínica enviada:', historia);
+  //     // Aquí integras la lógica para enviar los datos al backend (Firebase o API REST).
+  //   } else {
+  //     this.historiaForm.markAllAsTouched();
+  //   }
+  // }
+
+   onSubmit(): void {
     if (this.historiaForm.valid) {
       const historia: HistoriaClinica = this.historiaForm.value;
-      console.log('Historia clínica enviada:', historia);
-      // Aquí integras la lógica para enviar los datos al backend (Firebase o API REST).
+      console.log('Historia clínica enviada:', historia);  // :contentReference[oaicite:0]{index=0}
+
+      // **SweetAlert2** de éxito
+      Swal.fire({
+        icon: 'success',
+        title: '¡Guardado!',
+        text: 'La historia clínica se guardó correctamente.',
+        confirmButtonText: 'Aceptar'
+      });
+
+      // Aquí podés seguir con la lógica de envío al backend...
+
     } else {
       this.historiaForm.markAllAsTouched();
+
+      // **SweetAlert2** de error (opcional)
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, completá todos los campos obligatorios.',
+        confirmButtonText: 'Entendido'
+      });
     }
   }
+
+
 }
 
 
