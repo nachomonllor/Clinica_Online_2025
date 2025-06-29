@@ -12,6 +12,8 @@ import { SweetAlert2Module }                  from '@sweetalert2/ngx-sweetalert2
 import { AppComponent } from './app/app.component';
 import { routes }       from './app/app.routes';
 import { environment }  from './environments/environment';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 if (environment.production) {
   enableProdMode();
@@ -30,6 +32,8 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideAnimations(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
+
 
     // …otros providers como HttpClientModule, FormsModule, etc.
   ]

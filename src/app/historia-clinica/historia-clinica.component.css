@@ -70,7 +70,7 @@
       font-size: 0.8rem;
     }
     
-    /* Estilos para el control range */
+   
     input[type="range"] {
       width: 100%;
     }
@@ -82,7 +82,7 @@
     border: 1px dashed #ccc;
   }
   
-  /* Estilos para el switch (puedes ajustar a tu gusto) */
+   Estilos para el switch (puedes ajustar a tu gusto) 
   .switch {
     position: relative;
     display: inline-block;
@@ -144,4 +144,5 @@
     background-color: #cccccc;
     cursor: not-allowed;
   }
-} */
+
+*/

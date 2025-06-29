@@ -1,5 +1,55 @@
 
 .mis-turnos-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.mis-turnos-container mat-card-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.mis-turnos-container .filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.mis-turnos-container mat-form-field {
+  width: 60%;
+}
+
+.mis-turnos-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mis-turnos-container th,
+.mis-turnos-container td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.mis-turnos-container th {
+  background-color: #f2f2f2;
+}
+
+.mis-turnos-container button {
+  margin: 0 0.2rem;
+}
+
+.mis-turnos-container .no-data {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+}
+
+
+
+/*
+.mis-turnos-container {
   width: 80%;
   margin: 1rem auto;
   padding: 1rem;
@@ -62,8 +112,10 @@
   margin-top: 1rem;
   color: #666;
 }
+*/
 
 
+/* *************************** */
 
 /* .mis-turnos-container {
     width: 80%;
