@@ -1,4 +1,71 @@
+
 .mis-turnos-container {
+  width: 80%;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.mis-turnos-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.mis-turnos-container .filter-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.mis-turnos-container .filter-container input[type="text"] {
+  width: 60%;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.mis-turnos-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mis-turnos-container table th,
+.mis-turnos-container table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.mis-turnos-container table th {
+  background-color: #f2f2f2;
+}
+
+.mis-turnos-container table button {
+  margin: 0.2rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mis-turnos-container p {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+}
+
+
+
+/* .mis-turnos-container {
     width: 80%;
     margin: 1rem auto;
     padding: 1rem;
@@ -17,7 +84,7 @@
         padding: 0.5rem;
         border: 1px solid #aaa;
         border-radius: 4px;
-      }
+       } 
     }
   
     table {
@@ -48,4 +115,4 @@
       color: #666;
     }
   }
-  
+   */

@@ -1,8 +1,88 @@
 
+<mat-card class="mis-turnos-container">
+  <mat-card-header>
+    <mat-card-title>Mis Turnos</mat-card-title>
+  </mat-card-header>
+
+  <div class="filter-container">
+    <mat-form-field appearance="outline" style="width: 60%;">
+      <mat-label>Filtra por especialidad o especialista</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar…">
+      <button mat-icon-button matSuffix aria-label="Clear" *ngIf="dataSource.filter" (click)="applyFilter('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.id }} </td>
+    </ng-container>
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.fecha }} </td>
+    </ng-container>
+    <!-- Hora -->
+    <ng-container matColumnDef="hora">
+      <th mat-header-cell *matHeaderCellDef> Hora </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.hora }} </td>
+    </ng-container>
+    <!-- Especialidad -->
+    <ng-container matColumnDef="especialidad">
+      <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.especialidad }} </td>
+    </ng-container>
+    <!-- Especialista -->
+    <ng-container matColumnDef="especialista">
+      <th mat-header-cell *matHeaderCellDef> Especialista </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.especialista }} </td>
+    </ng-container>
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let turno"> {{ turno.estado }} </td>
+    </ng-container>
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let turno">
+        <button mat-icon-button color="warn" (click)="cancelarTurno(turno)" [disabled]="turno.estado==='realizado'">
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="turno.resena" (click)="verResena(turno)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <!-- Añade aquí los botones de encuesta y calificación con sus íconos -->
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <p *ngIf="!dataSource.data.length" class="no-data">No se encontraron turnos.</p>
+</mat-card>
+
+<!-- Aquí agregamos el template del diálogo -->
+<ng-template #confirmDialog let-data="data">
+  <h2 mat-dialog-title>Confirmar</h2>
+  <mat-dialog-content>{{ data.message }}</mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close="false">No</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Sí</button>
+  </mat-dialog-actions>
+</ng-template>
+
+
+
+<!-- 
 <div class="mis-turnos-container">
     <h2>Mis Turnos</h2>
   
-    <!-- Filtro único sin combobox -->
+   Filtro único sin combobox 
     <div class="filter-container">
       <input 
         type="text" 
@@ -12,7 +92,7 @@
       />
     </div>
   
-    <!-- Listado de turnos con acciones -->
+    Listado de turnos con acciones 
     <table>
       <thead>
         <tr>
@@ -34,16 +114,16 @@
           <td>{{ turno.especialista }}</td>
           <td>{{ turno.estado }}</td>
           <td>
-            <!-- Cancelar turno: visible si el turno NO está realizado -->
+            Cancelar turno: visible si el turno NO está realizado 
             <button *ngIf="turno.estado !== 'realizado'" (click)="cancelarTurno(turno)">Cancelar turno</button>
   
-            <!-- Ver reseña: visible si hay reseña cargada -->
+            Ver reseña: visible si hay reseña cargada 
             <button *ngIf="turno.resena" (click)="verResena(turno)">Ver reseña</button>
   
-            <!-- Completar encuesta: visible si el turno está realizado y tiene reseña -->
+             Completar encuesta: visible si el turno está realizado y tiene reseña 
             <button *ngIf="turno.estado === 'realizado' && turno.resena" (click)="completarEncuesta(turno)">Completar encuesta</button>
   
-            <!-- Calificar atención: visible si el turno está realizado -->
+             Calificar atención: visible si el turno está realizado 
             <button *ngIf="turno.estado === 'realizado'" (click)="calificarAtencion(turno)">Calificar atención</button>
           </td>
         </tr>
@@ -52,22 +132,22 @@
   
     <p *ngIf="filteredTurnos.length === 0">No se encontraron turnos.</p>
 
-    <!-- Input para buscar en todos los campos del turno -->
+     Input para buscar en todos los campos del turno 
     <input type="text" placeholder="Buscar turno..." [(ngModel)]="searchText" />
 
-    <!-- Uso del pipe para filtrar turnos -->
+     Uso del pipe para filtrar turnos 
     <table>
     <tr *ngFor="let turno of turnos | filtroTurnos:searchText">
-        <!-- Resto de columnas -->
+         Resto de columnas 
         <td>{{ turno.id }}</td>
         <td>{{ turno.fecha }}</td>
-        <!-- ... -->
+     
     </tr>
     </table>
 
 
   </div>
-  
+   -->
 
 
 

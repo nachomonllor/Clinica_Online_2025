@@ -1,35 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Turno } from '../models/turno.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FiltroTurnosPipe } from "../filtro-turnos.pipe";
+
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+
+import {  ViewChild, TemplateRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FiltroTurnosPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDialogModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css'
 })
 
-
 export class MisTurnosComponent implements OnInit {
-  turnos: Turno[] = [];
-  filteredTurnos: Turno[] = [];
-  filterTerm: string = '';
-searchText: any;
 
-  constructor() {}
+  displayedColumns: string[] = ['id','fecha','hora','especialidad','especialista','estado','acciones'];
+  dataSource = new MatTableDataSource<Turno>([]);
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
+
+
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    // Datos simulados: en un caso real, obtendrás estos datos desde un servicio.
-    this.turnos = [
+    const turnosMock: Turno[] = [
       { id: 1, fecha: '2025-03-30', hora: '09:00', especialidad: 'Cardiología', especialista: 'Dr. Juan Pérez', estado: 'pendiente' },
       { id: 2, fecha: '2025-04-02', hora: '10:30', especialidad: 'Dermatología', especialista: 'Dra. Marta López', estado: 'realizado', resena: 'Buena atención, muy profesional.' },
       { id: 3, fecha: '2025-04-05', hora: '08:30', especialidad: 'Neurología', especialista: 'Dr. Carlos Ruiz', estado: 'realizado' }
     ];
-    this.filteredTurnos = this.turnos;
+    this.dataSource.data = turnosMock;
+
+    // Configuro filtro para buscar en especialidad y especialista
+    this.dataSource.filterPredicate = (turno, filter) =>
+      turno.especialidad.toLowerCase().includes(filter)
+      || turno.especialista.toLowerCase().includes(filter);
   }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  cancelarTurno(turno: Turno): void {
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      data: { message: `¿Cancelar turno #${turno.id}?` }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        turno.estado = 'cancelado';
+        this.snackBar.open(`Turno ${turno.id} cancelado`, 'Cerrar', { duration: 2000 });
+      }
+    });
+  }
+
+  verResena(turno: Turno): void {
+    this.snackBar.open(turno.resena!, 'Cerrar', { duration: 4000 });
+  }
+
+  turnos: Turno[] = [];
+  filteredTurnos: Turno[] = [];
+  filterTerm: string = '';
+  searchText: any;
+
 
   onFilterChange(): void {
     const term = this.filterTerm.trim().toLowerCase();
@@ -43,21 +95,6 @@ searchText: any;
     }
   }
 
-  // Acción para cancelar turno: solicita un comentario y cambia el estado.
-  cancelarTurno(turno: Turno): void {
-    if (confirm(`¿Estás seguro de cancelar el turno ${turno.id}?`)) {
-      const comentario = prompt("Ingresa el comentario de cancelación:");
-      if (comentario) {
-        console.log(`Turno ${turno.id} cancelado. Comentario: ${comentario}`);
-        turno.estado = 'cancelado';
-      }
-    }
-  }
-
-  // Acción para ver reseña: muestra la reseña en un alert.
-  verResena(turno: Turno): void {
-    alert(`Reseña del turno ${turno.id}: ${turno.resena}`);
-  }
 
   // Acción para completar encuesta: solicita mediante prompt el ingreso de la encuesta.
   completarEncuesta(turno: Turno): void {
@@ -76,6 +113,10 @@ searchText: any;
       // Aquí se manejaría el envío de la calificación.
     }
   }
+}
+
+export class ConfirmDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string }) {}
 }
 
 
