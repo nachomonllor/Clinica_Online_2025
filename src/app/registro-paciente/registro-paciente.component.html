@@ -1,4 +1,104 @@
-<div class="registro-container">
+
+<mat-card class="registro-container">
+  <mat-card-title>Registro de Paciente</mat-card-title>
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingresa tu nombre" />
+      <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="apellido" placeholder="Ingresa tu apellido" />
+      <mat-error *ngIf="registroForm.get('apellido')?.hasError('required')">
+        El apellido es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Edad</mat-label>
+      <input matInput type="number" formControlName="edad" placeholder="Ingresa tu edad" />
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('required')">
+        La edad es obligatoria.
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('min')">
+        La edad debe ser ≥ 0.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" placeholder="Ingresa tu DNI" />
+      <mat-error *ngIf="registroForm.get('dni')?.hasError('required')">
+        El DNI es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Obra Social</mat-label>
+      <input matInput formControlName="obraSocial" placeholder="Ingresa tu obra social" />
+      <mat-error *ngIf="registroForm.get('obraSocial')?.hasError('required')">
+        La obra social es obligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Ingresa tu correo" />
+      <mat-error *ngIf="registroForm.get('email')?.hasError('required')">
+        El correo es obligatorio.
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('email')?.hasError('email')">
+        Formato inválido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Ingresa tu contraseña" />
+      <mat-error *ngIf="registroForm.get('password')?.hasError('required')">
+        La contraseña es obligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- File inputs: no mat-form-field nativo, usamos botón -->
+    <div class="full-width file-group">
+      <button mat-raised-button color="primary" type="button" (click)="fileInput1.click()">
+        Seleccionar Imagen 1
+      </button>
+      <input #fileInput1 type="file" hidden (change)="onFileChange($event, 1)" accept="image/*" />
+      <div class="preview" *ngIf="imagenPrevia1">
+        <img [src]="imagenPrevia1" alt="Previsualización 1" />
+      </div>
+    </div>
+
+    <div class="full-width file-group">
+      <button mat-raised-button color="primary" type="button" (click)="fileInput2.click()">
+        Seleccionar Imagen 2
+      </button>
+      <input #fileInput2 type="file" hidden (change)="onFileChange($event, 2)" accept="image/*" />
+      <div class="preview" *ngIf="imagenPrevia2">
+        <img [src]="imagenPrevia2" alt="Previsualización 2" />
+      </div>
+    </div>
+
+    <button mat-raised-button color="accent" class="full-width" [disabled]="registroForm.invalid" type="submit">
+      Registrarse
+    </button>
+  </form>
+</mat-card>
+
+
+
+
+
+
+
+<!-- <div class="registro-container">
     <h2>Registro de Paciente</h2>
     <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -84,4 +184,4 @@
       <button type="submit" [disabled]="registroForm.invalid">Registrarse</button>
     </form>
   </div>
-  
+   -->
