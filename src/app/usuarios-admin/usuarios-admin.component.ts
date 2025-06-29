@@ -126,9 +126,37 @@ export class UsuariosAdminComponent implements OnInit {
     }
   }
 
+  // descargarExcel(): void {
+  //   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.usuarios);
+  //   const workbook: XLSX.WorkBook = { Sheets: { 'Usuarios': worksheet }, SheetNames: ['Usuarios'] };
+  //   XLSX.writeFile(workbook, 'usuarios.xlsx');
+  // }
+
   descargarExcel(): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.usuarios);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Usuarios': worksheet }, SheetNames: ['Usuarios'] };
-    XLSX.writeFile(workbook, 'usuarios.xlsx');
-  }
+  // 1) Prepara un array sólo con los campos que quieres exportar
+  const exportData = this.usuarios.map(u => ({
+    id:          u.id,
+    perfil:      u.perfil,
+    nombre:      u.nombre,
+    apellido:    u.apellido,
+    edad:        u.edad,
+    dni:         u.dni,
+    email:       u.email,
+    obraSocial:  u.obraSocial || '',
+    especialidad:u.especialidad || '',
+    activo:      u.activo != null ? u.activo : ''
+  }));
+
+  // 2) Crea la hoja y el workbook
+  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook: XLSX.WorkBook = {
+    Sheets: { 'Usuarios': worksheet },
+    SheetNames: ['Usuarios']
+  };
+
+  // 3) Descarga
+  XLSX.writeFile(workbook, 'usuarios.xlsx');
+}
+
+
 }
