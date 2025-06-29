@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro-paciente',
@@ -57,14 +58,35 @@ export class RegistroPacienteComponent implements OnInit {
     }
   }
 
+  // onSubmit(): void {
+  //   if (this.registroForm.valid) {
+  //     console.log('Datos de registro del paciente:', this.registroForm.value);
+  //     // TODO: llamar servicio de registro
+  //   } else {
+  //     this.registroForm.markAllAsTouched();
+  //   }
+  // }
+
   onSubmit(): void {
-    if (this.registroForm.valid) {
-      console.log('Datos de registro del paciente:', this.registroForm.value);
-      // TODO: llamar servicio de registro
-    } else {
-      this.registroForm.markAllAsTouched();
-    }
+  if (this.registroForm.valid) {
+    const { nombre, apellido } = this.registroForm.value;
+    // Mostramos el SweetAlert
+    Swal.fire({
+      icon: 'success',
+      title: `Paciente ${nombre} ${apellido} registrado`,
+      showConfirmButton: false,
+      timer: 2000
+    });
+    // Aquí podrías llamar a tu servicio de registro...
+    // y luego, por ejemplo, resetear el formulario:
+    this.registroForm.reset();
+    this.imagenPrevia1 = this.imagenPrevia2 = null;
+  } else {
+    this.registroForm.markAllAsTouched();
   }
+}
+
+
 }
 
 
