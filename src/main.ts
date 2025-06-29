@@ -13,6 +13,7 @@ import { AppComponent } from './app/app.component';
 import { routes }       from './app/app.routes';
 import { environment }  from './environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 if (environment.production) {
@@ -32,7 +33,7 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideAnimations(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
+    provideAnimations(), provideAnimationsAsync(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
 
 
     // …otros providers como HttpClientModule, FormsModule, etc.

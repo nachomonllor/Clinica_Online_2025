@@ -1,6 +1,141 @@
+
 <div class="usuarios-admin-container">
+  <h2>Administración de Usuarios</h2>
+
+  <!-- Tabla de Material -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%; margin-bottom:1rem;">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let u"> {{u.id}} </td>
+    </ng-container>
+
+    <!-- Perfil -->
+    <ng-container matColumnDef="perfil">
+      <th mat-header-cell *matHeaderCellDef> Perfil </th>
+      <td mat-cell *matCellDef="let u"> {{u.perfil}} </td>
+    </ng-container>
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let u"> {{u.nombre}} </td>
+    </ng-container>
+
+    <!-- Apellido -->
+    <ng-container matColumnDef="apellido">
+      <th mat-header-cell *matHeaderCellDef> Apellido </th>
+      <td mat-cell *matCellDef="let u"> {{u.apellido}} </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let u"> {{u.email}} </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let u">
+        <button
+          mat-button
+          color="primary"
+          *ngIf="u.perfil === 'Especialista'"
+          (click)="toggleActivo(u)">
+          <mat-icon>{{ u.activo ? 'toggle_off' : 'toggle_on' }}</mat-icon>
+          {{ u.activo ? 'Inhabilitar' : 'Habilitar' }}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row        *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Formulario de Material -->
+  <h3>Crear Nuevo Usuario</h3>
+  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Perfil</mat-label>
+      <mat-select formControlName="perfil">
+        <mat-option value="Paciente">Paciente</mat-option>
+        <mat-option value="Especialista">Especialista</mat-option>
+        <mat-option value="Administrador">Administrador</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingresa el nombre" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="apellido" placeholder="Ingresa el apellido" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Edad</mat-label>
+      <input matInput type="number" formControlName="edad" placeholder="Ingresa la edad" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" placeholder="Ingresa el DNI" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Ingresa el correo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Ingresa la contraseña" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width"
+                    *ngIf="usuarioForm.get('perfil')?.value === 'Paciente'">
+      <mat-label>Obra Social</mat-label>
+      <input matInput formControlName="obraSocial" placeholder="Ingresa la obra social" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width"
+                    *ngIf="usuarioForm.get('perfil')?.value === 'Especialista'">
+      <mat-label>Especialidad</mat-label>
+      <input matInput formControlName="especialidad" placeholder="Ingresa la especialidad" />
+    </mat-form-field>
+
+    <div *ngIf="usuarioForm.get('perfil')?.value !== 'Paciente'" class="form-group">
+      <label>Imagen de Perfil</label>
+      <input id="imagenPerfil" type="file" (change)="onFileChange($event)" accept="image/*" />
+      <div class="preview" *ngIf="imagenPreview">
+        <img [src]="imagenPreview" alt="Imagen de Perfil" style="max-width:100px; margin-top:0.5rem;" />
+      </div>
+    </div>
+
+    <div class="botones" style="margin-top:1rem;">
+      <button mat-stroked-button color="accent" type="button" (click)="descargarExcel()">
+        <mat-icon>file_download</mat-icon> Descargar Excel
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="usuarioForm.invalid">
+        <mat-icon>person_add</mat-icon> Crear Usuario
+      </button>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+<!-- 
+
+ <div class="usuarios-admin-container">
     <h2>Administración de Usuarios</h2>
-    <!-- Listado de Usuarios -->
+     Listado de Usuarios 
     <h3>Listado de Usuarios</h3>
     <table>
       <thead>
@@ -21,7 +156,7 @@
           <td>{{ usuario.apellido }}</td>
           <td>{{ usuario.email }}</td>
           <td>
-            <!-- Botón para habilitar/inhabilitar solo para Especialistas -->
+             Botón para habilitar/inhabilitar solo para Especialistas 
             <button *ngIf="usuario.perfil === 'Especialista'" (click)="toggleActivo(usuario)">
               {{ usuario.activo ? 'Inhabilitar' : 'Habilitar' }}
             </button>
@@ -32,7 +167,7 @@
       </tbody>
     </table>
   
-    <!-- Formulario para crear nuevo usuario -->
+     Formulario para crear nuevo usuario 
     <h3>Crear Nuevo Usuario</h3>
     <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -74,19 +209,19 @@
         <input id="password" type="password" formControlName="password" placeholder="Ingresa la contraseña" />
       </div>
   
-      <!-- Campo Obra Social solo para Paciente -->
+      Campo Obra Social solo para Paciente 
       <div class="form-group" *ngIf="usuarioForm.get('perfil')?.value === 'Paciente'">
         <label for="obraSocial">Obra Social</label>
         <input id="obraSocial" type="text" formControlName="obraSocial" placeholder="Ingresa la obra social" />
       </div>
   
-      <!-- Campo Especialidad solo para Especialista -->
+       Campo Especialidad solo para Especialista 
       <div class="form-group" *ngIf="usuarioForm.get('perfil')?.value === 'Especialista'">
         <label for="especialidad">Especialidad</label>
         <input id="especialidad" type="text" formControlName="especialidad" placeholder="Ingresa la especialidad" />
       </div>
   
-      <!-- Campo Imagen de Perfil para Especialista y Administrador -->
+       Campo Imagen de Perfil para Especialista y Administrador 
       <div class="form-group" *ngIf="usuarioForm.get('perfil')?.value === 'Especialista' || usuarioForm.get('perfil')?.value === 'Administrador'">
         <label for="imagenPerfil">Imagen de Perfil</label>
         <input id="imagenPerfil" type="file" (change)="onFileChange($event)" accept="image/*" />
@@ -103,4 +238,4 @@
       <button type="submit" [disabled]="usuarioForm.invalid">Crear Usuario</button>
     </form>
   </div>
-  
+    -->
