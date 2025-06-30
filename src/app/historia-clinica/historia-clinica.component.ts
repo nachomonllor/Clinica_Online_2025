@@ -8,20 +8,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+
 import Swal from 'sweetalert2';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 @Component({
   selector: 'app-historia-clinica',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule,
 
-        // Material
-        MatToolbarModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatInputModule,
-        MatTableModule,
+    // Material
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatTableModule,
+    MatSlideToggleModule
 
   ],
   templateUrl: './historia-clinica.component.html',
@@ -52,14 +56,20 @@ export class HistoriaClinicaComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    // this.historiaForm = this.fb.group({
+    //   nuevosDatos: this.fb.group({
+    //     switchSiNo: [false]        // <— aquí inicializas el switch
+    //   }),
+    //   datosDinamicos: this.fb.array([])
+    // });
+  }
 
   // Getter para el FormArray de datos dinámicos (los pares clave/valor)
   get datosDinamicos(): FormArray {
     return this.historiaForm.get('datosDinamicos') as FormArray;
   }
 
-  // Agrega un nuevo dato dinámico (máximo 3)
   addDatoDinamico(): void {
     if (this.datosDinamicos.length < 3) {
       const datoGroup = this.fb.group({
@@ -68,7 +78,12 @@ export class HistoriaClinicaComponent implements OnInit {
       });
       this.datosDinamicos.push(datoGroup);
     } else {
-      alert('Solo se permiten hasta 3 datos dinámicos.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Límite alcanzado',
+        text: 'Solo se permiten hasta 3 datos dinámicos.',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 
@@ -77,18 +92,8 @@ export class HistoriaClinicaComponent implements OnInit {
     this.datosDinamicos.removeAt(index);
   }
 
-  // // Enviar la historia clínica
-  // onSubmit(): void {
-  //   if (this.historiaForm.valid) {
-  //     const historia: HistoriaClinica = this.historiaForm.value;
-  //     console.log('Historia clínica enviada:', historia);
-  //     // Aquí integras la lógica para enviar los datos al backend (Firebase o API REST).
-  //   } else {
-  //     this.historiaForm.markAllAsTouched();
-  //   }
-  // }
 
-   onSubmit(): void {
+  onSubmit(): void {
     if (this.historiaForm.valid) {
       const historia: HistoriaClinica = this.historiaForm.value;
       console.log('Historia clínica enviada:', historia);  // :contentReference[oaicite:0]{index=0}
@@ -96,7 +101,7 @@ export class HistoriaClinicaComponent implements OnInit {
       // **SweetAlert2** de éxito
       Swal.fire({
         icon: 'success',
-        title: '¡Guardado!',
+        title: 'Historia clinica guardada!',
         text: 'La historia clínica se guardó correctamente.',
         confirmButtonText: 'Aceptar'
       });
@@ -115,8 +120,6 @@ export class HistoriaClinicaComponent implements OnInit {
       });
     }
   }
-
-
 }
 
 
