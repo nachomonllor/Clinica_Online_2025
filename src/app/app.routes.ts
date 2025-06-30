@@ -7,6 +7,7 @@ import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especi
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 export const routes: Routes = [
 
@@ -15,7 +16,7 @@ export const routes: Routes = [
 
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login-paciente', component: LoginPacienteComponent },
-  // { path: 'mi-perfil', component: MiPerfilComponent},
+  { path: 'mi-perfil', component: MiPerfilComponent},
   { path: 'mis-turnos', component: MisTurnosComponent},
   { path: 'registro', component: RegistroPacienteComponent },
   { path: 'usuario-admin', component: UsuariosAdminComponent},

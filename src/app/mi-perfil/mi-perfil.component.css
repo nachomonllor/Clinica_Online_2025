@@ -1,71 +1,110 @@
+.horarios-container .mat-line {
+  display: block;
+}
 
+
+/* Contenedor principal del componente */
 .mi-perfil-container {
-    max-width: 600px;
-    margin: 1rem auto;
-    padding: 1rem;
-  
-    h2, h3, h4 {
-      text-align: center;
-    }
-  
-    .perfil-info {
-      text-align: center;
-      img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 1rem;
-      }
-      p {
-        font-size: 1rem;
-        margin: 0.5rem 0;
-      }
-    }
-  
-    .mis-horarios {
-      margin-top: 2rem;
-  
-      ul {
-        list-style: none;
-        padding: 0;
-        li {
-          padding: 0.5rem;
-          border-bottom: 1px solid #ccc;
-        }
-      }
-  
-      form {
-        margin-top: 1rem;
-        .form-group {
-          margin-bottom: 1rem;
-          display: flex;
-          flex-direction: column;
-          label {
-            margin-bottom: 0.3rem;
-            font-weight: bold;
-          }
-          input {
-            padding: 0.5rem;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-          }
-        }
-        button {
-          width: 100%;
-          padding: 0.75rem;
-          border: none;
-          background-color: #28a745;
-          color: #fff;
-          font-weight: bold;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-        button:disabled {
-          background-color: #cccccc;
-          cursor: not-allowed;
-        }
-      }
-    }
-  }
-  
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+/* Estilo de la tarjeta */
+mat-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección de información de perfil */
+.perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-info img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.perfil-info p {
+  margin: 0.2rem 0;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Contenedor y scroll para horarios */
+.horarios-container {
+  height: 200px;             /* altura fija para siempre mostrar scroll */
+  overflow-y: auto;          /* scroll vertical */
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: rgba(0, 0, 0, 0.87); /* asegurar visibilidad del texto */
+}
+
+/* Asegurar que cada línea envuelva texto */
+.mat-list-item .mat-line {
+  white-space: normal;
+}
+
+/* Estilo para cada item de la lista */
+mat-list-item {
+  padding: 0.5rem 0;
+}
+
+/* Separador interno */
+mat-divider {
+  margin: 1.5rem 0;
+}
+
+/* Formularios: ancho completo y espacio interno */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Layout del formulario */
+mat-card-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botón: alineado a la derecha */
+button[mat-raised-button] {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+}
+
+/* styling para los pills de especialidad */
+.pill-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.pill {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  font-size: 0.9rem;
+}
+
+.pill:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.pill.active {
+  background-color: #3f51b5;    /* color primario de Material */
+  color: #fff;
+  border-color: #3f51b5;
+}

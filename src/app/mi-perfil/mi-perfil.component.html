@@ -1,5 +1,150 @@
-<p>mi-perfil works!</p>
+<mat-card class="mi-perfil-container">
+  <mat-card-header>
+    <mat-card-title>Mi Perfil</mat-card-title>
+  </mat-card-header>
 
+  <mat-card-content>
+    <div class="perfil-info">
+      <img mat-card-avatar [src]="usuario.imagenPerfil" alt="Imagen de perfil" />
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+    </div>
+
+    <section *ngIf="usuario.horarios?.length">
+      <h3>Mis Horarios</h3>
+      <div class="horarios-container">
+        <mat-list>
+
+
+          <!-- <mat-list-item *ngFor="let h of usuario.horarios">
+              <mat-icon matListIcon>schedule</mat-icon>
+
+               Línea principal: especialidad 
+              <h4 matLine>{{ h.especialidad }}</h4>
+
+               Una línea por día 
+              <p matLine *ngFor="let dia of h.dias">
+                Día: {{ dia }}
+              </p>
+
+               Una línea por hora 
+              <p matLine *ngFor="let hora of h.horas">
+                Hora: {{ hora }}
+              </p>
+            </mat-list-item> -->
+
+          <mat-list>
+            <mat-list-item *ngFor="let h of usuario.horarios">
+              <mat-icon matListIcon>schedule</mat-icon>
+
+              <!-- 1ª línea: especialidad -->
+              <div matLine><strong>{{ h.especialidad }}</strong></div>
+
+              <!-- 2ª línea: días separados por coma -->
+              <div matLine>Días: {{ h.dias.join(', ') }}</div>
+
+              <!-- 3ª línea: horas separados por coma -->
+              <div matLine>Horas: {{ h.horas.join(', ') }}</div>
+            </mat-list-item>
+          </mat-list>
+
+
+
+        </mat-list>
+      </div>
+    </section>
+
+    <!-- mat-divider></mat-divider -->
+
+    <h4>Agregar Nuevo Horario</h4>
+    <form [formGroup]="horarioForm" (ngSubmit)="agregarHorario()">
+      <!-- <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Especialidad</mat-label>
+        <input matInput formControlName="especialidad" placeholder="Ej: Cardiología" />
+      </mat-form-field> -->
+
+      <!-- <div class="form-group">
+        <label>Especialidad</label>
+        <div class="pill-group">
+          <button type="button" class="pill" *ngFor="let esp of especialidades"
+            [class.active]="horarioForm.value.especialidad === esp"
+            (click)="horarioForm.get('especialidad')!.setValue(esp)">
+            {{ esp }}
+          </button>
+        </div>
+      </div> -->
+
+      <!-- <div class="form-group">
+        <label>Especialidades</label>
+        <div class="pill-group">
+          <button type="button" class="pill" *ngFor="let esp of especialidades"
+            [class.active]="horarioForm.get('especialidades')!.value.includes(esp)" (click)="toggleEspecialidad(esp)">
+            {{ esp }}
+          </button>
+        </div>
+      </div>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Días (separados por coma)</mat-label>
+        <input matInput formControlName="dias" placeholder="Ej: Lunes, Miércoles" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Horas (separadas por coma)</mat-label>
+        <input matInput formControlName="horas" placeholder="Ej: 09:00, 10:00" />
+      </mat-form-field> -->
+
+      <!-- Especialidades -->
+      <div class="form-group">
+        <label>Especialidades</label>
+        <div class="pill-group">
+          <button type="button" class="pill" *ngFor="let esp of especialidades"
+            [class.active]="horarioForm.value.especialidades.includes(esp)" (click)="toggleEspecialidad(esp)">
+            {{ esp }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Días -->
+      <div class="form-group">
+        <label>Días</label>
+        <div class="pill-group">
+          <button type="button" class="pill" *ngFor="let d of diasDisponibles"
+            [class.active]="horarioForm.value.dias.includes(d)" (click)="toggleDia(d)">
+            {{ d }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Horas -->
+      <div class="form-group">
+        <label>Horas</label>
+        <div class="pill-group">
+          <button type="button" class="pill" *ngFor="let h of horasDisponibles"
+            [class.active]="horarioForm.value.horas.includes(h)" (click)="toggleHora(h)">
+            {{ h }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Botón de enviar -->
+      <button mat-raised-button color="primary" [disabled]="horarioForm.invalid" (click)="agregarHorario()">
+        <mat-icon>add</mat-icon> Agregar Horario
+      </button>
+
+
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="horarioForm.invalid">
+        <mat-icon>add</mat-icon> Agregar Horario
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+<!-- 
 <div class="mi-perfil-container">
     <h2>Mi Perfil</h2>
     <div class="perfil-info">
@@ -9,7 +154,7 @@
       <p><strong>Email:</strong> {{ usuario.email }}</p>
     </div>
     
-    <!-- Sección para especialistas: Mostrar y agregar horarios -->
+    Sección para especialistas: Mostrar y agregar horarios 
     <div class="mis-horarios" *ngIf="usuario.horarios">
       <h3>Mis Horarios</h3>
       <ul>
@@ -36,4 +181,4 @@
       </form>
     </div>
   </div>
-  
+   -->

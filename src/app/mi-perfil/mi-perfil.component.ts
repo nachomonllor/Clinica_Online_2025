@@ -1,58 +1,98 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+
+interface Horario {
+  especialidad: string;  // seguiremos guardando como string (comma-joined)
+  dias: string[];
+  horas: string[];
+}
+
+interface Usuario {
+  nombre: string;
+  apellido: string;
+  email: string;
+  imagenPerfil?: string;
+  horarios: Horario[];
+}
 
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    MatDividerModule
+  ],
   templateUrl: './mi-perfil.component.html',
-  styleUrl: './mi-perfil.component.css'
+  styleUrls: ['./mi-perfil.component.css']
 })
 
 export class MiPerfilComponent implements OnInit {
-  // Usuario simulado; en una aplicación real vendría del servicio de autenticación.
+
+  especialidades = ['Cardiología','Dermatología','Neurología','Pediatría','Psiquiatría'];
+  diasDisponibles = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+  horasDisponibles = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
+
+  horarioForm: FormGroup;
+     
   usuario: Usuario = {
-    nombre: 'Juan',
-    apellido: 'Pérez',
-    email: 'juan@example.com',
-    imagenPerfil: 'https://via.placeholder.com/150',
-    horarios: [
-      { especialidad: 'Cardiología', dias: ['Lunes', 'Miércoles'], horas: ['09:00', '10:00'] },
-      { especialidad: 'Neurología', dias: ['Martes'], horas: ['14:00'] }
-    ]
+    nombre: 'Guido',
+    apellido: 'Kafka',
+    email: 'guido.kafka@ejemplo.com',
+    imagenPerfil: 'assets/avatar.JPG',
+    horarios: []
   };
 
-  // Formulario para agregar un nuevo horario.
-  horarioForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
-    this.horarioForm = this.fb.group({
-      especialidad: ['', Validators.required],
-      dias: ['', Validators.required],
-      horas: ['', Validators.required]
+   constructor(private fb: FormBuilder) {
+      this. horarioForm = this.fb.group({
+      especialidades: [<string[]>[], Validators.required],
+      dias: [<string[]>[], Validators.required],
+      horas: [<string[]>[], Validators.required]
     });
+   }
+
+   ngOnInit(): void {}
+
+  private toggleItem(controlName: 'especialidades'|'dias'|'horas', value: string) {
+    const ctrl = this.horarioForm.get(controlName)!;
+    const arr: string[] = ctrl.value || [];
+    const updated = arr.includes(value)
+      ? arr.filter(x => x !== value)
+      : [...arr, value];
+    ctrl.setValue(updated);
   }
 
-  ngOnInit(): void {}
+  toggleEspecialidad(esp: string) { this.toggleItem('especialidades', esp); }
+  toggleDia(d: string)         { this.toggleItem('dias', d); }
+  toggleHora(h: string)        { this.toggleItem('horas', h); }
 
   agregarHorario(): void {
-    if (this.horarioForm.valid) {
-      const nuevoHorario: Horario = {
-        especialidad: this.horarioForm.value.especialidad,
-        // Se espera que el usuario ingrese los días separados por coma.
-        dias: this.horarioForm.value.dias.split(',').map((d: string) => d.trim()),
-        // Se espera que el usuario ingrese las horas separadas por coma.
-        horas: this.horarioForm.value.horas.split(',').map((h: string) => h.trim())
-      };
-      if (!this.usuario.horarios) {
-        this.usuario.horarios = [];
-      }
-      this.usuario.horarios.push(nuevoHorario);
-      console.log('Nuevo horario agregado:', nuevoHorario);
-      this.horarioForm.reset();
-    } else {
-      this.horarioForm.markAllAsTouched();
-    }
+    const { especialidades, dias, horas } = this.horarioForm.value;
+    const nuevo: Horario = {
+      especialidad: especialidades.join(', '),
+      dias,
+      horas
+    };
+    this.usuario.horarios.push(nuevo);
+    this.horarioForm.reset({ especialidades: [], dias: [], horas: [] });
   }
+
 }
+
