@@ -1,0 +1,30 @@
+.pacientes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.paciente-card {
+  text-align: center;
+  position: relative;
+  padding-top: 2rem;
+
+  button[mat-fab] {
+    position: absolute;
+    top: -1rem;
+    left: calc(50% - 28px);
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 1rem auto;
+  }
+}
+
+.detalle-paciente {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}

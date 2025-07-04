@@ -1,0 +1,36 @@
+<p>pacientes works!</p>
+
+
+<!-- src/app/pacientes/pacientes.component.html -->
+
+<div class="pacientes-list">
+  <mat-card *ngFor="let p of pacientes" class="paciente-card">
+    <button mat-fab color="primary"
+            (click)="seleccionarPaciente(p)"
+            aria-label="Seleccionar paciente">
+      <mat-icon>person</mat-icon>
+    </button>
+
+    <img [src]="p.avatarUrl"
+         class="avatar"
+         alt="Avatar de {{ p.nombre }}">
+
+    <h3>{{ p.nombre }} {{ p.apellido }}</h3>
+  </mat-card>
+</div>
+
+<ng-container *ngIf="pacienteSeleccionado">
+  <section class="detalle-paciente">
+    <h2>Turnos de {{ pacienteSeleccionado.nombre }}</h2>
+    <mat-list>
+      <mat-list-item *ngFor="let t of turnos">
+        {{ t.fecha | date:'dd/MM/yyyy HH:mm' }} —
+        {{ t.estado }}
+        <button mat-button (click)="verResena(t)">Ver reseña</button>
+      </mat-list-item>
+    </mat-list>
+
+    <h2>Historia Clínica</h2>
+    <p>{{ historia?.resumen }}</p>
+  </section>
+</ng-container>

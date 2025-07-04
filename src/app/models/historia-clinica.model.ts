@@ -5,5 +5,6 @@ export interface HistoriaClinica {
     peso: number;
     temperatura: number;
     presion: string;
+    resumen:string;
     datosDinamicos?: DatoDinamico[];
 }

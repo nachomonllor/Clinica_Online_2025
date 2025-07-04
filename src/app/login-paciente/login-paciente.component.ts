@@ -10,9 +10,7 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'app-login-paciente',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
+   
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

@@ -1,0 +1,5 @@
+Mazo de cartas que van saliendo las cartas
+y vos tenes que ir deciendo si la proxima carta en salir es mayor o menor que la ultima carta que salio.
+Ej, sale como carta un 2, vos tenes que decir si la proxima carta que saldra es mayor o menor. Si acertas sumo un punto o por ejemplo 10 puntos,
+y si no acertas resto 5 puntos.
+  

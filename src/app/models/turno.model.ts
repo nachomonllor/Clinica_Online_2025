@@ -1,5 +1,6 @@
 
 export interface Turno {
+  pacienteId: any;
   id: number;
   fecha: string; // Para simplificar, string; en producción puede ser Date.
   hora: string;

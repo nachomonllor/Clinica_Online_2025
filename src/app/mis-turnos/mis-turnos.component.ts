@@ -57,7 +57,8 @@ export class MisTurnosComponent implements OnInit {
         hora: '09:00',
         especialidad: 'Cardiología',
         especialista: 'Dr. Juan Pérez',
-        estado: 'pendiente'
+        estado: 'pendiente',
+        pacienteId : 1
       },
       {
         id: 2,
@@ -66,7 +67,8 @@ export class MisTurnosComponent implements OnInit {
         especialidad: 'Dermatología',
         especialista: 'Dra. Marta López',
         estado: 'realizado',
-        resena: 'Buena atención, muy profesional.'
+        resena: 'Buena atención, muy profesional.',
+        pacienteId :2
       },
       {
         id: 3,
@@ -74,9 +76,11 @@ export class MisTurnosComponent implements OnInit {
         hora: '08:30',
         especialidad: 'Neurología',
         especialista: 'Dr. Carlos Ruiz',
-        estado: 'realizado'
+        estado: 'realizado',
+        pacienteId : 3
       }
     ];
+
     this.dataSource.data = turnosMock;
 
     // Configuramos el filtro para especialidad y especialista
