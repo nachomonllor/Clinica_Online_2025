@@ -1,0 +1,19 @@
+<div class="selector-container">
+  <h2>Selecciona tu tipo de usuario</h2>
+  <div class="cards">
+    <mat-card class="card" (click)="irAPaciente()">
+      <div class="icon">
+        <!-- Aquí podrías usar <mat-icon> o una imagen SVG -->
+        <img src="assets/icons/paciente.JPG" alt="Paciente">
+      </div>
+      <button mat-button>Paciente</button>
+    </mat-card>
+
+    <mat-card class="card" (click)="irAEspecialista()">
+      <div class="icon">
+        <img src="assets/icons/especialista.JPG" alt="Especialista">
+      </div>
+      <button mat-button>Especialista</button>
+    </mat-card>
+  </div>
+</div>

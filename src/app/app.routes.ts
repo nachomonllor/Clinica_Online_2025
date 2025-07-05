@@ -9,6 +9,7 @@ import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.co
 import { WelcomeComponent } from './welcome/welcome.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
+import { SeleccionarUsuarioComponent } from './seleccionar-usuario/seleccionar-usuario.component';
 
 export const routes: Routes = [
 
@@ -19,8 +20,9 @@ export const routes: Routes = [
   { path: 'login-paciente', component: LoginPacienteComponent },
   { path: 'mi-perfil', component: MiPerfilComponent},
   { path: 'mis-turnos', component: MisTurnosComponent},
-  { path: 'registro', component: RegistroPacienteComponent },
+  { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'pacientes', component: PacientesComponent},
+  { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent},
   { path: 'usuario-admin', component: UsuariosAdminComponent},
   { path: 'turno', component: MisTurnosComponent},
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
