@@ -1,0 +1,114 @@
+<p>registro-especialista works!</p>
+
+
+<mat-card class="registro-container">
+  <mat-card-title>Registro de Especialista</mat-card-title>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre / Apellido / Edad / DNI -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="apellido" />
+      <mat-error *ngIf="registroForm.get('apellido')?.hasError('required')">
+        El apellido es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Edad</mat-label>
+      <input matInput type="number" formControlName="edad" />
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('required')">
+        La edad es obligatoria.
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('min')">
+        La edad debe ser ≥ 0.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" />
+      <mat-error *ngIf="registroForm.get('dni')?.hasError('required')">
+        El DNI es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Especialidad con “Otro” dinámico -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Especialidad</mat-label>
+      <mat-select formControlName="especialidad">
+        <mat-option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="registroForm.get('especialidad')?.hasError('required')">
+        La especialidad es obligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field
+      *ngIf="registroForm.get('especialidad')?.value === 'Otro'"
+      appearance="outline"
+      class="full-width">
+      <mat-label>¿Cuál?</mat-label>
+      <input matInput formControlName="otraEspecialidad" />
+      <mat-error *ngIf="registroForm.get('otraEspecialidad')?.hasError('required')">
+        Debes indicar la especialidad.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Mail / Contraseña -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="registroForm.get('email')?.hasError('required')">
+        El correo es obligatorio.
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('email')?.hasError('email')">
+        Formato inválido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="registroForm.get('password')?.hasError('required')">
+        La contraseña es obligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Imagen de perfil -->
+    <div class="full-width file-group">
+      <button mat-raised-button type="button" (click)="fileInput.click()">
+        Seleccionar Imagen de Perfil
+      </button>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="onFileChange($event)"
+        accept="image/*" />
+      <div class="preview" *ngIf="imagenPrevia">
+        <img [src]="imagenPrevia" alt="Previsualización perfil" />
+      </div>
+      <mat-error *ngIf="registroForm.get('imagenPerfil')?.hasError('required') && registroForm.get('imagenPerfil')?.touched">
+        La imagen de perfil es obligatoria.
+      </mat-error>
+    </div>
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="full-width"
+      [disabled]="registroForm.invalid"
+      type="submit">
+      Registrarse
+    </button>
+  </form>
+</mat-card>

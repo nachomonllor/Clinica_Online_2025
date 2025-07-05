@@ -10,6 +10,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { SeleccionarUsuarioComponent } from './seleccionar-usuario/seleccionar-usuario.component';
+import { RegistroEspecialistaComponent } from './registro-especialista/registro-especialista.component';
 
 export const routes: Routes = [
 
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'mi-perfil', component: MiPerfilComponent},
   { path: 'mis-turnos', component: MisTurnosComponent},
   { path: 'registro-paciente', component: RegistroPacienteComponent },
+  { path: 'registro-especialista', component: RegistroEspecialistaComponent},
   { path: 'pacientes', component: PacientesComponent},
   { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent},
   { path: 'usuario-admin', component: UsuariosAdminComponent},
