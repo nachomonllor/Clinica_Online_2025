@@ -108,7 +108,7 @@ A continuación se describen qué componentes y servicios intervienen en cada m�
 1. Clonar el repositorio:
 
    ```bash
-   git clone https://github.com/tu-usuario/clinica-online.git
+   git clone https://github.com/nachomonllor/Clinica_Online_2025
    ```
 2. Instalar dependencias:
 
@@ -127,9 +127,6 @@ A continuación se describen qué componentes y servicios intervienen en cada m�
    ```
 5. Generar Pull Request describiendo los cambios.
 
----
-
-> **Licencia:** MIT
 
 
 
