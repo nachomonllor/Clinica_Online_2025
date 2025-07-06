@@ -15,6 +15,7 @@ import { environment }  from './environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { provideStorage, getStorage }          from '@angular/fire/storage';
 
 if (environment.production) {
   enableProdMode();
@@ -35,6 +36,8 @@ bootstrapApplication(AppComponent, {
     provideFirestore(() => getFirestore()),
     provideAnimations(), provideAnimationsAsync(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
 
+    provideStorage(()   => getStorage()),
+
 
     // …otros providers como HttpClientModule, FormsModule, etc.
   ]
@@ -43,3 +46,29 @@ bootstrapApplication(AppComponent, {
 
 
 
+// // app.module.ts
+// import { NgModule } from '@angular/core';
+// import { BrowserModule } from '@angular/platform-browser';
+// import { provideFirebaseApp, initializeApp }  from '@angular/fire/app';
+// import { provideFirestore, getFirestore }      from '@angular/fire/firestore';
+// import { provideAuth, getAuth }                from '@angular/fire/auth';
+// import { environment } from '../environments/environment';
+
+// import { AppComponent } from './app.component';
+// // … tus otros imports
+
+// @NgModule({
+//   declarations: [AppComponent /* … */],
+//   imports: [
+//     BrowserModule,
+//     // inicializa Firebase
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+//     // Cloud Firestore
+//     provideFirestore(() => getFirestore()),
+//     // Auth (si lo usarás)
+//     provideAuth(() => getAuth()),
+//     // … tus otros módulos
+//   ],
+//   bootstrap: [AppComponent]
+// })
+// export class AppModule { }

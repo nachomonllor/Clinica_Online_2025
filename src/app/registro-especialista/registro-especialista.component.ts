@@ -136,6 +136,8 @@ export class RegistroEspecialistaComponent implements OnInit {
     this.registroForm.reset();
     this.imagenPrevia = null;
   }
+
+  
 }
 
 

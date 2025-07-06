@@ -1,12 +1,12 @@
 
 <mat-card class="registro-container">
   <mat-card-title>Registro de Paciente</mat-card-title>
-  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registroPacienteForm" (ngSubmit)="onSubmit()">
     
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" placeholder="Ingresa tu nombre" />
-      <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('nombre')?.hasError('required')">
         El nombre es obligatorio.
       </mat-error>
     </mat-form-field>
@@ -14,7 +14,7 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Apellido</mat-label>
       <input matInput formControlName="apellido" placeholder="Ingresa tu apellido" />
-      <mat-error *ngIf="registroForm.get('apellido')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('apellido')?.hasError('required')">
         El apellido es obligatorio.
       </mat-error>
     </mat-form-field>
@@ -22,10 +22,10 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Edad</mat-label>
       <input matInput type="number" formControlName="edad" placeholder="Ingresa tu edad" />
-      <mat-error *ngIf="registroForm.get('edad')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('edad')?.hasError('required')">
         La edad es obligatoria.
       </mat-error>
-      <mat-error *ngIf="registroForm.get('edad')?.hasError('min')">
+      <mat-error *ngIf="registroPacienteForm.get('edad')?.hasError('min')">
         La edad debe ser ≥ 0.
       </mat-error>
     </mat-form-field>
@@ -33,7 +33,7 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>DNI</mat-label>
       <input matInput formControlName="dni" placeholder="Ingresa tu DNI" />
-      <mat-error *ngIf="registroForm.get('dni')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('dni')?.hasError('required')">
         El DNI es obligatorio.
       </mat-error>
     </mat-form-field>
@@ -41,7 +41,7 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Obra Social</mat-label>
       <input matInput formControlName="obraSocial" placeholder="Ingresa tu obra social" />
-      <mat-error *ngIf="registroForm.get('obraSocial')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('obraSocial')?.hasError('required')">
         La obra social es obligatoria.
       </mat-error>
     </mat-form-field>
@@ -49,10 +49,10 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Correo Electrónico</mat-label>
       <input matInput type="email" formControlName="email" placeholder="Ingresa tu correo" />
-      <mat-error *ngIf="registroForm.get('email')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('email')?.hasError('required')">
         El correo es obligatorio.
       </mat-error>
-      <mat-error *ngIf="registroForm.get('email')?.hasError('email')">
+      <mat-error *ngIf="registroPacienteForm.get('email')?.hasError('email')">
         Formato inválido.
       </mat-error>
     </mat-form-field>
@@ -60,7 +60,7 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Contraseña</mat-label>
       <input matInput type="password" formControlName="password" placeholder="Ingresa tu contraseña" />
-      <mat-error *ngIf="registroForm.get('password')?.hasError('required')">
+      <mat-error *ngIf="registroPacienteForm.get('password')?.hasError('required')">
         La contraseña es obligatoria.
       </mat-error>
     </mat-form-field>
@@ -86,7 +86,7 @@
       </div>
     </div>
 
-    <button mat-raised-button color="accent" class="full-width" [disabled]="registroForm.invalid" type="submit">
+    <button mat-raised-button color="accent" class="full-width" [disabled]="registroPacienteForm.invalid" type="submit">
       Registrarse
     </button>
   </form>
