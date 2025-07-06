@@ -11,6 +11,7 @@ import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { SeleccionarUsuarioComponent } from './seleccionar-usuario/seleccionar-usuario.component';
 import { RegistroEspecialistaComponent } from './registro-especialista/registro-especialista.component';
+import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.component';
 
 export const routes: Routes = [
 
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'registro-especialista', component: RegistroEspecialistaComponent},
   { path: 'pacientes', component: PacientesComponent},
+  { path: 'listar-pacientes', component: ListarPacientesComponent},
   { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent},
   { path: 'usuario-admin', component: UsuariosAdminComponent},
   { path: 'turno', component: MisTurnosComponent},

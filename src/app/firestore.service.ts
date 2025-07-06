@@ -1,29 +1,67 @@
-
-// src/app/firestore.service.ts
 import { Injectable } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  addDoc,
-  doc,
-  updateDoc,
-  DocumentReference
-} from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { Paciente } from './models/paciente.model';
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
-  constructor(private firestore: Firestore) {}
+  private pacientesCollection: AngularFirestoreCollection<Paciente>;
 
-  addPaciente(pacienteData: any): Promise<DocumentReference> {
-    const pacientesCol = collection(this.firestore, 'pacientes');
-    return addDoc(pacientesCol, pacienteData);
+  constructor(private afs: AngularFirestore) {
+    // Inicializa la colección 'pacientes'
+    this.pacientesCollection = this.afs.collection<Paciente>('pacientes');
   }
 
+  /**
+   * Obtiene un Observable con la lista de pacientes, incluyendo el campo 'id'.
+   */
+  getPacientes(): Observable<Paciente[]> {
+    return this.pacientesCollection.valueChanges({ idField: 'id' });
+  }
+
+  /**
+   * Crea un nuevo paciente en Firestore.
+   */
+  addPaciente(pacienteData: any): Promise<any> {
+    return this.pacientesCollection.add(pacienteData);
+  }
+
+  /**
+   * Actualiza un paciente existente identificándolo por su ID.
+   */
   updatePaciente(id: string, updateData: any): Promise<void> {
-    const pacienteRef = doc(this.firestore, 'pacientes', id);
-    return updateDoc(pacienteRef, updateData);
+    return this.pacientesCollection.doc(id).update(updateData);
   }
 }
+
+
+
+// // src/app/firestore.service.ts
+// import { Injectable } from '@angular/core';
+// import {
+//   Firestore,
+//   collection,
+//   addDoc,
+//   doc,
+//   updateDoc,
+//   DocumentReference
+// } from '@angular/fire/firestore';
+
+// @Injectable({ providedIn: 'root' })
+// export class FirestoreService {
+//   constructor(private firestore: Firestore) {}
+
+//   addPaciente(pacienteData: any): Promise<DocumentReference> {
+//     const pacientesCol = collection(this.firestore, 'pacientes');
+//     return addDoc(pacientesCol, pacienteData);
+//   }
+
+//   updatePaciente(id: string, updateData: any): Promise<void> {
+//     const pacienteRef = doc(this.firestore, 'pacientes', id);
+//     return updateDoc(pacienteRef, updateData);
+//   }
+
+// }
 
 
 

@@ -7,15 +7,18 @@ import { provideRouter }                      from '@angular/router';
 import { provideFirebaseApp, initializeApp }  from '@angular/fire/app';
 import { provideAuth, getAuth }               from '@angular/fire/auth';
 import { provideFirestore, getFirestore }     from '@angular/fire/firestore';
+import { provideStorage, getStorage }         from '@angular/fire/storage';
+
+import { AngularFireModule }                  from '@angular/fire/compat';
+import { AngularFirestoreModule }             from '@angular/fire/compat/firestore';
+
 import { SweetAlert2Module }                  from '@sweetalert2/ngx-sweetalert2';
+
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app/app.component';
 import { routes }       from './app/app.routes';
 import { environment }  from './environments/environment';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
-import { provideStorage, getStorage }          from '@angular/fire/storage';
 
 if (environment.production) {
   enableProdMode();
@@ -25,24 +28,71 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
 
-    // Módulos (NgModule) via importProvidersFrom
+    // Inyectamos NgModules de compat a través de importProvidersFrom:
     importProvidersFrom(
-      SweetAlert2Module.forRoot()
+      SweetAlert2Module.forRoot(),
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFirestoreModule
     ),
 
-    // Providers “puros” (EnvironmentProviders) van aquí, fuera de importProvidersFrom
+    // Proveedores “modulares”:
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideAnimations(), provideAnimationsAsync(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
+    provideAuth(()          => getAuth()),
+    provideFirestore(()    => getFirestore()),
+    provideStorage(()      => getStorage()),
 
-    provideStorage(()   => getStorage()),
-
-
-    // …otros providers como HttpClientModule, FormsModule, etc.
+    provideAnimations(),
+    //provideAnimationsAsync()
   ]
 })
 .catch(err => console.error(err));
+
+
+
+// // main.ts
+// import { enableProdMode, importProvidersFrom } from '@angular/core';
+// import { bootstrapApplication }                from '@angular/platform-browser';
+// import { provideRouter }                      from '@angular/router';
+
+// import { provideFirebaseApp, initializeApp }  from '@angular/fire/app';
+// import { provideAuth, getAuth }               from '@angular/fire/auth';
+// import { provideFirestore, getFirestore }     from '@angular/fire/firestore';
+// import { SweetAlert2Module }                  from '@sweetalert2/ngx-sweetalert2';
+
+// import { AppComponent } from './app/app.component';
+// import { routes }       from './app/app.routes';
+// import { environment }  from './environments/environment';
+// import { provideAnimations } from '@angular/platform-browser/animations';
+// import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+// import { provideStorage, getStorage }          from '@angular/fire/storage';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideRouter(routes),
+
+//     // Módulos (NgModule) via importProvidersFrom
+//     importProvidersFrom(
+//       SweetAlert2Module.forRoot()
+//     ),
+
+//     // Providers “puros” (EnvironmentProviders) van aquí, fuera de importProvidersFrom
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+//     provideAnimations(), provideAnimationsAsync(),    // ← IMPORTANTE: habilita BrowserAnimationsModule
+
+//     provideStorage(()   => getStorage()),
+
+//     // …otros providers como HttpClientModule, FormsModule, etc.
+//   ]
+// })
+// .catch(err => console.error(err));
 
 
 
