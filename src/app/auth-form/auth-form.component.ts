@@ -6,13 +6,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.scss',
-  imports: [FormsModule, ReactiveFormsModule, MatInputModule, MatButtonModule]
+  imports: [
+    FormsModule, 
+    ReactiveFormsModule, 
+    MatInputModule, 
+    MatButtonModule,
+    CommonModule,
+    MatCardModule,      // ya lo usas en registro-paciente :contentReference[oaicite:0]{index=0}
+    MatButtonModule     // idem :contentReference[oaicite:1]{index=1}
+  ]
 })
 
 export class AuthFormComponent {
@@ -89,7 +99,7 @@ export class AuthFormComponent {
       this.snack.open(err.message, 'Cerrar', { duration: 3000 });
     }
   }
-  
+
   private async register() {
     try {
       const cred = await this.afAuth.createUserWithEmailAndPassword(this.email, this.password);

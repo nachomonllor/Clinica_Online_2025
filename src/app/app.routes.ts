@@ -23,10 +23,12 @@ export const routes: Routes = [
 
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login-paciente', component: LoginPacienteComponent },
-  { path: 'mi-perfil', component: MiPerfilComponent},
-  { path: 'mis-turnos', component: MisTurnosComponent},
+
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'registro-especialista', component: RegistroEspecialistaComponent},
+  { path: 'mi-perfil', component: MiPerfilComponent},
+  { path: 'mis-turnos', component: MisTurnosComponent},
+
   { path: 'pacientes', component: PacientesComponent},
   { path: 'listar-pacientes', component: ListarPacientesComponent},
   { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent},
@@ -43,10 +45,20 @@ export const routes: Routes = [
   // ruta genérica de login/register
    { path: 'auth/:mode/:role', component: AuthFormComponent },
   
-  // opcional: redirecciones de compatibilidad
-  { path: 'login-paciente', redirectTo: 'auth/login/paciente', pathMatch: 'full' },
-  { path: 'registro-paciente', redirectTo: 'auth/register/paciente', pathMatch: 'full' },
-  { path: 'registro-especialista', redirectTo: 'auth/register/especialista', pathMatch: 'full' },
+  // // opcional: redirecciones de compatibilidad
+  // { path: 'login-paciente', redirectTo: 'auth/login/paciente', pathMatch: 'full' },
+  // { path: 'login-especialista', redirectTo: 'auth/login/especialista', pathMatch: 'full' },
+
+  // { path: 'registro-paciente', redirectTo: 'auth/register/paciente', pathMatch: 'full' },
+  // { path: 'registro-especialista', redirectTo: 'auth/register/especialista', pathMatch: 'full' },
+
+
+
+  // —————— Redirecciones “compatibilidad” ——————
+  { path: 'login-paciente',       redirectTo: 'auth/login/paciente',       pathMatch: 'full' },
+  { path: 'login-especialista',   redirectTo: 'auth/login/especialista',   pathMatch: 'full' },
+  { path: 'registro-paciente',    redirectTo: 'auth/register/paciente',    pathMatch: 'full' },
+  { path: 'registro-especialista',redirectTo: 'auth/register/especialista',pathMatch: 'full' },
 
 
 
