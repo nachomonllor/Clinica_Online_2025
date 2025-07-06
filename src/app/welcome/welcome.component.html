@@ -1,4 +1,51 @@
-<div class="welcome-page">
+
+<!-- welcome.component.html -->
+<div class="welcome-bg">
+  <!-- Toolbar superior -->
+  <mat-toolbar color="primary" class="welcome-toolbar">
+    <mat-icon>local_hospital</mat-icon>
+    <span class="toolbar-title">Clínica OnLine</span>
+    <span class="spacer"></span>
+    <!-- Botón fijo de registro directo (puede quedarse o quitarse) -->
+    <button mat-button (click)="router.navigate(['/seleccionar-usuario-register'])">
+      Registrarse
+    </button>
+  </mat-toolbar>
+
+  <!-- Contenedor central con imagen de fondo vía CSS -->
+  <div class="welcome-center">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>Bienvenido a Clínica OnLine</mat-card-title>
+        <mat-card-subtitle>Especialistas en Salud</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="button-group">
+          <button
+            mat-raised-button
+            color="primary"
+            class="action-button"
+            (click)="router.navigate(['/seleccionar-usuario-login'])">
+            Iniciar Sesión
+          </button>
+          <button
+            mat-stroked-button
+            color="accent"
+            class="action-button"
+            (click)="router.navigate(['/seleccionar-usuario-registro'])">
+            Registrarse
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="welcome-page">
   <header class="header">
     <div class="logo">
       <img src="/assets/logo.JPG" alt="Clínica OnLine logo" />
@@ -11,13 +58,10 @@
   </header>
 
   <div class="hero">
-    <!-- Imagen de fondo como <img> -->
     <img class="hero-img" src="/assets/hero-bg.jpg" alt="Fondo clínico" />
 
-    <!-- Capa semitransparente -->
     <div class="overlay"></div>
 
-    <!-- Tarjeta de login -->
     <div class="auth-card">
       <h2>Iniciar sesión</h2>
 
@@ -57,4 +101,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->

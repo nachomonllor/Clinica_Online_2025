@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 
 export class SeleccionarUsuarioComponent {
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   irAPaciente() {
     this.router.navigate(['/registro-paciente']);

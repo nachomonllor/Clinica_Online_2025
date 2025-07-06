@@ -12,6 +12,9 @@ import { PacientesComponent } from './pacientes/pacientes.component';
 import { SeleccionarUsuarioComponent } from './seleccionar-usuario/seleccionar-usuario.component';
 import { RegistroEspecialistaComponent } from './registro-especialista/registro-especialista.component';
 import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.component';
+import { SeleccionarUsuarioLoginComponent } from './seleccionar-usuario-login/seleccionar-usuario-login.component';
+import { SeleccionarUsuarioRegistroComponent } from './seleccionar-usuario-registro/seleccionar-usuario-registro.component';
+import { AuthFormComponent } from './auth-form/auth-form.component';
 
 export const routes: Routes = [
 
@@ -32,6 +35,21 @@ export const routes: Routes = [
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
   { path: 'solicitar-turno', component: SolicitarTurnoComponent},
   { path: 'historia-clinica', component: HistoriaClinicaComponent},
+  { path: 'seleccionar-usuario-login', component: SeleccionarUsuarioLoginComponent },
+  { path: 'seleccionar-usuario-registro', component: SeleccionarUsuarioRegistroComponent },
+
+
+
+  // ruta genérica de login/register
+   { path: 'auth/:mode/:role', component: AuthFormComponent },
+  
+  // opcional: redirecciones de compatibilidad
+  { path: 'login-paciente', redirectTo: 'auth/login/paciente', pathMatch: 'full' },
+  { path: 'registro-paciente', redirectTo: 'auth/register/paciente', pathMatch: 'full' },
+  { path: 'registro-especialista', redirectTo: 'auth/register/especialista', pathMatch: 'full' },
+
+
+
   { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
 
 ];
