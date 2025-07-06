@@ -1,4 +1,39 @@
 
+// import { Component, OnInit } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+// import {
+//   FormBuilder,
+//   FormControl,
+//   FormGroup,
+//   ReactiveFormsModule,
+//   Validators
+// } from '@angular/forms';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatCardModule } from '@angular/material/card';
+// import { MatSelectModule } from '@angular/material/select';
+// import Swal from 'sweetalert2';
+// import { EspecialistaService } from '../especialista.service';
+
+// @Component({
+//   selector: 'app-registro-especialista',
+//   standalone: true,
+//   imports: [
+//     CommonModule,
+//     ReactiveFormsModule,
+//     MatFormFieldModule,
+//     MatInputModule,
+//     MatSelectModule,
+//     MatButtonModule,
+//     MatCardModule
+//   ],
+//   templateUrl: './registro-especialista.component.html',
+//   styleUrls: ['./registro-especialista.component.scss']
+// })
+
+
+// registro-especialista.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -9,11 +44,16 @@ import {
   Validators
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule }     from '@angular/material/input';
-import { MatButtonModule }    from '@angular/material/button';
-import { MatCardModule }      from '@angular/material/card';
-import { MatSelectModule }    from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 import Swal from 'sweetalert2';
+
+import { EspecialistaService } from '../especialista.service';
+
+//  Storage y funciones de la API modular:
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -45,32 +85,36 @@ export class RegistroEspecialistaComponent implements OnInit {
   imagenPrevia: string | null = null;
 
   registroForm!: FormGroup<{
-    nombre:           FormControl<string | null>;
-    apellido:         FormControl<string | null>;
-    edad:             FormControl<number | null>;
-    dni:              FormControl<string | null>;
-    especialidad:     FormControl<string | null>;
+    nombre: FormControl<string | null>;
+    apellido: FormControl<string | null>;
+    edad: FormControl<number | null>;
+    dni: FormControl<string | null>;
+    especialidad: FormControl<string | null>;
     otraEspecialidad: FormControl<string | null>;
-    email:            FormControl<string | null>;
-    password:         FormControl<string | null>;
-    imagenPerfil:     FormControl<File | null>;
+    email: FormControl<string | null>;
+    password: FormControl<string | null>;
+    imagenPerfil: FormControl<File | null>;
   }>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private especialistaService: EspecialistaService,
+    private storage: Storage            // 🔹 inyectar Storage
+  ) { }
 
   ngOnInit() {
     // Creamos el form con validaciones básicas
     this.registroForm = this.fb.group({
-      nombre:           this.fb.control<string | null>(null, Validators.required),
-      apellido:         this.fb.control<string | null>(null, Validators.required),
-      edad:             this.fb.control<number | null>(null, [Validators.required, Validators.min(0)]),
-      dni:              this.fb.control<string | null>(null, Validators.required),
-      especialidad:     this.fb.control<string | null>(null, Validators.required),
+      nombre: this.fb.control<string | null>(null, Validators.required),
+      apellido: this.fb.control<string | null>(null, Validators.required),
+      edad: this.fb.control<number | null>(null, [Validators.required, Validators.min(0)]),
+      dni: this.fb.control<string | null>(null, Validators.required),
+      especialidad: this.fb.control<string | null>(null, Validators.required),
       // inicializamos sin validadores; se los ponemos dinámicamente
       otraEspecialidad: this.fb.control<string | null>(null),
-      email:            this.fb.control<string | null>(null, [Validators.required, Validators.email]),
-      password:         this.fb.control<string | null>(null, Validators.required),
-      imagenPerfil:     this.fb.control<File | null>(null, Validators.required),
+      email: this.fb.control<string | null>(null, [Validators.required, Validators.email]),
+      password: this.fb.control<string | null>(null, Validators.required),
+      imagenPerfil: this.fb.control<File | null>(null, Validators.required),
     });
 
     // Si elige “Otro”, requerimos el campo extra
@@ -106,51 +150,53 @@ export class RegistroEspecialistaComponent implements OnInit {
     }
 
     const fv = this.registroForm.value;
-    // Determinamos la especialidad final
     const especialidadFinal = fv.especialidad === 'Otro'
-      ? fv.otraEspecialidad
-      : fv.especialidad;
+      ? fv.otraEspecialidad!
+      : fv.especialidad!;
 
-    // Aquí mapearías a tu modelo de Especialista
-    const nuevoEspecialista = {
-      nombre:        fv.nombre!,
-      apellido:      fv.apellido!,
-      edad:          fv.edad!,
-      dni:           fv.dni!,
-      especialidad:  especialidadFinal!,
-      email:         fv.email!,
-      password:      fv.password!,
-      imagenPerfil:  fv.imagenPerfil!
-    };
+    const file = fv.imagenPerfil!;      // 📁 File
+    const filePath = `especialistas/${Date.now()}_${file.name}`;
+    const storageRef = ref(this.storage, filePath);
 
-    // Llamada al servicio y feedback
-    // this.especialistaService.crear(nuevoEspecialista).subscribe(...)
-    Swal.fire({
-      icon: 'success',
-      title: `Especialista ${nuevoEspecialista.nombre} ${nuevoEspecialista.apellido} registrado`,
-      showConfirmButton: false,
-      timer: 2000
-    });
+    // 1) subimos la imagen a Storage
+    uploadBytes(storageRef, file)
+      .then(() => getDownloadURL(storageRef))
+      .then((url: string) => {
+        // 2) una vez subida, creamos el objeto con la URL
+        const nuevoEspecialista = {
+          nombre: fv.nombre!,
+          apellido: fv.apellido!,
+          edad: fv.edad!,
+          dni: fv.dni!,
+          especialidad: especialidadFinal,
+          email: fv.email!,
+          password: fv.password!,
+          imagenPerfil: url     // ◀️ URL en lugar de File
+        };
 
-    // Reseteamos
-    this.registroForm.reset();
-    this.imagenPrevia = null;
+        // 3) lo guardamos en Firestore
+        return this.especialistaService.addEspecialista(nuevoEspecialista)
+          .then(docRef =>
+            // opcional: guardar el id dentro del doc
+            this.especialistaService.updateEspecialista(docRef.id, { id: docRef.id })
+          );
+      })
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: `Especialista registrado con éxito`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.registroForm.reset();
+        this.imagenPrevia = null;
+      })
+      .catch(err => {
+        console.error(err);
+        Swal.fire('Error', err.message, 'error');
+      });
   }
 
-  
+
 }
 
-
-
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-registro-especialista',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './registro-especialista.component.html',
-//   styleUrl: './registro-especialista.component.scss'
-// })
-// export class RegistroEspecialistaComponent {
-
-// }

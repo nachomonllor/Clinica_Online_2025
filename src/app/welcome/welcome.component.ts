@@ -34,6 +34,6 @@ export class WelcomeComponent {
   }
 
   goToRegister() {
-    this.router.navigate(['/registro']);
+    this.router.navigate(['/seleccionar-usuario']);
   }
 }
