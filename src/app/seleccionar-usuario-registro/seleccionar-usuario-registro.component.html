@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="seleccionar-usuario-container">
   <mat-card class="selector-card">
     <mat-card-header>
@@ -19,7 +19,7 @@
       </div>
     </mat-card-content>
   </mat-card>
-</div>
+</div> -->
 
 
 <!-- <div class="selector-container">
@@ -42,3 +42,21 @@
 </div>
  -->
 
+ 
+<mat-card class="selector-card">
+  <mat-card-header>
+    <mat-card-title>Iniciar sesión</mat-card-title>
+    <mat-card-subtitle>¿Con qué rol desea ingresar?</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="button-group">
+    <button mat-raised-button color="primary"
+            (click)="router.navigate(['/registro-paciente'])">
+      Paciente
+    </button>
+    <button mat-raised-button color="accent"
+            (click)="router.navigate(['/registro-especialista'])">
+      Especialista
+    </button>
+  </mat-card-content>
+</mat-card>

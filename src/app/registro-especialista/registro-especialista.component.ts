@@ -1,38 +1,3 @@
-
-// import { Component, OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import {
-//   FormBuilder,
-//   FormControl,
-//   FormGroup,
-//   ReactiveFormsModule,
-//   Validators
-// } from '@angular/forms';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatCardModule } from '@angular/material/card';
-// import { MatSelectModule } from '@angular/material/select';
-// import Swal from 'sweetalert2';
-// import { EspecialistaService } from '../especialista.service';
-
-// @Component({
-//   selector: 'app-registro-especialista',
-//   standalone: true,
-//   imports: [
-//     CommonModule,
-//     ReactiveFormsModule,
-//     MatFormFieldModule,
-//     MatInputModule,
-//     MatSelectModule,
-//     MatButtonModule,
-//     MatCardModule
-//   ],
-//   templateUrl: './registro-especialista.component.html',
-//   styleUrls: ['./registro-especialista.component.scss']
-// })
-
-
 // registro-especialista.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -196,7 +161,41 @@ export class RegistroEspecialistaComponent implements OnInit {
         Swal.fire('Error', err.message, 'error');
       });
   }
-
-
+  
 }
 
+
+
+
+// import { Component, OnInit } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+// import {
+//   FormBuilder,
+//   FormControl,
+//   FormGroup,
+//   ReactiveFormsModule,
+//   Validators
+// } from '@angular/forms';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatCardModule } from '@angular/material/card';
+// import { MatSelectModule } from '@angular/material/select';
+// import Swal from 'sweetalert2';
+// import { EspecialistaService } from '../especialista.service';
+
+// @Component({
+//   selector: 'app-registro-especialista',
+//   standalone: true,
+//   imports: [
+//     CommonModule,
+//     ReactiveFormsModule,
+//     MatFormFieldModule,
+//     MatInputModule,
+//     MatSelectModule,
+//     MatButtonModule,
+//     MatCardModule
+//   ],
+//   templateUrl: './registro-especialista.component.html',
+//   styleUrls: ['./registro-especialista.component.scss']
+// })

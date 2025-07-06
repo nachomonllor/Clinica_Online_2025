@@ -14,7 +14,7 @@ import { RegistroEspecialistaComponent } from './registro-especialista/registro-
 import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.component';
 import { SeleccionarUsuarioLoginComponent } from './seleccionar-usuario-login/seleccionar-usuario-login.component';
 import { SeleccionarUsuarioRegistroComponent } from './seleccionar-usuario-registro/seleccionar-usuario-registro.component';
-import { AuthFormComponent } from './auth-form/auth-form.component';
+import { LoginEspecialistaComponent } from './login-especialista/login-especialista.component';
 
 export const routes: Routes = [
 
@@ -41,24 +41,13 @@ export const routes: Routes = [
   { path: 'seleccionar-usuario-registro', component: SeleccionarUsuarioRegistroComponent },
 
 
+    // Login específicos
+  { path: 'login-paciente',       component: LoginPacienteComponent },
+  { path: 'login-especialista',   component: LoginEspecialistaComponent },
 
-  // ruta genérica de login/register
-   { path: 'auth/:mode/:role', component: AuthFormComponent },
-  
-  // // opcional: redirecciones de compatibilidad
-  // { path: 'login-paciente', redirectTo: 'auth/login/paciente', pathMatch: 'full' },
-  // { path: 'login-especialista', redirectTo: 'auth/login/especialista', pathMatch: 'full' },
-
-  // { path: 'registro-paciente', redirectTo: 'auth/register/paciente', pathMatch: 'full' },
-  // { path: 'registro-especialista', redirectTo: 'auth/register/especialista', pathMatch: 'full' },
-
-
-
-  // —————— Redirecciones “compatibilidad” ——————
-  { path: 'login-paciente',       redirectTo: 'auth/login/paciente',       pathMatch: 'full' },
-  { path: 'login-especialista',   redirectTo: 'auth/login/especialista',   pathMatch: 'full' },
-  { path: 'registro-paciente',    redirectTo: 'auth/register/paciente',    pathMatch: 'full' },
-  { path: 'registro-especialista',redirectTo: 'auth/register/especialista',pathMatch: 'full' },
+  // Registro específicos
+  { path: 'registro-paciente',      component: RegistroPacienteComponent },
+  { path: 'registro-especialista',  component: RegistroEspecialistaComponent },
 
 
 
