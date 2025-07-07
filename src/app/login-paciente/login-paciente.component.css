@@ -1,12 +1,31 @@
 
 
-.login-wrapper {
+/* login-paciente.component.css */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 16px;
+}
+
+
+
+/* .login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;        /* centra verticalmente */
+  height: 100vh;       
   padding: 1rem;
-  background: #f5f5f5;  /* tono suave de fondo */
+  background: #f5f5f5;
 }
 
 .login-card {
@@ -16,7 +35,7 @@
 
 .full-width {
   width: 100%;
-}
+} */
 
 
 /* .login-container {

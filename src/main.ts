@@ -19,6 +19,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppComponent } from './app/app.component';
 import { routes }       from './app/app.routes';
 import { environment }  from './environments/environment';
+import { provideHttpClient } from '@angular/common/http';
+
 
 if (environment.production) {
   enableProdMode();
@@ -42,7 +44,10 @@ bootstrapApplication(AppComponent, {
     provideStorage(()      => getStorage()),
 
     provideAnimations(),
+     provideHttpClient() 
     //provideAnimationsAsync()
+
+
   ]
 })
 .catch(err => console.error(err));

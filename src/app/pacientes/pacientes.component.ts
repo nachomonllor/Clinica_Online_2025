@@ -52,7 +52,8 @@ export class PacientesComponent implements OnInit {
 
   ngOnInit(): void {
     // 1) Obtengo el ID del especialista
-    this.especialistaId = this.auth.currentUser.uid;
+
+    // this.especialistaId = this.auth.user$.uid;
     // 2) Cargo la lista de pacientes
     this.cargarPacientes();
   }

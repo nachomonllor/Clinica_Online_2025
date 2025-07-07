@@ -8,5 +8,6 @@ export const environment = {
     storageBucket: "clinica-2025-a2654.firebasestorage.app",
     messagingSenderId: "259848622",
     appId: "1:259848622:web:59d3f1cd9c3d8b413a303f"
+
   }
 };

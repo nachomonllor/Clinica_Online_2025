@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 import { Turno } from '../models/turno.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TurnoService } from '../turno.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -33,57 +35,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrls: ['./mis-turnos.component.css']
 })
 export class MisTurnosComponent implements OnInit {
-  displayedColumns: string[] = [
-    'id',
-    'fecha',
-    'hora',
-    'especialidad',
-    'especialista',
-    'estado',
-    'acciones'
+
+
+  displayedColumns = [
+    'id','fecha','hora','especialidad','especialista','estado','acciones'
   ];
   dataSource = new MatTableDataSource<Turno>([]);
 
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private turnoSvc: TurnoService,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {
-    // Mock de datos; aquí cargarías desde tu servicio real
-    const turnosMock: Turno[] = [
-      {
-        id: 1,
-        fecha: '2025-03-30',
-        hora: '09:00',
-        especialidad: 'Cardiología',
-        especialista: 'Dr. Juan Pérez',
-        estado: 'pendiente',
-        pacienteId : 1
-      },
-      {
-        id: 2,
-        fecha: '2025-04-02',
-        hora: '10:30',
-        especialidad: 'Dermatología',
-        especialista: 'Dra. Marta López',
-        estado: 'realizado',
-        resena: 'Buena atención, muy profesional.',
-        pacienteId :2
-      },
-      {
-        id: 3,
-        fecha: '2025-04-05',
-        hora: '08:30',
-        especialidad: 'Neurología',
-        especialista: 'Dr. Carlos Ruiz',
-        estado: 'realizado',
-        pacienteId : 3
-      }
-    ];
+    // 1) Obtenemos los turnos del paciente
+    this.turnoSvc.getTurnosPaciente()
+      .subscribe(turnos => this.dataSource.data = turnos);
 
-    this.dataSource.data = turnosMock;
-
-    // Configuramos el filtro para especialidad y especialista
+    // 2) Configuramos el filtro
     this.dataSource.filterPredicate = (turno, filter) =>
       turno.especialidad.toLowerCase().includes(filter) ||
       turno.especialista.toLowerCase().includes(filter);
@@ -94,23 +66,108 @@ export class MisTurnosComponent implements OnInit {
   }
 
   cancelarTurno(turno: Turno): void {
-    this.dialog
-      .open(this.confirmDialog, {
-        data: { message: `¿Cancelar turno #${turno.id}?` }
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        if (result) {
-          turno.estado = 'cancelado';
-          Swal.fire({
-            title: 'Turno cancelado',
-            text: `El turno #${turno.id} fue cancelado.`,
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-          });
-        }
-      });
+    this.dialog.open(this.confirmDialog, {
+      data: { message: `¿Cancelar turno #${turno.id}?` }
+    })
+    .afterClosed()
+    .subscribe(async confirmed => {
+      if (!confirmed) return;
+      try {
+        // Persistimos el cambio en Firebase
+        await this.turnoSvc.actualizarTurno(turno.id!.toString(), { estado: 'cancelado' });
+        // Actualizamos la fila localmente (opcional, ya que la suscripción recarga)
+        turno.estado = 'cancelado';
+        Swal.fire('Turno cancelado', `El turno #${turno.id} fue cancelado.`, 'success');
+      } catch (err) {
+        Swal.fire('Error', 'No se pudo cancelar el turno, intenta de nuevo.', 'error');
+      }
+    });
   }
+
+
+
+
+
+
+
+  // displayedColumns: string[] = [
+  //   'id',
+  //   'fecha',
+  //   'hora',
+  //   'especialidad',
+  //   'especialista',
+  //   'estado',
+  //   'acciones'
+  // ];
+ // dataSource = new MatTableDataSource<Turno>([]);
+
+  //@ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
+
+ // constructor(private dialog: MatDialog) {}
+
+  // ngOnInit(): void {
+  //   // Mock de datos; aquí cargarías desde tu servicio real
+  //   const turnosMock: Turno[] = [
+  //     {
+  //       id: 1,
+  //       fecha: '2025-03-30',
+  //       hora: '09:00',
+  //       especialidad: 'Cardiología',
+  //       especialista: 'Dr. Juan Pérez',
+  //       estado: 'pendiente',
+  //       pacienteId : 1
+  //     },
+  //     {
+  //       id: 2,
+  //       fecha: '2025-04-02',
+  //       hora: '10:30',
+  //       especialidad: 'Dermatología',
+  //       especialista: 'Dra. Marta López',
+  //       estado: 'realizado',
+  //       resena: 'Buena atención, muy profesional.',
+  //       pacienteId :2
+  //     },
+  //     {
+  //       id: 3,
+  //       fecha: '2025-04-05',
+  //       hora: '08:30',
+  //       especialidad: 'Neurología',
+  //       especialista: 'Dr. Carlos Ruiz',
+  //       estado: 'realizado',
+  //       pacienteId : 3
+  //     }
+  //   ];
+
+  //   this.dataSource.data = turnosMock;
+
+  //   // Configuramos el filtro para especialidad y especialista
+  //   this.dataSource.filterPredicate = (turno, filter) =>
+  //     turno.especialidad.toLowerCase().includes(filter) ||
+  //     turno.especialista.toLowerCase().includes(filter);
+  // }
+
+  // applyFilter(filterValue: string): void {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
+
+  // cancelarTurno(turno: Turno): void {
+  //   this.dialog
+  //     .open(this.confirmDialog, {
+  //       data: { message: `¿Cancelar turno #${turno.id}?` }
+  //     })
+  //     .afterClosed()
+  //     .subscribe((result) => {
+  //       if (result) {
+  //         turno.estado = 'cancelado';
+  //         Swal.fire({
+  //           title: 'Turno cancelado',
+  //           text: `El turno #${turno.id} fue cancelado.`,
+  //           icon: 'success',
+  //           confirmButtonText: 'Aceptar'
+  //         });
+  //       }
+  //     });
+  // }
 
   verResena(turno: Turno): void {
     Swal.fire({

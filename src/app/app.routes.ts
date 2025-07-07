@@ -15,6 +15,7 @@ import { ListarPacientesComponent } from './listar-pacientes/listar-pacientes.co
 import { SeleccionarUsuarioLoginComponent } from './seleccionar-usuario-login/seleccionar-usuario-login.component';
 import { SeleccionarUsuarioRegistroComponent } from './seleccionar-usuario-registro/seleccionar-usuario-registro.component';
 import { LoginEspecialistaComponent } from './login-especialista/login-especialista.component';
+import { LogTableComponent } from './log-table/log-table.component';
 
 export const routes: Routes = [
 
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'seleccionar-usuario-login', component: SeleccionarUsuarioLoginComponent },
   { path: 'seleccionar-usuario-registro', component: SeleccionarUsuarioRegistroComponent },
 
+  {path: 'log-table', component: LogTableComponent},
 
     // Login específicos
   { path: 'login-paciente',       component: LoginPacienteComponent },
