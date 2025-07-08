@@ -18,6 +18,7 @@ import { TurnosEspecialidadComponent } from './components/turnos-especialidad/tu
 import { TurnosEspecialistaComponent } from './components/turnos-especialista/turnos-especialista.component';
 import { UsuariosAdminComponent } from './components/usuarios-admin/usuarios-admin.component';
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
+import { ReseniaComponent } from './components/resenia/resenia.component';
 
 export const routes: Routes = [
 
@@ -45,35 +46,44 @@ export const routes: Routes = [
   { path: 'login-paciente', component: LoginPacienteComponent },
 
   { path: 'registro-paciente', component: RegistroPacienteComponent },
-  { path: 'registro-especialista', component: RegistroEspecialistaComponent},
-  { path: 'mi-perfil', component: MiPerfilComponent},
-  { path: 'mis-turnos', component: MisTurnosComponent},
+  { path: 'registro-especialista', component: RegistroEspecialistaComponent },
+  { path: 'mi-perfil', component: MiPerfilComponent },
+  { path: 'mis-turnos', component: MisTurnosComponent },
 
-  { path: 'pacientes', component: PacientesComponent},
-  { path: 'listar-pacientes', component: ListarPacientesComponent},
-  { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent},
-  { path: 'usuario-admin', component: UsuariosAdminComponent},
-  { path: 'turno', component: MisTurnosComponent},
+  { path: 'pacientes', component: PacientesComponent },
+  { path: 'listar-pacientes', component: ListarPacientesComponent },
+  { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent },
+  { path: 'usuario-admin', component: UsuariosAdminComponent },
+  { path: 'turno', component: MisTurnosComponent },
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
 
-  { path: 'turnos-especialidad', component: TurnosEspecialidadComponent},
+  { path: 'turnos-especialidad', component: TurnosEspecialidadComponent },
 
-  {path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent},
+  {
+    path: 'resenia/:id',
+    component: ReseniaComponent
+  },
 
-  { path: 'solicitar-turno', component: SolicitarTurnoComponent},
-  { path: 'historia-clinica', component: HistoriaClinicaComponent},
+  { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
+  { path: 'resenia/:id', component: ReseniaComponent },
+
+  { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
+
+  { path: 'solicitar-turno', component: SolicitarTurnoComponent },
+  { path: 'historia-clinica', component: HistoriaClinicaComponent },
   { path: 'seleccionar-usuario-login', component: SeleccionarUsuarioLoginComponent },
   { path: 'seleccionar-usuario-registro', component: SeleccionarUsuarioRegistroComponent },
 
-  {path: 'log-table', component: LogTableComponent},
+  { path: 'log-table', component: LogTableComponent },
 
-    // Login específicos
-  { path: 'login-paciente',       component: LoginPacienteComponent },
-  { path: 'login-especialista',   component: LoginEspecialistaComponent },
+  // Login específicos
+  { path: 'login-paciente', component: LoginPacienteComponent },
+  { path: 'login-especialista', component: LoginEspecialistaComponent },
 
   // Registro específicos
-  { path: 'registro-paciente',      component: RegistroPacienteComponent },
-  { path: 'registro-especialista',  component: RegistroEspecialistaComponent },
+  { path: 'registro-paciente', component: RegistroPacienteComponent },
+  { path: 'registro-especialista', component: RegistroEspecialistaComponent },
+
 
 
   { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas

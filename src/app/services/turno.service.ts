@@ -16,6 +16,8 @@ import { Observable } from 'rxjs';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { Turno } from '../models/turno.model';
 
+import {  of } from 'rxjs';
+
 interface TurnoDto {
   pacienteId: any; id: number; fecha: string; hora: string;
   especialidad: string; especialista: string; estado: string;
@@ -37,6 +39,27 @@ export class TurnoService {
     private afs: AngularFirestore,
     private auth: AuthService
   ) { }
+
+
+   // → aquí el mock único para toda la app
+  private mockTurnos: Turno[] = [
+    { id: 101, fecha: new Date('2025-06-25'), hora: '09:30', especialidad: 'Cardiología',
+      especialista: 'Dra. Pérez', estado: 'aceptado', resena: 'Excelente atención, muy profesional.', encuesta: false },
+    { id: 102, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología',
+      especialista: 'Dr. Gómez', estado: 'realizado', resena: 'Me gustó mucho la consulta.', encuesta: true },
+    { id: 103, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría',
+      especialista: 'Dra. Ruiz', estado: 'pendiente', resena: undefined, encuesta: false }
+  ];
+
+  /** Devuelve todos los turnos (mock) */
+  getMockTurnos(): Observable<Turno[]> {
+    return of(this.mockTurnos);
+  }
+
+  /** Devuelve sólo el turno con el id indicado */
+  getMockTurnoById(id: number): Observable<Turno|undefined> {
+    return of(this.mockTurnos.find(t => t.id === id));
+  }
 
   getTurnosPaciente(): Observable<Turno[]> {
     return this.auth.user$.pipe(

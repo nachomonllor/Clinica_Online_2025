@@ -1,0 +1,21 @@
+ <mat-card class="resenia-card">
+  <mat-card-header>
+    <mat-card-title>Reseña del Turno</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ resena }}</p>
+  </mat-card-content>
+<!-- 
+  <mat-card-actions align="end">
+    <button mat-button routerLink="/mis-turnos-paciente">Volver</button>
+  </mat-card-actions> -->
+
+  <mat-card-actions align="end">
+  <button mat-button (click)="goBack()">
+    Volver
+  </button>
+</mat-card-actions>
+
+</mat-card> 
+

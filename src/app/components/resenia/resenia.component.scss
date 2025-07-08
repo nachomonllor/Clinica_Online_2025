@@ -1,0 +1,43 @@
+.resenia-card {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0;
+
+  .mat-card-header {
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 16px;
+    
+    .mat-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .mat-card-content {
+    padding: 24px 16px;
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: justify;
+      margin: 0;
+    }
+  }
+
+  .mat-card-actions {
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+
+    button[mat-button] {
+      font-weight: 500;
+    }
+  }
+}
+
+// Opcional: ajustar la apariencia del botón al volver
+::ng-deep .resenia-card button[mat-button] {
+  text-transform: uppercase;
+}

@@ -10,12 +10,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { Turno } from '../../models/turno.model';
+import { Router } from '@angular/router';
+import { TurnoService } from '../../services/turno.service';
 
 @Component({
   selector: 'app-mis-turnos-paciente',
   standalone: true,
   templateUrl: './mis-turnos-paciente.component.html',
-   styleUrl: './mis-turnos-paciente.component.scss',
+  styleUrl: './mis-turnos-paciente.component.scss',
   imports: [
     CommonModule,
     FormsModule,
@@ -41,13 +43,13 @@ export class MisTurnosPacienteComponent implements OnInit {
   // --- Datos mock para pruebas ---
   private mockTurnos: Turno[] = [
     {
-      id: 100, 
-      fecha: new Date('2025-06-25'), 
-      hora: '09:30', 
-      especialidad: 'Cardio', 
-      especialista: 'Dra. Pérez', 
-      estado: 'aceptado', 
-      resena: 'Muy bien', 
+      id: 100,
+      fecha: new Date('2025-06-25'),
+      hora: '09:30',
+      especialidad: 'Cardio',
+      especialista: 'Dra. Pérez',
+      estado: 'aceptado',
+      resena: 'Muy bien',
       encuesta: false,
       pacienteId: '1'
     },
@@ -89,19 +91,37 @@ export class MisTurnosPacienteComponent implements OnInit {
 
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<unknown>;
 
+  // constructor(
+  //   private dialog: MatDialog,
+  //   private snackBar: MatSnackBar,
+  //   private router: Router
+  // ) { }
+
   constructor(
+    private turnoService: TurnoService,
+    private router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
 
-  ngOnInit(): void {
-    // Para usar mock, simplemente asigno el array
-    this.dataSource.data = this.mockTurnos;
+  // ngOnInit(): void {
+  //   // Para usar mock,   asigno el array
+  //   this.dataSource.data = this.mockTurnos;
 
-    // Configuro el filtro único (especialidad o especialista)
-    this.dataSource.filterPredicate = (t, f) =>
-      t.especialidad.toLowerCase().includes(f) ||
-      t.especialista.toLowerCase().includes(f);
+  //   // Configuro el filtro único (especialidad o especialista)
+  //   this.dataSource.filterPredicate = (t, f) =>
+  //     t.especialidad.toLowerCase().includes(f) ||
+  //     t.especialista.toLowerCase().includes(f);
+  // }
+
+  ngOnInit(): void {
+    // en lugar de un mock local, llamas al servicio
+    this.turnoService.getMockTurnos().subscribe(ts => {
+      this.dataSource.data = ts;
+      this.dataSource.filterPredicate = (t, f) =>
+        t.especialidad.toLowerCase().includes(f) ||
+        t.especialista.toLowerCase().includes(f);
+    });
   }
 
   /** Buscar */
@@ -125,8 +145,12 @@ export class MisTurnosPacienteComponent implements OnInit {
   }
 
   /** Ver reseña */
+  // public verResena(turno: Turno): void {
+  //   this.snackBar.open(turno.resena ?? 'Sin reseña', 'Cerrar', { duration: 4000 });
+  // }
+
   public verResena(turno: Turno): void {
-    this.snackBar.open(turno.resena ?? 'Sin reseña', 'Cerrar', { duration: 4000 });
+    this.router.navigate(['/resenia', turno.id]);
   }
 
   /** Completar encuesta */
