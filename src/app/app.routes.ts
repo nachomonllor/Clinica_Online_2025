@@ -19,6 +19,7 @@ import { TurnosEspecialistaComponent } from './components/turnos-especialista/tu
 import { UsuariosAdminComponent } from './components/usuarios-admin/usuarios-admin.component';
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { ReseniaComponent } from './components/resenia/resenia.component';
+import { EncuestaAtencionComponent } from './components/encuesta-atencion/encuesta-atencion.component';
 
 export const routes: Routes = [
 
@@ -84,7 +85,7 @@ export const routes: Routes = [
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'registro-especialista', component: RegistroEspecialistaComponent },
 
-
+  { path: 'encuesta-atencion', component: EncuestaAtencionComponent},
 
   { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
 
