@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-encuesta-atencion',
-//   imports: [],
-//   templateUrl: './encuesta-atencion.component.html',
-//   styleUrl: './encuesta-atencion.component.scss'
-// })
-// export class EncuestaAtencionComponent {
-
-// }
-
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -80,3 +67,16 @@ export class EncuestaAtencionComponent implements OnInit {
     }
   }
 }
+
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-encuesta-atencion',
+//   imports: [],
+//   templateUrl: './encuesta-atencion.component.html',
+//   styleUrl: './encuesta-atencion.component.scss'
+// })
+// export class EncuestaAtencionComponent {
+
+// }

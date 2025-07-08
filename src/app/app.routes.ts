@@ -20,6 +20,7 @@ import { UsuariosAdminComponent } from './components/usuarios-admin/usuarios-adm
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { ReseniaComponent } from './components/resenia/resenia.component';
 import { EncuestaAtencionComponent } from './components/encuesta-atencion/encuesta-atencion.component';
+import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 
 export const routes: Routes = [
 
@@ -68,7 +69,7 @@ export const routes: Routes = [
   { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
   { path: 'resenia/:id', component: ReseniaComponent },
 
-  { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
+  { path: 'mis-turnos-especialista', component: MisTurnosEspecialistaComponent },
 
   { path: 'solicitar-turno', component: SolicitarTurnoComponent },
   { path: 'historia-clinica', component: HistoriaClinicaComponent },
@@ -85,7 +86,8 @@ export const routes: Routes = [
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'registro-especialista', component: RegistroEspecialistaComponent },
 
-  { path: 'encuesta-atencion', component: EncuestaAtencionComponent},
+  // { path: 'encuesta-atencion', component: EncuestaAtencionComponent},
+  { path: 'encuesta-atencion/:id', component: EncuestaAtencionComponent },
 
   { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
 

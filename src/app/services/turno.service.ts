@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { Turno } from '../models/turno.model';
 
-import {  of } from 'rxjs';
+import { of } from 'rxjs';
 
 interface TurnoDto {
   pacienteId: any; id: number; fecha: string; hora: string;
@@ -41,14 +41,47 @@ export class TurnoService {
   ) { }
 
 
-   // → aquí el mock único para toda la app
+  // → aquí el mock único para toda la app
   private mockTurnos: Turno[] = [
-    { id: 101, fecha: new Date('2025-06-25'), hora: '09:30', especialidad: 'Cardiología',
-      especialista: 'Dra. Pérez', estado: 'aceptado', resena: 'Excelente atención, muy profesional.', encuesta: false },
-    { id: 102, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología',
-      especialista: 'Dr. Gómez', estado: 'realizado', resena: 'Me gustó mucho la consulta.', encuesta: true },
-    { id: 103, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría',
-      especialista: 'Dra. Ruiz', estado: 'pendiente', resena: undefined, encuesta: false }
+    {
+      id: 101, fecha: new Date('2025-06-25'), hora: '09:30', especialidad: 'Cardiología',
+      especialista: 'Dra. Pérez', estado: 'aceptado', resena: 'Excelente atención, muy profesional.', encuesta: false
+    },
+    {
+      id: 102, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología',
+      especialista: 'Dr. Gómez', estado: 'realizado', resena: 'Me gustó mucho la consulta.', encuesta: true
+    },
+    {
+      id: 103, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría',
+      especialista: 'Dra. Ruiz', estado: 'pendiente', resena: "prueba res", encuesta: false
+    },
+    {
+      id: 104,
+      fecha: new Date('2025-09-02'),
+      hora: '11:15',
+      especialidad: 'Cardiologia',
+      especialista: 'Dra. Nora Da Puente',
+      estado: 'realizado',
+
+      resena: 'Reseña de prueba',    // ← aquí
+
+      encuesta: false,
+      pacienteId: '5'
+    },
+    {
+      id: 105,
+      fecha: new Date('2025-06-22'),
+      hora: '11:15',
+      especialidad: 'Diabetóloga',
+      especialista: 'Dra. Florencia De Césare',
+      estado: 'realizado',
+      resena: 'Reseña de prueba',    // ← aquí
+
+
+      encuesta: false,
+      pacienteId: '6'
+    }
+
   ];
 
   /** Devuelve todos los turnos (mock) */
@@ -57,7 +90,7 @@ export class TurnoService {
   }
 
   /** Devuelve sólo el turno con el id indicado */
-  getMockTurnoById(id: number): Observable<Turno|undefined> {
+  getMockTurnoById(id: number): Observable<Turno | undefined> {
     return of(this.mockTurnos.find(t => t.id === id));
   }
 

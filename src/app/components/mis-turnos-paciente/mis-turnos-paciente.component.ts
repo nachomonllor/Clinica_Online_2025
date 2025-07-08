@@ -86,16 +86,33 @@ export class MisTurnosPacienteComponent implements OnInit {
       // sin reseña aún
       encuesta: false,
       pacienteId: '4'
+    },
+    {
+      id: 104,
+      fecha: new Date('2025-09-02'),
+      hora: '11:15',
+      especialidad: 'Cardiologia',
+      especialista: 'Dra. Nora Da Puente',
+      estado: 'pendiente',
+      // sin reseña aún
+      encuesta: false,
+      pacienteId: '5'
+    },
+    {
+      id: 105,
+      fecha: new Date('2025-06-22'),
+      hora: '11:15',
+      especialidad: 'Diabetóloga',
+      especialista: 'Dra. Florencia De Césare',
+      estado: 'pendiente',
+      // sin reseña aún
+      encuesta: false,
+      pacienteId: '6'
     }
   ];
 
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<unknown>;
 
-  // constructor(
-  //   private dialog: MatDialog,
-  //   private snackBar: MatSnackBar,
-  //   private router: Router
-  // ) { }
 
   constructor(
     private turnoService: TurnoService,
@@ -104,18 +121,8 @@ export class MisTurnosPacienteComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
 
-  // ngOnInit(): void {
-  //   // Para usar mock,   asigno el array
-  //   this.dataSource.data = this.mockTurnos;
-
-  //   // Configuro el filtro único (especialidad o especialista)
-  //   this.dataSource.filterPredicate = (t, f) =>
-  //     t.especialidad.toLowerCase().includes(f) ||
-  //     t.especialista.toLowerCase().includes(f);
-  // }
-
   ngOnInit(): void {
-    // en lugar de un mock local, llamas al servicio
+    // en lugar de un mock local, llamo al servicio
     this.turnoService.getMockTurnos().subscribe(ts => {
       this.dataSource.data = ts;
       this.dataSource.filterPredicate = (t, f) =>
@@ -144,23 +151,20 @@ export class MisTurnosPacienteComponent implements OnInit {
     });
   }
 
-  /** Ver reseña */
-  // public verResena(turno: Turno): void {
-  //   this.snackBar.open(turno.resena ?? 'Sin reseña', 'Cerrar', { duration: 4000 });
-  // }
-
   public verResena(turno: Turno): void {
     this.router.navigate(['/resenia', turno.id]);
   }
 
-  /** Completar encuesta */
+  /** Abrir la encuesta para el turno seleccionado */
   public completarEncuesta(turno: Turno): void {
-    // Aquí podrías navegar a la ruta de la encuesta
+    // Asumiendo que en routing esta esto:
+    // { path: 'encuesta-atencion/:id', component: EncuestaAtencionComponent }
+    this.router.navigate(['/encuesta-atencion', turno.id]);
   }
 
   /** Calificar atención */
   public calificarAtencion(turno: Turno): void {
-    // Aquí podrías abrir diálogo o ruta de calificación
+    // abrir diálogo o ruta de calificación
   }
 }
 
