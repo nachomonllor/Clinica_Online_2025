@@ -51,7 +51,8 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'aceptado',
       resena: 'Muy bien',
       encuesta: false,
-      pacienteId: '1'
+      pacienteId: '1',
+      calificacion: 10
     },
 
     {
@@ -63,7 +64,8 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'aceptado',
       resena: 'Excelente atención, muy profesional.',
       encuesta: false,
-      pacienteId: '2'
+      pacienteId: '2',
+      calificacion: 9
     },
     {
       id: 102,
@@ -74,7 +76,8 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'realizado',
       resena: 'Me gustó mucho la consulta.',
       encuesta: true,
-      pacienteId: '3'
+      pacienteId: '3',
+      calificacion: 7
     },
     {
       id: 103,
@@ -85,7 +88,9 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'pendiente',
       // sin reseña aún
       encuesta: false,
-      pacienteId: '4'
+      pacienteId: '4',
+      resena: '',
+      calificacion: 10
     },
     {
       id: 104,
@@ -96,7 +101,9 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'pendiente',
       // sin reseña aún
       encuesta: false,
-      pacienteId: '5'
+      pacienteId: '5',
+      resena: '',
+      calificacion: 10
     },
     {
       id: 105,
@@ -107,7 +114,9 @@ export class MisTurnosPacienteComponent implements OnInit {
       estado: 'pendiente',
       // sin reseña aún
       encuesta: false,
-      pacienteId: '6'
+      pacienteId: '6',
+      resena: '',
+      calificacion: 10
     }
   ];
 

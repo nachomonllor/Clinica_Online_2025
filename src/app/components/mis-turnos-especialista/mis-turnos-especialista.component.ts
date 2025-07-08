@@ -25,6 +25,8 @@ import { MatCardModule } from '@angular/material/card';
 
 import { Turno } from '../../models/turno.model';
 import { TurnoService } from '../../services/turno.service';
+import { Router } from '@angular/router';
+import { TurnoEspecialista } from '../../models/turno-especialista.model';
 
 @Component({
   selector: 'app-mis-turnos-especialista',
@@ -46,39 +48,24 @@ import { TurnoService } from '../../services/turno.service';
   ]
 })
 export class MisTurnosEspecialistaComponent implements OnInit {
+  //dataSource = new MatTableDataSource<Turno>([]);
+  //dataSource = new MatTableDataSource<(Turno & { pacienteNombre: string })>([]);
+
+  dataSource = new MatTableDataSource<TurnoEspecialista>([]);
+
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<unknown>;
+
   displayedColumns = [
     'id', 'fecha', 'hora', 'especialidad', 'paciente', 'estado', 'acciones'
   ];
-  dataSource = new MatTableDataSource<Turno>([]);
-  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<unknown>;
 
   constructor(
     private turnoService: TurnoService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    public router: Router
 
-  ngOnInit(): void {
-    this.turnoService.getMockTurnos().subscribe(turnos => {
-      // filtramos solo los tuyos; para el mock dejamos todos
-      this.dataSource.data = turnos;
-      this.dataSource.filterPredicate = (t, f) =>
-        t.especialidad.toLowerCase().includes(f) ||
-        String(t.pacienteId).toLowerCase().includes(f);
-    });
-  }
-
-  applyFilter(value: string): void {
-    this.dataSource.filter = value.trim().toLowerCase();
-  }
-
-  /** Aceptar turno */
-  aceptarTurno(turno: Turno): void {
-    // *ngIf permite sólo si estado ≠ realizado, cancelado, rechazado
-    turno.estado = 'aceptado';
-    this.snackBar.open(`Turno ${turno.id} aceptado`, 'Cerrar', { duration: 2000 });
-    this.dataSource.data = [...this.dataSource.data];
-  }
+  ) { }
 
   /** Rechazar turno: abre diálogo y deja comentario */
   rechazarTurno(turno: Turno): void {
@@ -108,23 +95,50 @@ export class MisTurnosEspecialistaComponent implements OnInit {
     });
   }
 
-  /** Finalizar turno: abre diálogo para dejar reseña */
+  /** Finalizar turno: abre confirm y navega a formulario de reseña */
   finalizarTurno(turno: Turno): void {
     const ref = this.dialog.open(this.confirmDialog, {
-      data: { message: `Deja tu reseña para el turno #${turno.id}` }
+      data: { message: `¿Quieres dejar reseña para el turno #${turno.id}?` }
     });
     ref.afterClosed().subscribe(ok => {
       if (ok) {
-        turno.estado = 'realizado';
-        turno.resena = 'RESENA DE EJEMPLO'; // luego toma del formulario
-        this.snackBar.open(`Turno ${turno.id} finalizado`, 'Cerrar', { duration: 2000 });
-        this.dataSource.data = [...this.dataSource.data];
+        this.router.navigate(['/resena-especialista', turno.id]);
       }
     });
   }
 
-  /** Ver reseña (igual que en paciente) */
-  verResena(turno: Turno): void {
+  // ngOnInit(): void {
+  //   this.turnoService.getMockTurnosEspecialista()
+  //     .subscribe(list => {
+  //       this.dataSource.data = list;
+  //       this.dataSource.filterPredicate = (t, f) =>
+  //         t.especialidad.toLowerCase().includes(f) ||
+  //         t.paciente.toLowerCase().includes(f);
+  //     });
+  // }
+
+  ngOnInit(): void {
+    this.turnoService.getMockTurnosEspecialista()
+      .subscribe((list: TurnoEspecialista[]) => {
+        this.dataSource.data = list;
+        this.dataSource.filterPredicate = (t, f) =>
+          t.especialidad.toLowerCase().includes(f) ||
+          t.paciente.toLowerCase().includes(f);
+      });
+  }
+
+  applyFilter(value: string): void {
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  aceptarTurno(turno: TurnoEspecialista): void {
+    turno.estado = 'aceptado';
+    this.snackBar.open(`Turno ${turno.id} aceptado`, 'Cerrar', { duration: 2000 });
+    this.dataSource.data = [...this.dataSource.data];
+  }
+
+  verResena(turno: TurnoEspecialista): void {
     this.snackBar.open(turno.resena ?? 'Sin reseña', 'Cerrar', { duration: 4000 });
   }
+
 }

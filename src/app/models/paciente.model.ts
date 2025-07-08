@@ -1,4 +1,6 @@
 
+
+
 // src/app/models/paciente.model.ts
 export interface Paciente {
 
@@ -14,7 +16,7 @@ export interface Paciente {
   password: string;
 
 
-  // Si vas a manejar los archivos directamente como File:
+  //  manejar los archivos directamente como File:
   // imagenPerfil1: File;
   //imagenPerfil2: File;
   // Si prefieres trabajar con URLs/base64:

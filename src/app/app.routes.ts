@@ -21,6 +21,7 @@ import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis
 import { ReseniaComponent } from './components/resenia/resenia.component';
 import { EncuestaAtencionComponent } from './components/encuesta-atencion/encuesta-atencion.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
+import { ReseniaEspecialistaComponent } from './components/resenia-especialista/resenia-especialista.component';
 
 export const routes: Routes = [
 
@@ -70,6 +71,9 @@ export const routes: Routes = [
   { path: 'resenia/:id', component: ReseniaComponent },
 
   { path: 'mis-turnos-especialista', component: MisTurnosEspecialistaComponent },
+
+   // … otras rutas …
+  { path: 'resena-especialista/:id', component: ReseniaEspecialistaComponent },
 
   { path: 'solicitar-turno', component: SolicitarTurnoComponent },
   { path: 'historia-clinica', component: HistoriaClinicaComponent },

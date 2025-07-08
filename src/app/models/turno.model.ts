@@ -1,16 +1,37 @@
 
+
 export interface Turno {
-  pacienteId?: string;
   id: number;
-  fecha: Date;            // reemplazo string por DATE
+  fecha: Date;
   hora: string;
   especialidad: string;
   especialista: string;
-  estado: 'pendiente' | 'realizado' | 'cancelado' | 'rechazado' | 'aceptado';
-  resena?: string;
+  pacienteId?: string;
+  estado: TurnoEstado;
+  // reseña que deja el especialista
+  resenaEspecialista?: string;
+  resena:string;
+  calificacion: number;
+  // comentario / calificación del paciente (opcional, si los usas)
+  comentarioPaciente?: string;
+  calificacionPaciente?: number;
   encuesta?: boolean;
-  calificacion?: number;
 }
+
+
+// export interface Turno {
+//   pacienteId?: string;
+//   paciente?: string;
+//   id: number;
+//   fecha: Date;            // reemplazo string por DATE
+//   hora: string;
+//   especialidad: string;
+//   especialista: string;
+//   estado: 'pendiente' | 'realizado' | 'cancelado' | 'rechazado' | 'aceptado';
+//   resena?: string;
+//   encuesta?: boolean;
+//   calificacion?: number;
+// }
 
 // turno.model.ts
 export type TurnoEstado = 
