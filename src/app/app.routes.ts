@@ -22,6 +22,7 @@ import { ReseniaComponent } from './components/resenia/resenia.component';
 import { EncuestaAtencionComponent } from './components/encuesta-atencion/encuesta-atencion.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 import { ReseniaEspecialistaComponent } from './components/resenia-especialista/resenia-especialista.component';
+import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
 
 export const routes: Routes = [
 
@@ -56,8 +57,12 @@ export const routes: Routes = [
   { path: 'pacientes', component: PacientesComponent },
   { path: 'listar-pacientes', component: ListarPacientesComponent },
   { path: 'seleccionar-usuario', component: SeleccionarUsuarioComponent },
+
+  //usuario admin
   { path: 'usuario-admin', component: UsuariosAdminComponent },
   { path: 'turno', component: MisTurnosComponent },
+
+
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
 
   { path: 'turnos-especialidad', component: TurnosEspecialidadComponent },
@@ -67,20 +72,30 @@ export const routes: Routes = [
     component: ReseniaComponent
   },
 
+  //turnos asignados al paciente
   { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
   { path: 'resenia/:id', component: ReseniaComponent },
 
+  //turnos asignados al especialista
   { path: 'mis-turnos-especialista', component: MisTurnosEspecialistaComponent },
 
-   // … otras rutas …
+   // reseña
   { path: 'resena-especialista/:id', component: ReseniaEspecialistaComponent },
 
+  // solicitar turno  
   { path: 'solicitar-turno', component: SolicitarTurnoComponent },
+
+  //historia clinica
   { path: 'historia-clinica', component: HistoriaClinicaComponent },
+
+  //seleccionar login o registro segun paciente o especialista
   { path: 'seleccionar-usuario-login', component: SeleccionarUsuarioLoginComponent },
   { path: 'seleccionar-usuario-registro', component: SeleccionarUsuarioRegistroComponent },
 
   { path: 'log-table', component: LogTableComponent },
+
+  // estadisticas
+  {path: 'estadisticas', component: EstadisticasComponent},
 
   // Login específicos
   { path: 'login-paciente', component: LoginPacienteComponent },

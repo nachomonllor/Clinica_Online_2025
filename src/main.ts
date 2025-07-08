@@ -5,7 +5,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppComponent } from './app/app.component';
@@ -14,11 +14,17 @@ import { routes } from './app/app.routes';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 
+ //import { provideTranslate } from '@ngx-translate/core';
+
+
+
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),
+    
     provideRouter(routes),
     provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+   // provideTranslate(), // <-- PARA IDIOMAS
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireAuthModule,
@@ -26,6 +32,8 @@ bootstrapApplication(AppComponent, {
     )
   ]
 });
+
+
 
 
 // // src/main.ts
