@@ -1,3 +1,22 @@
+<!-- estadisticas.component.html -->
+<div class="p-4">
+  <google-chart [data]="visitasChart"></google-chart>
+</div>
+
+<div class="grid grid-cols-1 gap-6 p-4">
+  <!-- Gráfico de visitas -->
+  <section class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Visitas por mes</h2>
+    <google-chart [data]="visitasChart"></google-chart>
+  </section>
+
+  <!-- Gráfico de pacientes por especialidad -->
+  <section class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">Pacientes por especialidad</h2>
+    <google-chart [data]="pacientesChart"></google-chart>
+  </section>
+</div>
+
 
 <!-- <div class="p-4">
   <google-chart
@@ -6,8 +25,3 @@
     [options]="visitasChart.options">
   </google-chart>
 </div> -->
-
-<!-- estadisticas.component.html -->
-<div class="p-4">
-  <google-chart [data]="visitasChart"></google-chart>
-</div>

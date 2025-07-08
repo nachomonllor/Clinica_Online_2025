@@ -15,7 +15,7 @@ export class EstadisticasComponent implements OnInit{
     chartType: 'ColumnChart',
     dataTable: [
       ['Mes', 'Visitas'],
-      // aquí irán los datos reales
+      // aca irán los datos reales
     ],
     options: {
       title: 'Visitas por mes',
@@ -26,18 +26,46 @@ export class EstadisticasComponent implements OnInit{
 
   constructor(private statsSvc: EstadisticasService) {}
 
+  // ngOnInit() {
+  //   this.statsSvc.getVisitasPorMes().subscribe(data => {
+  //     // data: [ ['Enero', 10], ['Febrero', 23], … ]
+  //     this.visitasChart = {
+  //       ...this.visitasChart,
+  //       dataTable: [
+  //         ['Mes', 'Visitas'],
+  //         ...data
+  //       ]
+  //     };
+  //   });
+  // }
+
   ngOnInit() {
+    // Carga visitas
     this.statsSvc.getVisitasPorMes().subscribe(data => {
-      // data: [ ['Enero', 10], ['Febrero', 23], … ]
       this.visitasChart = {
         ...this.visitasChart,
-        dataTable: [
-          ['Mes', 'Visitas'],
-          ...data
-        ]
+        dataTable: [['Mes', 'Visitas'], ...data]
+      };
+    });
+
+    // Carga pacientes por especialidad
+    this.statsSvc.getPacientesPorEspecialidad().subscribe(data => {
+      this.pacientesChart = {
+        ...this.pacientesChart,
+        dataTable: [['Especialidad', 'Pacientes'], ...data]
       };
     });
   }
+
+  public pacientesChart: GoogleChartInterface = {
+    chartType: 'PieChart',
+    dataTable: [['Especialidad', 'Pacientes']],
+    options: {
+      title: 'Pacientes por especialidad',
+      height: 400
+    }
+  };
+
 
 }
 
