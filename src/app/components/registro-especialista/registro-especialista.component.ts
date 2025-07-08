@@ -15,10 +15,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import Swal from 'sweetalert2';
 
-
 //  Storage y funciones de la API modular:
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
-import { EspecialistaService } from '../../especialista.service';
+import { EspecialistaService } from '../../services/especialista.service';
+
 
 @Component({
     selector: 'app-registro-especialista',

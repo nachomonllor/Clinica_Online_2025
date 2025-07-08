@@ -1,0 +1,58 @@
+.mis-turnos-container {
+  margin: 24px;
+
+  .mat-card-header {
+    .mat-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+  .filter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 16px 0;
+
+    mat-form-field {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding: 12px 8px;
+    }
+
+    th.mat-header-cell {
+      font-weight: 600;
+      text-transform: uppercase;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    }
+
+    tr.mat-row:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    button[mat-icon-button] {
+      margin-right: 8px;
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    margin: 24px 0;
+    font-style: italic;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  // Diálogo de confirmación
+  ::ng-deep .mat-dialog-container {
+    padding: 0;
+    border-radius: 8px;
+  }
+}

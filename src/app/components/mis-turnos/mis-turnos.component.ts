@@ -13,8 +13,9 @@ import Swal from 'sweetalert2';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Turno } from '../../models/turno.model';
-import { TurnoService } from '../../turno.service';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
+import { TurnoService } from '../../services/turno.service';
+
 
 @Component({
     selector: 'app-mis-turnos',

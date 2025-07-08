@@ -8,15 +8,19 @@
 //   constructor() { }
 // }
 
-
 // src/app/services/turno.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service'; // tu servicio de autenticación
 import { Observable } from 'rxjs';
-import { Turno } from './models/turno.model';
 import { map, switchMap, filter } from 'rxjs/operators';
+import { Turno } from '../models/turno.model';
 
+interface TurnoDto {
+  pacienteId: any; id: number; fecha: string; hora: string;
+  especialidad: string; especialista: string; estado: string;
+  resena?: string; encuesta?: boolean; calificacion?: number;
+}
 /**
  * Estructura para devolver conteos agrupados
  */
@@ -47,6 +51,14 @@ export class TurnoService {
     );
   }
 
+  // getTurnosPacienteDto(): Observable<Turno[]> {
+  //   return this.http.get<TurnoDto[]>('/api/turnos/paciente').pipe(
+  //     map(arr => arr.map(dto => ({
+  //       ...dto,
+  //       fecha: new Date(dto.fecha)
+  //     })))
+  //   );
+  // }
 
   /** Actualiza campos de un turno */
   actualizarTurno(id: string, data: Partial<Turno>) {
@@ -107,5 +119,33 @@ export class TurnoService {
       )
       .valueChanges({ idField: 'id' });
   }
+
+  /** Solo DTOs: lee crudo desde Firebase */
+  getTurnosPacienteDto(pacienteId: string): Observable<TurnoDto[]> {
+    return this.afs
+      .collection<TurnoDto>(this.coleccion, ref =>
+        ref.where('pacienteId', '==', pacienteId)
+      )
+      .valueChanges();
+  }
+
+  // getTurnosPacienteDesdeDto(pacienteId: string): Observable<Turno[]> {
+  //   return this.getTurnosPacienteDto(pacienteId).pipe(
+  //     map(dtos =>
+  //       dtos.map(dto => ({
+  //         pacienteId: dto.pacienteId,       
+  //         id: dto.id,
+  //         fecha: new Date(dto.fecha),
+  //         hora: dto.hora,
+  //         especialidad: dto.especialidad,
+  //         especialista: dto.especialista,
+  //         estado: dto.estado,
+  //         resena: dto.resena,
+  //         encuesta: dto.encuesta,
+  //         calificacion: dto.calificacion
+  //       }))
+  //     )
+  //   );
+  // }
 
 }

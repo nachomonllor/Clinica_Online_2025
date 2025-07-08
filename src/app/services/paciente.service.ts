@@ -14,11 +14,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Paciente } from './models/paciente.model';
-import { Turno } from './models/turno.model';
+import { Turno } from '../models/turno.model';
+import { Paciente } from '../models/paciente.model';
+import { HistoriaClinica } from '../models/historia-clinica.model';
 
 // src/app/services/paciente.service.ts
-import { HistoriaClinica } from './models/historia-clinica.model';
 
 @Injectable({ providedIn: 'root' })
 export class PacienteService {

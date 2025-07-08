@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { CountByKey, TurnoService } from '../../turno.service';
+import { CountByKey, TurnoService } from '../../services/turno.service';
 
 @Component({
   selector: 'app-turnos-especialidad',

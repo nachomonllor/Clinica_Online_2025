@@ -1,37 +1,274 @@
 
 
-// src/main.ts
-import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
-// AngularFire compat
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    // 1) HTTP client
     provideHttpClient(),
     provideRouter(routes),
-
-    // 2) Chart.js (ng2-charts standalone)
-    provideCharts(withDefaultRegisterables()),
-
-    // 3) AngularFire compat modules
+    provideAnimations(),
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebase),
+      AngularFireAuthModule,
       AngularFirestoreModule
     )
   ]
-})
-  .catch(err => console.error(err));
+});
+
+
+// // src/main.ts
+// import { bootstrapApplication }    from '@angular/platform-browser';
+// import { importProvidersFrom }     from '@angular/core';
+// import { provideHttpClient }       from '@angular/common/http';
+// import { provideRouter }           from '@angular/router';
+// import { provideAnimations }       from '@angular/platform-browser/animations';
+
+// import { AppComponent }            from './app/app.component';
+// import { routes }                  from './app/app.routes';
+// import { environment }             from './environments/environment';
+
+// import { AngularFireModule }       from '@angular/fire/compat';
+// import { AngularFireAuthModule }   from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }  from '@angular/fire/compat/firestore';
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     provideAnimations(),
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
+
+
+
+
+// // src/main.ts
+// import { bootstrapApplication }    from '@angular/platform-browser';
+// import { importProvidersFrom }     from '@angular/core';
+// import { provideHttpClient }       from '@angular/common/http';
+// import { provideRouter }           from '@angular/router';
+// import { provideAnimations }       from '@angular/platform-browser/animations';
+
+// import { AppComponent }            from './app/app.component';
+// import { routes }                  from './app/app.routes';
+// import { environment }             from './environments/environment';
+
+// import { AngularFireModule }       from '@angular/fire/compat';
+// import { AngularFireAuthModule }   from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }  from '@angular/fire/compat/firestore';
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     provideAnimations(),
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
+
+
+
+
+// // src/main.ts
+// import { bootstrapApplication }      from '@angular/platform-browser';
+// import { importProvidersFrom }       from '@angular/core';
+// import { provideAnimations }         from '@angular/platform-browser/animations';
+// import { provideHttpClient }         from '@angular/common/http';
+// import { provideRouter }             from '@angular/router';
+// import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
+// import { AppComponent }              from './app/app.component';
+// import { environment }               from './environments/environment';
+// import { routes }                    from './app/app.routes';
+
+// // SDK modular (Auth, Firestore, Storage)
+// import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+// import { getAuth, provideAuth }             from '@angular/fire/auth';
+// import { getFirestore, provideFirestore }   from '@angular/fire/firestore';
+// import { getStorage, provideStorage }       from '@angular/fire/storage';
+
+// // API compat
+// import { AngularFireModule }          from '@angular/fire/compat';
+// import { AngularFireAuthModule }      from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }     from '@angular/fire/compat/firestore';
+// import { AngularFireStorageModule }   from '@angular/fire/compat/storage';
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideAnimations(),
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     provideCharts(withDefaultRegisterables()),
+
+//     // — SDK modular —
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+//     provideStorage(() => getStorage()),
+
+//     // — módulos compat (incluye FirestoreService necesita esto) —
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule,
+//       AngularFireStorageModule
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
+
+
+
+// // src/main.ts
+// import { bootstrapApplication }     from '@angular/platform-browser';
+// import { provideAnimations }       from '@angular/platform-browser/animations';
+// import { provideHttpClient }       from '@angular/common/http';
+// import { provideRouter }           from '@angular/router';
+// import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
+// import { AppComponent }            from './app/app.component';
+// import { environment }             from './environments/environment';
+// import { routes }                  from './app/app.routes';
+
+// import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+// import { getAuth, provideAuth }             from '@angular/fire/auth';
+// import { getFirestore, provideFirestore }   from '@angular/fire/firestore';
+// import { getStorage, provideStorage }       from '@angular/fire/storage';
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideAnimations(),            // o provideNoopAnimations()
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     provideCharts(withDefaultRegisterables()),
+
+//     // 1) Inicializa FirebaseApp
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+
+//     // 2) Provee Auth, Firestore y Storage (modular)
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+//     provideStorage(() => getStorage()),
+//   ]
+// }).catch(err => console.error(err));
+
+
+
+
+// // src/main.ts
+// import { bootstrapApplication } from '@angular/platform-browser';
+// import { provideAnimations } from '@angular/platform-browser/animations';
+// import { importProvidersFrom } from '@angular/core';
+// import { provideHttpClient } from '@angular/common/http';
+// import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
+// import { AppComponent } from './app/app.component';
+// import { environment } from './environments/environment';
+// import { provideRouter } from '@angular/router';
+// import { routes } from './app/app.routes';
+
+// import { initializeApp } from 'firebase/app';
+// import { provideFirebaseApp } from '@angular/fire/app';
+// import { getAuth, provideAuth } from '@angular/fire/auth';
+// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+// import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     // 0) Proveedor de animaciones (¡importante!)
+//     provideAnimations(),
+
+//     // 1) HTTP, rutas y gráficas
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     provideCharts(withDefaultRegisterables()),
+
+//     // 2) Inicializa FirebaseApp
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+
+//     // 3) Provee Auth y Firestore
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+
+//     // 4) (si aún necesitas compat) tus importProvidersFrom(...)
+//     //    AngularFire compat modules
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFirestoreModule,
+//       AngularFireAuthModule,
+//       AngularFireStorageModule    // ← agrega esto
+//     )
+//   ]
+// })
+//   .catch(err => console.error(err));
+
+
+// // src/main.ts
+// import { bootstrapApplication } from '@angular/platform-browser';
+// import { importProvidersFrom } from '@angular/core';
+// import { provideHttpClient } from '@angular/common/http';
+// import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+
+// // AngularFire compat
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+// import { AppComponent } from './app/app.component';
+// import { environment } from './environments/environment';
+// import { provideRouter } from '@angular/router';
+// import { routes } from './app/app.routes';
+
+// import { getAuth, provideAuth } from '@angular/fire/auth';
+// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     // 1) HTTP client
+//     provideHttpClient(),
+//     provideRouter(routes),
+
+//     // 2) Chart.js (ng2-charts standalone)
+//     provideCharts(withDefaultRegisterables()),
+
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+
+//     // 3) AngularFire compat modules
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFirestoreModule
+//     )
+//   ]
+// })
+//   .catch(err => console.error(err));
 
 
 // bootstrapApplication(AppComponent, {

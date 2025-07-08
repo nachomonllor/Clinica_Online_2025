@@ -14,8 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { Paciente } from '../../models/paciente.model';
 import { Turno } from '../../models/turno.model';
 import { HistoriaClinica } from '../../models/historia-clinica.model';
-import { AuthService } from '../../auth.service';
-import { PacienteService } from '../../paciente.service';
+import { AuthService } from '../../services/auth.service';
+import { PacienteService } from '../../services/paciente.service';
 
 @Component({
     selector: 'app-pacientes',

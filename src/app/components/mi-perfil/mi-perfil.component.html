@@ -1,9 +1,14 @@
+
 <mat-card class="mi-perfil-container">
+  <!-- Cabecera -->
   <mat-card-header>
     <mat-card-title>Mi Perfil</mat-card-title>
   </mat-card-header>
 
+  <!-- Contenido principal -->
   <mat-card-content>
+
+    <!-- Datos del usuario -->
     <div class="perfil-info">
       <img mat-card-avatar [src]="usuario.imagenPerfil" alt="Imagen de perfil" />
       <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
@@ -11,37 +16,39 @@
       <p><strong>Email:</strong> {{ usuario.email }}</p>
     </div>
 
+    <!-- Botón de descarga de historia clínica (sólo pacientes) -->
+    <mat-card-actions *ngIf="usuario.rol === 'paciente'">
+      <button mat-raised-button color="accent" (click)="descargarPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Descargar historia clínica
+      </button>
+    </mat-card-actions>
+
+    <!-- Lista de horarios existentes -->
     <section *ngIf="usuario.horarios?.length">
       <h3>Mis Horarios</h3>
-      <div class="horarios-container">
-       
-          <mat-list>
-            <mat-list-item *ngFor="let h of usuario.horarios">
-              <mat-icon matListIcon>schedule</mat-icon>
-
-              <!-- 1ª línea: especialidad -->
-              <div matLine><strong>{{ h.especialidad }}</strong></div>
-
-              <!-- 2ª línea: días separados por coma -->
-              <div matLine>Días: {{ h.dias.join(', ') }}</div>
-
-              <!-- 3ª línea: horas separados por coma -->
-              <div matLine>Horas: {{ h.horas.join(', ') }}</div>
-            </mat-list-item>
-          </mat-list>
-
-      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let h of usuario.horarios">
+          <mat-icon matListIcon>schedule</mat-icon>
+          <div matLine><strong>{{ h.especialidad }}</strong></div>
+          <div matLine>Días: {{ h.dias.join(', ') }}</div>
+          <div matLine>Horas: {{ h.horas.join(', ') }}</div>
+        </mat-list-item>
+      </mat-list>
     </section>
 
+    <!-- Formulario para agregar un nuevo horario -->
     <h4>Agregar Nuevo Horario</h4>
     <form [formGroup]="horarioForm" (ngSubmit)="agregarHorario()">
-     
+
       <!-- Especialidades -->
       <div class="form-group">
         <label>Especialidades</label>
         <div class="pill-group">
-          <button type="button" class="pill" *ngFor="let esp of especialidades"
-            [class.active]="horarioForm.value.especialidades.includes(esp)" (click)="toggleEspecialidad(esp)">
+          <button type="button" class="pill"
+                  *ngFor="let esp of especialidades"
+                  [class.active]="horarioForm.value.especialidades.includes(esp)"
+                  (click)="toggleEspecialidad(esp)">
             {{ esp }}
           </button>
         </div>
@@ -51,8 +58,10 @@
       <div class="form-group">
         <label>Días</label>
         <div class="pill-group">
-          <button type="button" class="pill" *ngFor="let d of diasDisponibles"
-            [class.active]="horarioForm.value.dias.includes(d)" (click)="toggleDia(d)">
+          <button type="button" class="pill"
+                  *ngFor="let d of diasDisponibles"
+                  [class.active]="horarioForm.value.dias.includes(d)"
+                  (click)="toggleDia(d)">
             {{ d }}
           </button>
         </div>
@@ -62,19 +71,25 @@
       <div class="form-group">
         <label>Horas</label>
         <div class="pill-group">
-          <button type="button" class="pill" *ngFor="let h of horasDisponibles"
-            [class.active]="horarioForm.value.horas.includes(h)" (click)="toggleHora(h)">
+          <button type="button" class="pill"
+                  *ngFor="let h of horasDisponibles"
+                  [class.active]="horarioForm.value.horas.includes(h)"
+                  (click)="toggleHora(h)">
             {{ h }}
           </button>
         </div>
       </div>
 
-      <!-- Botón de enviar -->
-      <button mat-raised-button color="primary" [disabled]="horarioForm.invalid" (click)="agregarHorario()">
-        <mat-icon>add</mat-icon> Agregar Horario
+      <!-- Botón de envío -->
+      <button mat-raised-button color="primary"
+              [disabled]="horarioForm.invalid"
+              type="submit">
+        <mat-icon>add</mat-icon>
+        Agregar Horario
       </button>
 
     </form>
+
   </mat-card-content>
 </mat-card>
 

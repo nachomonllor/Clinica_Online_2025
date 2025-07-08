@@ -45,12 +45,22 @@ export class TurnosEspecialistaComponent implements OnInit {
   // Para vincular con el input de filtrado
   filterText: string = '';
 
+  /*
+    { id:2, nombre:'Dra. Marta López', especialidad:'Dermatología', imagenPerfil:'/assets/icons/doctor2.JPG' },
+    { id:3, nombre:'Dr. Carlos Ruiz', especialidad:'Neurología',    imagenPerfil:'/assets/icons/healthcare.JPG' }
+  */
+
   ngOnInit(): void {
     this.turnos = [
       { id: 1, fecha: '2025-03-30', hora: '09:00', especialidad: 'Cardiología', paciente: 'María Gómez', estado: 'pendiente' },
       { id: 2, fecha: '2025-04-01', hora: '10:00', especialidad: 'Dermatología', paciente: 'Luis Rodríguez', estado: 'aceptado' },
       { id: 3, fecha: '2025-04-03', hora: '11:00', especialidad: 'Neurología', paciente: 'Ana Torres', estado: 'pendiente' },
-      { id: 4, fecha: '2025-04-05', hora: '08:30', especialidad: 'Cardiología', paciente: 'Carlos Pérez', estado: 'realizado', resena: 'Consulta satisfactoria.' }
+      { id: 4, fecha: '2025-04-05', hora: '08:30', especialidad: 'Cardiología', paciente: 'Nora Da Puente', estado: 'realizado', resena: 'Consulta satisfactoria.' },
+      { id: 5, fecha: '2025-04-07', hora: '08:30', especialidad: 'Dermatología', paciente: 'Carlos Alvarez', estado: 'pendiente', resena: 'Consulta satisfactoria.' },
+      { id: 6, fecha: '2025-04-08', hora: '08:30', especialidad: 'Neurología', paciente: 'Carlos Pérez', estado: 'realizado', resena: 'Consulta satisfactoria.' },
+      { id: 7, fecha: '2025-06-05', hora: '08:30', especialidad: 'Cardiología', paciente: 'Carlos Pérez', estado: 'realizado', resena: 'Consulta satisfactoria.' },
+      { id: 8, fecha: '2025-06-06', hora: '08:30', especialidad: 'Diabetologia', paciente: 'Florencia De Cesare', estado: 'realizado', resena: 'Consulta satisfactoria.' }
+
     ];
     this.filteredTurnos = this.turnos;
     this.dataSource = this.filteredTurnos; // <-- asignamos dataSource

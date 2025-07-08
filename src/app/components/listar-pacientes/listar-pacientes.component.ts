@@ -19,7 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { Paciente } from '../../models/paciente.model';
-import { FirestoreService } from '../../firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
   
 @Component({
     selector: 'app-listar-pacientes',

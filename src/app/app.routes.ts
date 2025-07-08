@@ -17,6 +17,7 @@ import { SolicitarTurnoComponent } from './components/solicitar-turno/solicitar-
 import { TurnosEspecialidadComponent } from './components/turnos-especialidad/turnos-especialidad.component';
 import { TurnosEspecialistaComponent } from './components/turnos-especialista/turnos-especialista.component';
 import { UsuariosAdminComponent } from './components/usuarios-admin/usuarios-admin.component';
+import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 
 export const routes: Routes = [
 
@@ -56,6 +57,8 @@ export const routes: Routes = [
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
 
   { path: 'turnos-especialidad', component: TurnosEspecialidadComponent},
+
+  {path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent},
 
   { path: 'solicitar-turno', component: SolicitarTurnoComponent},
   { path: 'historia-clinica', component: HistoriaClinicaComponent},
