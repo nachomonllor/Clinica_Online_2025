@@ -9,6 +9,10 @@ import { Turno } from '../models/turno.model';
 import { of } from 'rxjs';
 import { Paciente } from '../models/paciente.model';
 import { TurnoEspecialista } from '../models/turno-especialista.model';
+import { Especialista } from '../models/especialista.model';
+
+import {  GoogleChartInterface } from 'ng2-google-charts';
+
 
 interface TurnoDto {
   pacienteId: any; id: number; fecha: string; hora: string;
@@ -238,42 +242,8 @@ setResenaEspecialista(id: number, texto: string): Observable<void> {
   }
   return of(void 0);
 }
-
-/** Me devuelve sólo lo que necesita el especialista */
-  // getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
-  //   return forkJoin({
-  //     turnos: of(this.mockTurnos),
-  //     pacientes: of(this.mockPacientes)
-  //   }).pipe(
-  //     map(({ turnos, pacientes }) =>
-  //       turnos.map(t => {
-  //         const paciente = pacientes.find(p => p.id === t.pacienteId);
-  //         // formateo fecha a string dd/MM/yyyy
-  //         const fechaStr = t.fecha instanceof Date
-  //           ? `${t.fecha.getDate().toString().padStart(2,'0')}/` +
-  //             `${(t.fecha.getMonth()+1).toString().padStart(2,'0')}/` +
-  //             `${t.fecha.getFullYear()}`
-  //           : String(t.fecha);
-
-  //         return {
-  //           id: t.id,
-  //           fecha: fechaStr,
-  //           hora: t.hora,
-  //           especialidad: t.especialidad,
-  //           paciente: paciente
-  //             ? `${paciente.nombre} ${paciente.apellido} (ID:${paciente.id})`
-  //             : `ID:${t.pacienteId}`,
-  //           estado: t.estado,
-  //           resena: t.resenaEspecialista  // o t.resena si así lo almacenas
-  //         } as TurnoEspecialista;
-  //       })
-  //     )
-  //   );
-  // }
-
-
  
-  getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
+getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
   return forkJoin({
     turnos: of(this.mockTurnos),
     pacientes: of(this.mockPacientes)
@@ -307,11 +277,82 @@ setResenaEspecialista(id: number, texto: string): Observable<void> {
   );
 }
 
+   // Mock de especialistas
+  private especialistasMock: Especialista[] = [
+    { id:1, nombre:'Ana', apellido:'Pérez', edad:40, dni:'12345678', especialidad:'Cardiología', mail:'', password:'', imagenPerfil:'' },
+    { id:2, nombre:'Luis', apellido:'Gómez', edad:38, dni:'87654321', especialidad:'Pediatría',    mail:'', password:'', imagenPerfil:'' },
+    { id:3, nombre:'María', apellido:'López', edad:45, dni:'11223344', especialidad:'Cardiología', mail:'', password:'', imagenPerfil:'' },
+    { id:4, nombre:'Carlos',apellido:'Fernández',edad:50, dni:'44332211', especialidad:'Dermatología', mail:'', password:'', imagenPerfil:'' },
+    { id:5, nombre:'Sofía', apellido:'Suárez', edad:35, dni:'55667788', especialidad:'Pediatría',    mail:'', password:'', imagenPerfil:'' },
+    // … más especialistas
+  ];
 
+  /** Devuelve todos los especialistas */
+  getEspecialistas(): Observable<Especialista[]> {
+    // Reemplaza `of` por tu llamada real a la API si la tienes
+    return of(this.especialistasMock);
+  }
 
+  /** Cuenta cuántos especialistas hay por especialidad */
+  getEspecialistasPorEspecialidad(): Observable<[string, number][]> {
+    return this.getEspecialistas().pipe(
+      map(lista => {
+        const contador: Record<string, number> = {};
+        lista.forEach(e => {
+          const esp = e.especialidad || 'Sin especialidad';
+          contador[esp] = (contador[esp] || 0) + 1;
+        });
+        // Convertimos a array de tuplas
+        return Object.entries(contador);
+      })
+    );
+  }
 
+  // public especialistasChart: GoogleChartInterface = {
+  //   chartType: 'PieChart',
+  //   dataTable: [['Especialidad', 'Cantidad']],
+  //   options: {
+  //     title: 'Especialistas por especialidad',
+  //     height: 400
+  //   }
+  // };
+
+  
 
 }
+
+/** Me devuelve sólo lo que necesita el especialista */
+  // getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
+  //   return forkJoin({
+  //     turnos: of(this.mockTurnos),
+  //     pacientes: of(this.mockPacientes)
+  //   }).pipe(
+  //     map(({ turnos, pacientes }) =>
+  //       turnos.map(t => {
+  //         const paciente = pacientes.find(p => p.id === t.pacienteId);
+  //         // formateo fecha a string dd/MM/yyyy
+  //         const fechaStr = t.fecha instanceof Date
+  //           ? `${t.fecha.getDate().toString().padStart(2,'0')}/` +
+  //             `${(t.fecha.getMonth()+1).toString().padStart(2,'0')}/` +
+  //             `${t.fecha.getFullYear()}`
+  //           : String(t.fecha);
+
+  //         return {
+  //           id: t.id,
+  //           fecha: fechaStr,
+  //           hora: t.hora,
+  //           especialidad: t.especialidad,
+  //           paciente: paciente
+  //             ? `${paciente.nombre} ${paciente.apellido} (ID:${paciente.id})`
+  //             : `ID:${t.pacienteId}`,
+  //           estado: t.estado,
+  //           resena: t.resenaEspecialista  // o t.resena si así lo almacenas
+  //         } as TurnoEspecialista;
+  //       })
+  //     )
+  //   );
+  // }
+
 
 // import { Injectable } from '@angular/core';
 

@@ -4,12 +4,12 @@ import { EstadisticasService } from '../../services/estadisticas.service';
 
 @Component({
   selector: 'app-estadisticas',
-  standalone:true,
+  standalone: true,
   imports: [Ng2GoogleChartsModule],
   templateUrl: './estadisticas.component.html',
   styleUrl: './estadisticas.component.scss'
 })
-export class EstadisticasComponent implements OnInit{
+export class EstadisticasComponent implements OnInit {
 
   public visitasChart: GoogleChartInterface = {
     chartType: 'ColumnChart',
@@ -24,17 +24,25 @@ export class EstadisticasComponent implements OnInit{
     }
   };
 
-  constructor(private statsSvc: EstadisticasService) {}
+
+  public especialistasChart: GoogleChartInterface = {
+    chartType: 'PieChart',
+    dataTable: [['Especialidad', 'Cantidad']],
+    options: {
+      title: 'Especialistas por especialidad',
+      height: 400
+    }
+  };
+
+  constructor(private statsSvc: EstadisticasService) { }
 
   // ngOnInit() {
-  //   this.statsSvc.getVisitasPorMes().subscribe(data => {
-  //     // data: [ ['Enero', 10], ['Febrero', 23], … ]
-  //     this.visitasChart = {
-  //       ...this.visitasChart,
-  //       dataTable: [
-  //         ['Mes', 'Visitas'],
-  //         ...data
-  //       ]
+  //   // … cargas de visitas y pacientes
+  //   // Carga de especialistas
+  //   this.statsSvc.getEspecialistasPorEspecialidad().subscribe(data => {
+  //     this.especialistasChart = {
+  //       ...this.especialistasChart,
+  //       dataTable: [['Especialidad', 'Cantidad'], ...data]
   //     };
   //   });
   // }
@@ -55,6 +63,14 @@ export class EstadisticasComponent implements OnInit{
         dataTable: [['Especialidad', 'Pacientes'], ...data]
       };
     });
+
+    // Carga de especialistas
+    this.statsSvc.getEspecialistasPorEspecialidad().subscribe(data => {
+      this.especialistasChart = {
+        ...this.especialistasChart,
+        dataTable: [['Especialidad', 'Cantidad'], ...data]
+      };
+    });
   }
 
   public pacientesChart: GoogleChartInterface = {
@@ -71,24 +87,24 @@ export class EstadisticasComponent implements OnInit{
 
 
 
-  //   public visitasChart = {
-  //   chartType: 'ColumnChart',
-  //   dataTable: [] as any[][],
-  //   options: {
-  //     title: 'Visitas por mes',
-  //     height: 400,
-  //     legend: { position: 'none' }
-  //   }
-  // };
+//   public visitasChart = {
+//   chartType: 'ColumnChart',
+//   dataTable: [] as any[][],
+//   options: {
+//     title: 'Visitas por mes',
+//     height: 400,
+//     legend: { position: 'none' }
+//   }
+// };
 
-  // constructor(private statsSvc: EstadisticasService) {}
+// constructor(private statsSvc: EstadisticasService) {}
 
-  // ngOnInit() {
-  //   this.statsSvc.getVisitasPorMes().subscribe(data => {
-  //     // data: [ ['Enero', 10], ['Febrero', 23], … ]
-  //     this.visitasChart.dataTable = [
-  //       ['Mes', 'Visitas'],
-  //       ...data
-  //     ];
-  //   });
-  // }
+// ngOnInit() {
+//   this.statsSvc.getVisitasPorMes().subscribe(data => {
+//     // data: [ ['Enero', 10], ['Febrero', 23], … ]
+//     this.visitasChart.dataTable = [
+//       ['Mes', 'Visitas'],
+//       ...data
+//     ];
+//   });
+// }
