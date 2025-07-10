@@ -11,14 +11,19 @@ import { Paciente } from '../models/paciente.model';
 import { TurnoEspecialista } from '../models/turno-especialista.model';
 import { Especialista } from '../models/especialista.model';
 
-import {  GoogleChartInterface } from 'ng2-google-charts';
-
-
 interface TurnoDto {
-  pacienteId: any; id: number; fecha: string; hora: string;
-  especialidad: string; especialista: string; estado: string;
-  resena?: string; encuesta?: boolean; calificacion?: number;
+  pacienteId: string;
+  id: number;
+  fecha: string;
+  hora: string;
+  especialidad: string;
+  especialista: string;
+  estado: string;
+  resena?: string;
+  encuesta?: boolean;
+  calificacion?: number;
 }
+
 /**
  * Estructura para devolver conteos agrupados
  */
@@ -40,37 +45,38 @@ export class TurnoService {
   private mockTurnos: Turno[] = [
     {
       id: 101,
-       fecha: new Date('2025-06-25'),
-        hora: '09:30', 
-        especialidad: 'Cardiología',
-      especialista: 'Dra. Pérez', 
-      estado: 'aceptado', 
-      resena: 'Excelente atención, muy profesional.', 
+      fecha: new Date('2025-06-25'),
+      hora: '09:30',
+      especialidad: 'Cardiología',
+      especialista: 'Dra. Pérez',
+      estado: 'aceptado',
+      resena: 'Excelente atención, muy profesional.',
       encuesta: false,
-      calificacion: 10
+      calificacion: 10,
+      pacienteId: '3'
     },
     {
-      id: 102, 
-      fecha: new Date('2025-06-28'), 
-      hora: '14:00', 
+      id: 102,
+      fecha: new Date('2025-06-28'),
+      hora: '14:00',
       especialidad: 'Dermatología',
-      especialista: 'Dr. Gómez', 
-       pacienteId: '4',  
-        estado: 'realizado', 
-        resena: 'Me gustó mucho la consulta.', 
-        encuesta: true,
+      especialista: 'Dr. Gómez',
+      pacienteId: '4',
+      estado: 'realizado',
+      resena: 'Me gustó mucho la consulta.',
+      encuesta: true,
       calificacion: 10
     },
     {
-      id: 103, 
-      fecha: new Date('2025-07-02'), 
+      id: 103,
+      fecha: new Date('2025-07-02'),
       hora: '11:15',
-       especialidad: 'Pediatría',
+      especialidad: 'Pediatría',
       especialista: 'Dra. Ruiz',
-       pacienteId: '4',    
-       estado: 'pendiente', 
-       resena: "prueba res",
-       encuesta: false,
+      pacienteId: '4',
+      estado: 'pendiente',
+      resena: "prueba res",
+      encuesta: false,
       calificacion: 8
     },
     {
@@ -79,7 +85,7 @@ export class TurnoService {
       hora: '11:15',
       especialidad: 'Cardiologia',
       especialista: 'Dra. Nora Da Puente',
-       pacienteId: '5',   
+      pacienteId: '5',
       estado: 'realizado',
       resena: 'Reseña de prueba', // ← aquí
       encuesta: false,
@@ -100,17 +106,38 @@ export class TurnoService {
 
   ];
 
-   // → mock de pacientes que atiende este especialista
+  // // → mock de pacientes que atiende este especialista
   private mockPacientes: Paciente[] = [
-    { id: '101', avatarUrl: 'avatar1', nombre: 'Ramon',   apellido: 'Ruiz',   edad: 40, dni: '7777888999',  obraSocial: 'IOMA', email: 'ramon@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '102', avatarUrl: 'avatarx', nombre: 'Fernando',   apellido: 'Marquez',   edad: 40, dni: '6666777755',  obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' }
+    { id: '3', avatarUrl: 'avatar1', nombre: 'Ramon', apellido: 'Ruiz', edad: 40, dni: '7777888999', obraSocial: 'IOMA', email: 'ramon@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
+    { id: '4', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
+    { id: '5', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
+    { id: '6', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' }
     // agrega los demás según tu mock de turnos…
+  ];
+
+  //   private mockPacientes: Paciente[] = [
+  //   { id: '3', nombre: 'Ramón',    apellido: 'Ruiz',    /* … el resto de campos … */ },
+  //   { id: '4', nombre: 'Fernando', apellido: 'Márquez', /* … */ },
+  //   { id: '5', nombre: 'Lucía',    apellido: 'Gómez',   /* … */ },
+  //   { id: '6', nombre: 'María',    apellido: 'López',   /* … */ }
+  // ];
+
+
+  // Mock de especialistas
+  private especialistasMock: Especialista[] = [
+    { id: 1, nombre: 'Ana', apellido: 'Pérez', edad: 40, dni: '12345678', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
+    { id: 2, nombre: 'Luis', apellido: 'Gómez', edad: 38, dni: '87654321', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
+    { id: 3, nombre: 'María', apellido: 'López', edad: 45, dni: '11223344', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
+    { id: 4, nombre: 'Carlos', apellido: 'Fernández', edad: 50, dni: '44332211', especialidad: 'Dermatología', mail: '', password: '', imagenPerfil: '' },
+    { id: 5, nombre: 'Sofía', apellido: 'Suárez', edad: 35, dni: '55667788', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
+    // … más especialistas
   ];
 
   /** Devuelve todos los pacientes mock */
   getMockPacientes(): Observable<Paciente[]> {
     return of(this.mockPacientes);
   }
+
 
   /**
    * Devuelve los turnos enriquecidos con el nombre completo del paciente
@@ -155,15 +182,6 @@ export class TurnoService {
       )
     );
   }
-
-  // getTurnosPacienteDto(): Observable<Turno[]> {
-  //   return this.http.get<TurnoDto[]>('/api/turnos/paciente').pipe(
-  //     map(arr => arr.map(dto => ({
-  //       ...dto,
-  //       fecha: new Date(dto.fecha)
-  //     })))
-  //   );
-  // }
 
   /** Actualiza campos de un turno */
   actualizarTurno(id: string, data: Partial<Turno>) {
@@ -235,58 +253,47 @@ export class TurnoService {
   }
 
   // turno.service.ts
-setResenaEspecialista(id: number, texto: string): Observable<void> {
-  const turno = this.mockTurnos.find(t => t.id === id);
-  if (turno) {
-    turno.resenaEspecialista = texto;
+  setResenaEspecialista(id: number, texto: string): Observable<void> {
+    const turno = this.mockTurnos.find(t => t.id === id);
+    if (turno) {
+      turno.resenaEspecialista = texto;
+    }
+    return of(void 0);
   }
-  return of(void 0);
-}
- 
-getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
-  return forkJoin({
-    turnos: of(this.mockTurnos),
-    pacientes: of(this.mockPacientes)
-  }).pipe(
-    map(({ turnos, pacientes }) =>
-      turnos.map(t => {
-        // formateo manual dd/MM/yyyy
-        const d = t.fecha instanceof Date ? t.fecha : new Date(t.fecha);
-        const fechaStr = [
-          d.getDate().toString().padStart(2,'0'),
-          (d.getMonth()+1).toString().padStart(2,'0'),
-          d.getFullYear()
-        ].join('/');
 
-        const p = pacientes.find(x => x.id === t.pacienteId);
-        const pacienteStr = p
-          ? `${p.nombre} ${p.apellido} (ID:${p.id})`
-          : 'Paciente no asignado';
+  getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
+    return forkJoin({
+      turnos: of(this.mockTurnos),
+      pacientes: of(this.mockPacientes)
+    }).pipe(
+      map(({ turnos, pacientes }) =>
+        turnos.map(t => {
+          // formateo manual dd/MM/yyyy
+          const d = t.fecha instanceof Date ? t.fecha : new Date(t.fecha);
+          const fechaStr = [
+            d.getDate().toString().padStart(2, '0'),
+            (d.getMonth() + 1).toString().padStart(2, '0'),
+            d.getFullYear()
+          ].join('/');
 
-        return {
-          id         : t.id,
-          fecha      : fechaStr,        // <-- ahora un string dd/MM/yyyy
-          hora       : t.hora,
-          especialidad: t.especialidad,
-          paciente   : pacienteStr,
-          estado     : t.estado,
-          resena     : t.resenaEspecialista
-        } as TurnoEspecialista;
-      })
-    )
-  );
-}
+          const p = pacientes.find(x => x.id === t.pacienteId);
+          const pacienteStr = p
+            ? `${p.nombre} ${p.apellido} (ID:${p.id})`
+            : 'Paciente no asignado';
 
-   // Mock de especialistas
-  private especialistasMock: Especialista[] = [
-    { id:1, nombre:'Ana', apellido:'Pérez', edad:40, dni:'12345678', especialidad:'Cardiología', mail:'', password:'', imagenPerfil:'' },
-    { id:2, nombre:'Luis', apellido:'Gómez', edad:38, dni:'87654321', especialidad:'Pediatría',    mail:'', password:'', imagenPerfil:'' },
-    { id:3, nombre:'María', apellido:'López', edad:45, dni:'11223344', especialidad:'Cardiología', mail:'', password:'', imagenPerfil:'' },
-    { id:4, nombre:'Carlos',apellido:'Fernández',edad:50, dni:'44332211', especialidad:'Dermatología', mail:'', password:'', imagenPerfil:'' },
-    { id:5, nombre:'Sofía', apellido:'Suárez', edad:35, dni:'55667788', especialidad:'Pediatría',    mail:'', password:'', imagenPerfil:'' },
-    // … más especialistas
-  ];
-
+          return {
+            id: t.id,
+            fecha: fechaStr,        // <-- ahora un string dd/MM/yyyy
+            hora: t.hora,
+            especialidad: t.especialidad,
+            paciente: pacienteStr,
+            estado: t.estado,
+            resena: t.resenaEspecialista
+          } as TurnoEspecialista;
+        })
+      )
+    );
+  }
   /** Devuelve todos los especialistas */
   getEspecialistas(): Observable<Especialista[]> {
     // Reemplaza `of` por tu llamada real a la API si la tienes
@@ -308,78 +315,46 @@ getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
     );
   }
 
-  // public especialistasChart: GoogleChartInterface = {
-  //   chartType: 'PieChart',
-  //   dataTable: [['Especialidad', 'Cantidad']],
-  //   options: {
-  //     title: 'Especialistas por especialidad',
-  //     height: 400
-  //   }
-  // };
+    /** Devuelve todos los pacientes (para el select) */
+  getPacientes(): Observable<Paciente[]> {
+    return of(this.mockPacientes);
+  }
 
-  
+  // /** Devuelve todos los turnos (para conteos globales) */
+  // getAllTurnos(): Observable<Turno[]> {
+  //   return of(this.mockTurnos);
+  // }
+
+  /** Filtra los turnos por pacienteId */
+  getTurnosPorPaciente(pacienteId: string): Observable<Turno[]> {
+    const resultado: Turno[] = [];
+    for (let i = 0; i < this.mockTurnos.length; i++) {
+      if (this.mockTurnos[i].pacienteId === pacienteId) {
+        resultado.push(this.mockTurnos[i]);
+      }
+    }
+    return of(resultado);
+  }
+
+  /** Cuenta cuántas visitas hay por especialidad en todos los turnos */
+  getVisitasPorEspecialidad(): Observable<[string, number][]> {
+    const contador: Record<string, number> = {};
+    for (let i = 0; i < this.mockTurnos.length; i++) {
+      const esp = this.mockTurnos[i].especialidad;
+      if (contador.hasOwnProperty(esp)) {
+        contador[esp]++;
+      } else {
+        contador[esp] = 1;
+      }
+    }
+    const arr: [string, number][] = [];
+    for (const esp in contador) {
+      if (contador.hasOwnProperty(esp)) {
+        arr.push([esp, contador[esp]]);
+      }
+    }
+    return of(arr);
+  }
+
 
 }
-
-/** Me devuelve sólo lo que necesita el especialista */
-  // getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
-  //   return forkJoin({
-  //     turnos: of(this.mockTurnos),
-  //     pacientes: of(this.mockPacientes)
-  //   }).pipe(
-  //     map(({ turnos, pacientes }) =>
-  //       turnos.map(t => {
-  //         const paciente = pacientes.find(p => p.id === t.pacienteId);
-  //         // formateo fecha a string dd/MM/yyyy
-  //         const fechaStr = t.fecha instanceof Date
-  //           ? `${t.fecha.getDate().toString().padStart(2,'0')}/` +
-  //             `${(t.fecha.getMonth()+1).toString().padStart(2,'0')}/` +
-  //             `${t.fecha.getFullYear()}`
-  //           : String(t.fecha);
-
-  //         return {
-  //           id: t.id,
-  //           fecha: fechaStr,
-  //           hora: t.hora,
-  //           especialidad: t.especialidad,
-  //           paciente: paciente
-  //             ? `${paciente.nombre} ${paciente.apellido} (ID:${paciente.id})`
-  //             : `ID:${t.pacienteId}`,
-  //           estado: t.estado,
-  //           resena: t.resenaEspecialista  // o t.resena si así lo almacenas
-  //         } as TurnoEspecialista;
-  //       })
-  //     )
-  //   );
-  // }
-
-
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class TurnoService {
-
-//   constructor() { }
-// }
-
-
-  // getTurnosPacienteDesdeDto(pacienteId: string): Observable<Turno[]> {
-  //   return this.getTurnosPacienteDto(pacienteId).pipe(
-  //     map(dtos =>
-  //       dtos.map(dto => ({
-  //         pacienteId: dto.pacienteId,       
-  //         id: dto.id,
-  //         fecha: new Date(dto.fecha),
-  //         hora: dto.hora,
-  //         especialidad: dto.especialidad,
-  //         especialista: dto.especialista,
-  //         estado: dto.estado,
-  //         resena: dto.resena,
-  //         encuesta: dto.encuesta,
-  //         calificacion: dto.calificacion
-  //       }))
-  //     )
-  //   );
-  // }

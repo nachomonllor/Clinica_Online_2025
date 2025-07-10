@@ -9,16 +9,81 @@ import { Visita } from '../models/visita.model';
 
 export class EstadisticasService {
 
-  especialistasMock: Especialista[] = [
-    { id: 1, nombre: 'Ana', apellido: 'Pérez', edad: 40, dni: '12345678', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
-    { id: 2, nombre: 'Luis', apellido: 'Gómez', edad: 38, dni: '87654321', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
-    { id: 3, nombre: 'María', apellido: 'López', edad: 45, dni: '11223344', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
-    { id: 4, nombre: 'Carlos', apellido: 'Fernández', edad: 50, dni: '44332211', especialidad: 'Dermatología', mail: '', password: '', imagenPerfil: '' },
-    { id: 5, nombre: 'Sofía', apellido: 'Suárez', edad: 35, dni: '55667788', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
-    // … más especialistas
-  ];
+  // especialistasMock: Especialista[] = [
+  //   { id: 1, nombre: 'Ana', apellido: 'Pérez', edad: 40, dni: '12345678', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
+  //   { id: 2, nombre: 'Luis', apellido: 'Gómez', edad: 38, dni: '87654321', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
+  //   { id: 3, nombre: 'María', apellido: 'López', edad: 45, dni: '11223344', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
+  //   { id: 4, nombre: 'Carlos', apellido: 'Fernández', edad: 50, dni: '44332211', especialidad: 'Dermatología', mail: '', password: '', imagenPerfil: '' },
+  //   { id: 5, nombre: 'Sofía', apellido: 'Suárez', edad: 35, dni: '55667788', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
+  //   // … más especialistas
+  // ];
+
+  private especialistasMock: Record<string, Especialista> = {
+    '1': {
+      id: 1,
+      nombre: 'Ana',
+      apellido: 'Pérez',
+      edad: 40,
+      dni: '12345678',
+      especialidad: 'Cardiología',
+      mail: '',
+      password: '',
+      imagenPerfil: ''
+    },
+    '2': {
+      id: 2,
+      nombre: 'Luis',
+      apellido: 'Gómez',
+      edad: 38,
+      dni: '87654321',
+      especialidad: 'Pediatría',
+      mail: '',
+      password: '',
+      imagenPerfil: ''
+    },
+    '3': {
+      id: 3,
+      nombre: 'María',
+      apellido: 'López',
+      edad: 45,
+      dni: '11223344',
+      especialidad: 'Cardiología',
+      mail: '',
+      password: '',
+      imagenPerfil: ''
+    },
+    '4': {
+      id: 4,
+      nombre: 'Carlos',
+      apellido: 'Fernández',
+      edad: 50,
+      dni: '44332211',
+      especialidad: 'Dermatología',
+      mail: '',
+      password: '',
+      imagenPerfil: ''
+    },
+    '5': {
+      id: 5,
+      nombre: 'Sofía',
+      apellido: 'Suárez',
+      edad: 35,
+      dni: '55667788',
+      especialidad: 'Pediatría',
+      mail: '',
+      password: '',
+      imagenPerfil: ''
+    }
+    // … más claves si quieres
+  };
 
 
+  // Mock tipo diccionario: clave = id en Firebase, valor = Especialista
+  // private especialistasMock: Record<string, Especialista> = {
+  //   '1': { /* … */ },
+  //   '2': { /* … */ },
+  //   // …
+  // };
 
   constructor() { }
 
@@ -67,27 +132,6 @@ export class EstadisticasService {
     // … agrega más visitas o cámbialo por tu fuente real
   ];
 
-  /** Agrupa las visitas por mes y devuelve un array [mes, cantidad] */
-  // getVisitasPorMes(): Observable<[string, number][]> {
-  //   return of(this.visitasMock).pipe(
-  //     map(visitas => {
-  //       const meses = [
-  //         'Enero','Febrero','Marzo','Abril','Mayo','Junio',
-  //         'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
-  //       ];
-  //       const contador: Record<string, number> = {};
-
-  //       visitas.forEach(v => {
-  //         const mesNombre = meses[v.fecha.getMonth()];
-  //         contador[mesNombre] = (contador[mesNombre] || 0) + 1;
-  //       });
-
-  //       // Aseguramos que todos los meses aparezcan (incluso con 0)
-  //       return meses.map(m => [m, contador[m] || 0] as [string, number]);
-  //     })
-  //   );
-  // }
-
   getVisitasPorMes(): Observable<[string, number][]> {
     return of(this.visitasMock).pipe(
       map(visitas => {
@@ -124,39 +168,83 @@ export class EstadisticasService {
   }
 
   getPacientesPorEspecialidad(): Observable<[string, number][]> {
-    // → MOCK: cambia por tu endpoint real
-    return of([
+    // → MOCK: sustituir por llamada real al API si la tienes
+    const visitasEspecialidades: [string, number][] = [
       ['Cardiología', 45],
       ['Pediatría', 32],
       ['Dermatología', 28],
       ['Traumatología', 18],
-      ['Ginecología', 22],
-    ]);
-    // con un rest
-    // return this.http.get<[string, number][]>('/api/estadisticas/pacientes-por-especialidad');
+      ['Ginecología', 22]
+    ];
+
+    // Diccionario contador
+    const contador: Record<string, number> = {};
+
+    // Recorremos el mock con un for “común”
+    for (let i = 0; i < visitasEspecialidades.length; i++) {
+      // Desestructuramos nombre de especialidad y pacientes
+      const especialidadNom = visitasEspecialidades[i][0];
+      const cantidadPacientes = visitasEspecialidades[i][1];
+
+      if (contador.hasOwnProperty(especialidadNom)) {
+        // Si ya existe, sumamos la cantidad
+        contador[especialidadNom] = contador[especialidadNom] + cantidadPacientes;
+      } else {
+        // Si no existe, inicializamos con la cantidad
+        contador[especialidadNom] = cantidadPacientes;
+      }
+    }
+
+    // Convertimos el Record en el array de tuplas
+    const resultado: [string, number][] = [];
+    for (const esp in contador) {
+      if (contador.hasOwnProperty(esp)) {
+        resultado.push([esp, contador[esp]]);
+      }
+    }
+
+    // Devolvemos como Observable
+    return of(resultado);
   }
 
-
-  /** Devuelve todos los especialistas */
+  /** Simula fetch desde Firebase y convierte el Record en un array */
   getEspecialistas(): Observable<Especialista[]> {
-    // Reemplaza `of` por tu llamada real a la API si la tienes
-    return of(this.especialistasMock);
+    const lista: Especialista[] = [];
+    for (const key in this.especialistasMock) {
+      if (this.especialistasMock.hasOwnProperty(key)) {
+        lista.push(this.especialistasMock[key]);
+      }
+    }
+    return of(lista);
   }
 
-  /** Cuenta cuántos especialistas hay por especialidad */
+  /** Cuenta especialistas por especialidad (igual que antes) */
   getEspecialistasPorEspecialidad(): Observable<[string, number][]> {
     return this.getEspecialistas().pipe(
       map(lista => {
         const contador: Record<string, number> = {};
-        lista.forEach(e => {
-          const esp = e.especialidad || 'Sin especialidad';
-          contador[esp] = (contador[esp] || 0) + 1;
-        });
-        // Convertimos a array de tuplas
-        return Object.entries(contador);
+        // Bucle “a lo C#”
+        for (let i = 0; i < lista.length; i++) {
+          const esp = lista[i].especialidad || 'Sin especialidad';
+          if (contador.hasOwnProperty(esp)) {
+            contador[esp] += 1;
+          } else {
+            contador[esp] = 1;
+          }
+        }
+        // Pasar a array de tuplas
+        const resultado: [string, number][] = [];
+        for (const key in contador) {
+          if (contador.hasOwnProperty(key)) {
+            resultado.push([key, contador[key]]);
+          }
+        }
+        return resultado;
       })
     );
   }
+
+  
 
 }
 

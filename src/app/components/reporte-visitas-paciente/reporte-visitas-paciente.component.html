@@ -1,0 +1,78 @@
+<!-- reporte-visitas-paciente.component.html -->
+<div class="p-4 space-y-4">
+    <label>Seleccionar paciente:</label>
+
+    <div class="pill-group mb-4">
+        <button *ngFor="let p of pacientes" type="button" class="pill" [class.active]="selectedPacienteId === p.id"
+            (click)="selectPaciente(p.id)">
+            {{ p.nombre }} {{ p.apellido }}
+        </button>
+    </div>
+
+    <div *ngIf="turnos.length">
+        <h3 class="text-lg font-semibold">Turnos encontrados: {{ turnos.length }}</h3>
+        <!-- tabla igual que antes -->
+        <table class="min-w-full border">
+            <thead>
+                <tr>
+                    <th class="px-2 py-1">Fecha</th>
+                    <th class="px-2 py-1">Especialidad</th>
+                    <th class="px-2 py-1">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let t of turnos">
+                    <td class="px-2 py-1">{{ t.fecha | date:'shortDate' }} {{ t.hora }}</td>
+                    <td class="px-2 py-1">{{ t.especialidad }}</td>
+                    <td class="px-2 py-1">{{ t.estado }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            <google-chart [data]="turnosChart"></google-chart>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- reporte-visitas-paciente.component.html -->
+<!-- <div class="p-4 space-y-4">
+  <label>
+    Seleccionar paciente:
+    <select [formControl]="pacienteControl" class="border rounded p-2">
+      <option [ngValue]="null">— Elige uno —</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p.id">
+        {{ p.nombre }} {{ p.apellido }}
+      </option>
+    </select>
+  </label>
+
+  <div *ngIf="turnos.length">
+    <h3 class="text-lg font-semibold">Turnos encontrados: {{ turnos.length }}</h3>
+    <table class="min-w-full border">
+      <thead>
+        <tr>
+          <th class="px-2 py-1">Fecha</th>
+          <th class="px-2 py-1">Especialidad</th>
+          <th class="px-2 py-1">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of turnos">
+          <td class="px-2 py-1">{{ t.fecha | date:'shortDate' }} {{ t.hora }}</td>
+          <td class="px-2 py-1">{{ t.especialidad }}</td>
+          <td class="px-2 py-1">{{ t.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-4">
+      <google-chart [data]="turnosChart"></google-chart>
+    </div>
+  </div>
+</div> -->

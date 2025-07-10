@@ -1,4 +1,10 @@
-
+// turno.model.ts
+export type TurnoEstado = 
+  | 'pendiente'
+  | 'realizado'
+  | 'cancelado'
+  | 'rechazado'
+  | 'aceptado';
 
 export interface Turno {
   id: number;
@@ -6,7 +12,7 @@ export interface Turno {
   hora: string;
   especialidad: string;
   especialista: string;
-  pacienteId?: string;
+  pacienteId: string;
   estado: TurnoEstado;
   // reseña que deja el especialista
   resenaEspecialista?: string;
@@ -17,29 +23,6 @@ export interface Turno {
   calificacionPaciente?: number;
   encuesta?: boolean;
 }
-
-
-// export interface Turno {
-//   pacienteId?: string;
-//   paciente?: string;
-//   id: number;
-//   fecha: Date;            // reemplazo string por DATE
-//   hora: string;
-//   especialidad: string;
-//   especialista: string;
-//   estado: 'pendiente' | 'realizado' | 'cancelado' | 'rechazado' | 'aceptado';
-//   resena?: string;
-//   encuesta?: boolean;
-//   calificacion?: number;
-// }
-
-// turno.model.ts
-export type TurnoEstado = 
-  | 'pendiente'
-  | 'realizado'
-  | 'cancelado'
-  | 'rechazado'
-  | 'aceptado';
 
 export interface TurnoDto {
   pacienteId: string;
@@ -53,19 +36,4 @@ export interface TurnoDto {
   encuesta?: boolean;
   calificacion?: number;
 }
-
-
-// export interface Turno {
-//   pacienteId: any;
-//   id: number;
-//   fecha: string; // Para simplificar, string; en producción puede ser Date.
-//   hora: string;
-//   especialidad: string;
-//   especialista: string;
-//   estado: 'pendiente' | 'realizado' | 'cancelado' | 'rechazado' | 'aceptado';
-//   resena?: string;         // Reseña o comentario dejado por el especialista.
-//   encuesta?: boolean;      // Si el paciente ya completó la encuesta.
-//   calificacion?: number;   // Puntaje 1–5 dado por el paciente.
-// }
-
 

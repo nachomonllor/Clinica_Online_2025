@@ -71,6 +71,8 @@ export class EstadisticasComponent implements OnInit {
         dataTable: [['Especialidad', 'Cantidad'], ...data]
       };
     });
+
+
   }
 
   public pacientesChart: GoogleChartInterface = {
