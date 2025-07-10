@@ -43,66 +43,16 @@ export class TurnoService {
 
   // → aquí el mock único para toda la app
   private mockTurnos: Turno[] = [
-    {
-      id: 101,
-      fecha: new Date('2025-06-25'),
-      hora: '09:30',
-      especialidad: 'Cardiología',
-      especialista: 'Dra. Pérez',
-      estado: 'aceptado',
-      resena: 'Excelente atención, muy profesional.',
-      encuesta: false,
-      calificacion: 10,
-      pacienteId: '3'
-    },
-    {
-      id: 102,
-      fecha: new Date('2025-06-28'),
-      hora: '14:00',
-      especialidad: 'Dermatología',
-      especialista: 'Dr. Gómez',
-      pacienteId: '4',
-      estado: 'realizado',
-      resena: 'Me gustó mucho la consulta.',
-      encuesta: true,
-      calificacion: 10
-    },
-    {
-      id: 103,
-      fecha: new Date('2025-07-02'),
-      hora: '11:15',
-      especialidad: 'Pediatría',
-      especialista: 'Dra. Ruiz',
-      pacienteId: '4',
-      estado: 'pendiente',
-      resena: "prueba res",
-      encuesta: false,
-      calificacion: 8
-    },
-    {
-      id: 104,
-      fecha: new Date('2025-09-02'),
-      hora: '11:15',
-      especialidad: 'Cardiologia',
-      especialista: 'Dra. Nora Da Puente',
-      pacienteId: '5',
-      estado: 'realizado',
-      resena: 'Reseña de prueba', // ← aquí
-      encuesta: false,
-      calificacion: 9
-    },
-    {
-      id: 105,
-      fecha: new Date('2025-06-22'),
-      hora: '11:15',
-      especialidad: 'Diabetóloga',
-      especialista: 'Dra. Florencia De Césare',
-      estado: 'realizado',
-      resena: 'Reseña de prueba', // ← aquí
-      encuesta: false,
-      pacienteId: '6',
-      calificacion: 10
-    }
+    { id: 100, fecha: new Date('2025-06-25'), hora: '09:30', especialidad: 'Cardiología', especialista: 'Dra. Pérez', estado: 'aceptado', resena: 'Excelente atención, muy profesional.', encuesta: false, calificacion: 10, pacienteId: '3' },
+    { id: 101, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología', especialista: 'Dr. Gómez', pacienteId: '4', estado: 'aceptado', resena: 'Me gustó mucho la consulta.', encuesta: true, calificacion: 10 },
+    { id: 102, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología', especialista: 'Dr. Gómez', pacienteId: '4', estado: 'realizado', resena: 'Me gustó mucho la consulta.', encuesta: true, calificacion: 10 },
+    { id: 103, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
+    { id: 104, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
+    { id: 105, fecha: new Date('2025-07-02'), hora: '15:20', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
+    { id: 106, fecha: new Date('2025-07-02'), hora: '11:45', especialidad: 'Neurologia', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'realizado', resena: "prueba res", encuesta: false, calificacion: 8 },
+    { id: 107, fecha: new Date('2025-07-02'), hora: '11:30', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'realizado', resena: "prueba res", encuesta: false, calificacion: 8 },
+    { id: 108, fecha: new Date('2025-09-02'), hora: '12:15', especialidad: 'Cardiologia', especialista: 'Dra. Nora Da Puente', pacienteId: '5', estado: 'realizado', resena: 'Reseña de prueba', encuesta: false, calificacion: 9 },
+    { id: 109, fecha: new Date('2025-06-22'), hora: '13:15', especialidad: 'Diabetóloga', especialista: 'Dra. Florencia De Césare', estado: 'realizado', resena: 'Reseña de prueba', encuesta: false, pacienteId: '6', calificacion: 10 }
 
   ];
 
@@ -110,18 +60,10 @@ export class TurnoService {
   private mockPacientes: Paciente[] = [
     { id: '3', avatarUrl: 'avatar1', nombre: 'Ramon', apellido: 'Ruiz', edad: 40, dni: '7777888999', obraSocial: 'IOMA', email: 'ramon@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
     { id: '4', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '5', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '6', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' }
+    { id: '5', avatarUrl: 'avatarx', nombre: 'Francisco', apellido: 'Torres', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
+    { id: '6', avatarUrl: 'avatarx', nombre: 'Edgardo', apellido: 'Amicucci', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' }
     // agrega los demás según tu mock de turnos…
   ];
-
-  //   private mockPacientes: Paciente[] = [
-  //   { id: '3', nombre: 'Ramón',    apellido: 'Ruiz',    /* … el resto de campos … */ },
-  //   { id: '4', nombre: 'Fernando', apellido: 'Márquez', /* … */ },
-  //   { id: '5', nombre: 'Lucía',    apellido: 'Gómez',   /* … */ },
-  //   { id: '6', nombre: 'María',    apellido: 'López',   /* … */ }
-  // ];
-
 
   // Mock de especialistas
   private especialistasMock: Especialista[] = [
@@ -226,22 +168,22 @@ export class TurnoService {
   /**
    * Turnos de un médico en un rango de fechas, filtrados por estado (solicitado | finalizado)
    */
-  getTurnosPorMedico(
-    medicoId: string,
-    from: Date,
-    to: Date,
-    estado: 'solicitado' | 'finalizado'
-  ): Observable<Turno[]> {
-    return this.afs
-      .collection<Turno>(this.coleccion, ref =>
-        ref
-          .where('medicoId', '==', medicoId)
-          .where('fecha', '>=', from.toISOString())
-          .where('fecha', '<=', to.toISOString())
-          .where('estado', '==', estado)
-      )
-      .valueChanges({ idField: 'id' });
-  }
+  // getTurnosPorMedico(
+  //   medicoId: string,
+  //   from: Date,
+  //   to: Date,
+  //   estado: 'solicitado' | 'finalizado'
+  // ): Observable<Turno[]> {
+  //   return this.afs
+  //     .collection<Turno>(this.coleccion, ref =>
+  //       ref
+  //         .where('medicoId', '==', medicoId)
+  //         .where('fecha', '>=', from.toISOString())
+  //         .where('fecha', '<=', to.toISOString())
+  //         .where('estado', '==', estado)
+  //     )
+  //     .valueChanges({ idField: 'id' });
+  // }
 
   /** Solo DTOs: lee crudo desde Firebase */
   getTurnosPacienteDto(pacienteId: string): Observable<TurnoDto[]> {
@@ -294,6 +236,7 @@ export class TurnoService {
       )
     );
   }
+
   /** Devuelve todos los especialistas */
   getEspecialistas(): Observable<Especialista[]> {
     // Reemplaza `of` por tu llamada real a la API si la tienes
@@ -315,7 +258,7 @@ export class TurnoService {
     );
   }
 
-    /** Devuelve todos los pacientes (para el select) */
+  /** Devuelve todos los pacientes (para el select) */
   getPacientes(): Observable<Paciente[]> {
     return of(this.mockPacientes);
   }
