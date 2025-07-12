@@ -1,37 +1,39 @@
+
 // reporte-visitas-paciente.component.ts
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   Ng2GoogleChartsModule,
   GoogleChartInterface
 } from 'ng2-google-charts';
-import { TurnoService } from '../../services/turno.service';
-import { Paciente }   from '../../models/paciente.model';
-import { Turno }      from '../../models/turno.model';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule }  from '@angular/material/card';
 
-// @Component({
-//   standalone: true,
-//   selector: 'app-reporte-visitas-paciente',
-//   imports: [CommonModule, Ng2GoogleChartsModule],
-//   templateUrl: './reporte-visitas-paciente.component.html'
-// })
+import { TurnoService } from '../../services/turno.service';
+import { Paciente }     from '../../models/paciente.model';
+import { Turno }        from '../../models/turno.model';
 
 @Component({
   standalone: true,
   selector: 'app-reporte-visitas-paciente',
-  imports: [CommonModule, Ng2GoogleChartsModule],
+  imports: [
+    CommonModule,
+    Ng2GoogleChartsModule,
+    MatCardModule,
+    MatTableModule      // ← Angular Material table
+  ],
   templateUrl: './reporte-visitas-paciente.component.html',
-  styleUrls: ['./reporte-visitas-paciente.component.scss']  // ← aquí, con S y en plural
+  styleUrls: ['./reporte-visitas-paciente.component.scss']
 })
-
 export class ReporteVisitasPacienteComponent implements OnInit {
   pacientes: Paciente[] = [];
   selectedPacienteId: string | null = null;
-
-  // El arreglo que alimenta la tabla *ngFor
   turnos: Turno[] = [];
 
-  // El wrapper para Google Charts
+  // Configuración de la Mat-Table
+  displayedColumns: string[] = ['fecha','especialidad','estado'];
+  dataSource = this.turnos;  // ¡podría ser también new MatTableDataSource<Turno>()!
+
   public turnosChart: GoogleChartInterface = {
     chartType: 'PieChart',
     dataTable: [['Estado','Cantidad']],
@@ -43,47 +45,115 @@ export class ReporteVisitasPacienteComponent implements OnInit {
   ngOnInit() {
     this.turnoSvc.getPacientes().subscribe(ps => {
       this.pacientes = ps;
-      if (ps.length) {
-        // auto-selecciono el primero para que se vea algo al cargar
-        this.selectPaciente(ps[0].idPaciente);
-      }
+      if (ps.length) this.selectPaciente(ps[0].idPaciente);
     });
   }
 
-  public selectPaciente(id: string) {
+  selectPaciente(id: string) {
     this.selectedPacienteId = id;
-
-    // Traigo DINÁMICAMENTE los turnos de este paciente
     this.turnoSvc.getTurnosPorPaciente(id).subscribe(lista => {
       this.turnos = lista;
+      this.dataSource = lista;           // actualiza dataSource
       this.actualizarChart(lista);
     });
   }
 
   private actualizarChart(lista: Turno[]) {
-    // 1) Contar por estado
     const contador: Record<string, number> = {};
-    for (const t of lista) {
-      contador[t.estado] = (contador[t.estado] || 0) + 1;
-    }
-
-    // 2) Construir la dataTable para Google Charts
+    lista.forEach(t => contador[t.estado] = (contador[t.estado]||0)+1);
     const data: any[][] = [['Estado','Cantidad']];
-    for (const estado in contador) {
-      data.push([estado, contador[estado]]);
-    }
-
-    // 3) Reasigno TODO el objeto para forzar redraw
+    for (const e in contador) data.push([e,contador[e]]);
     this.turnosChart = {
       chartType: 'PieChart',
       dataTable: data,
-      options: {
-        title: 'Turnos por estado',
-        height: 300
-      }
+      options: { title: 'Turnos por estado', height: 300 }
     };
   }
 }
+
+
+
+
+
+// // reporte-visitas-paciente.component.ts
+// import { Component, OnInit } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+// import {
+//   Ng2GoogleChartsModule,
+//   GoogleChartInterface
+// } from 'ng2-google-charts';
+// import { TurnoService } from '../../services/turno.service';
+// import { Paciente }   from '../../models/paciente.model';
+// import { Turno }      from '../../models/turno.model';
+
+// @Component({
+//   standalone: true,
+//   selector: 'app-reporte-visitas-paciente',
+//   imports: [CommonModule, Ng2GoogleChartsModule],
+//   templateUrl: './reporte-visitas-paciente.component.html',
+//   styleUrls: ['./reporte-visitas-paciente.component.scss']  // ← aquí, con S y en plural
+// })
+
+// export class ReporteVisitasPacienteComponent implements OnInit {
+//   pacientes: Paciente[] = [];
+//   selectedPacienteId: string | null = null;
+
+//   // El arreglo que alimenta la tabla *ngFor
+//   turnos: Turno[] = [];
+
+//   // El wrapper para Google Charts
+//   public turnosChart: GoogleChartInterface = {
+//     chartType: 'PieChart',
+//     dataTable: [['Estado','Cantidad']],
+//     options: { title: 'Turnos por estado', height: 300 }
+//   };
+
+//   constructor(private turnoSvc: TurnoService) {}
+
+//   ngOnInit() {
+//     this.turnoSvc.getPacientes().subscribe(ps => {
+//       this.pacientes = ps;
+//       if (ps.length) {
+//         // auto-selecciono el primero para que se vea algo al cargar
+//         this.selectPaciente(ps[0].idPaciente);
+//       }
+//     });
+//   }
+
+//   public selectPaciente(id: string) {
+//     this.selectedPacienteId = id;
+
+//     // Traigo DINÁMICAMENTE los turnos de este paciente
+//     this.turnoSvc.getTurnosPorPaciente(id).subscribe(lista => {
+//       this.turnos = lista;
+//       this.actualizarChart(lista);
+//     });
+//   }
+
+//   private actualizarChart(lista: Turno[]) {
+//     // 1) Contar por estado
+//     const contador: Record<string, number> = {};
+//     for (const t of lista) {
+//       contador[t.estado] = (contador[t.estado] || 0) + 1;
+//     }
+
+//     // 2) Construir la dataTable para Google Charts
+//     const data: any[][] = [['Estado','Cantidad']];
+//     for (const estado in contador) {
+//       data.push([estado, contador[estado]]);
+//     }
+
+//     // 3) Reasigno TODO el objeto para forzar redraw
+//     this.turnosChart = {
+//       chartType: 'PieChart',
+//       dataTable: data,
+//       options: {
+//         title: 'Turnos por estado',
+//         height: 300
+//       }
+//     };
+//   }
+// }
 
 
 

@@ -1,4 +1,62 @@
+
+<!-- reporte-visitas-paciente.component.html -->
 <div class="p-4">
+  <label>Seleccionar paciente:</label>
+  <div class="pill-group mb-4">
+    <button
+      *ngFor="let p of pacientes"
+      (click)="selectPaciente(p.idPaciente)"
+      [class.active]="selectedPacienteId === p.idPaciente"
+    >
+      {{ p.nombre }} {{ p.apellido }} ({{ p.idPaciente }})
+    </button>
+  </div>
+
+  <div class="reporte-wrapper" *ngIf="turnos.length">
+    <!-- columna de datos usando Mat-Table -->
+    <mat-card class="turnos-listado mat-elevation-z2">
+      <h3>Turnos: {{ turnos.length }}</h3>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+        <!-- Fecha -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef> Fecha </th>
+          <td mat-cell *matCellDef="let t">
+            {{ t.fecha | date:'shortDate' }} {{ t.hora }}
+          </td>
+        </ng-container>
+
+        <!-- Especialidad -->
+        <ng-container matColumnDef="especialidad">
+          <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+          <td mat-cell *matCellDef="let t">
+            {{ t.especialidadNombre }}
+          </td>
+        </ng-container>
+
+        <!-- Estado -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let t">
+            {{ t.estado }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row        *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+
+    <!-- columna del gráfico -->
+    <div class="turnos-chart-container">
+      <google-chart [data]="turnosChart"></google-chart>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="p-4">
   <label>Seleccionar paciente:</label>
   <div class="pill-group mb-4">
     <button
@@ -12,9 +70,9 @@
     </button>
   </div>
 
-  <!-- Sólo un *ngIf en este wrapper de dos columnas -->
+  Sólo un *ngIf en este wrapper de dos columnas 
   <div class="reporte-wrapper" *ngIf="turnos.length">
-    <!-- ========== Columna de datos ========== -->
+    ========== Columna de datos ========== 
     <div class="turnos-listado">
       <h3 class="text-lg font-semibold">
         Turnos encontrados: {{ turnos.length }}
@@ -39,10 +97,10 @@
       </table>
     </div>
 
-    <!-- ========== Columna del gráfico ========== -->
+    ========== Columna del gráfico ========== 
     <div class="turnos-chart-container">
       <google-chart [data]="turnosChart"></google-chart>
     </div>
   </div>
-</div>
+</div> -->
 
