@@ -74,7 +74,7 @@ export class TurnoService {
       imagenPerfil2: 'assets/avatars/laura.JPG',
       id: '4'
     },
-        {
+    {
       idPaciente: '7',
       avatarUrl: 'assets/avatars/juliana.JPG',
       nombre: 'Juliana',
@@ -88,7 +88,7 @@ export class TurnoService {
       imagenPerfil2: 'assets/avatars/juliana.JPG',
       id: '5'
     },
-        {
+    {
       idPaciente: '8',
       avatarUrl: 'assets/avatars/marcela.JPG',
       nombre: 'Marcela',
@@ -96,7 +96,7 @@ export class TurnoService {
       edad: 37,
       dni: '6666777755',
       obraSocial: 'OSDE',
-      email: 'amicuchi@gmail.com',
+      email: 'mendez@gmail.com',
       password: 'pass456',
       imagenPerfil1: 'assets/avatars/marcela.JPG',
       imagenPerfil2: 'assets/avatars/marcela.JPG',
@@ -136,7 +136,7 @@ export class TurnoService {
   mockTurnos: Turno[] = [
     {
       idTurno: '100',
-      fecha: '2025-06-25',     
+      fecha: '2025-06-25',
       hora: '09:30',
       especialidadNombre: 'Cardiología',
       especialistaNombreApell: 'Dra. Ana Pérez',
@@ -151,7 +151,7 @@ export class TurnoService {
     },
     {
       idTurno: '101',
-      fecha: '2025-06-28',            
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -164,9 +164,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '102',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -179,9 +179,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '103',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -194,9 +194,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '104',
-      fecha: '2025-06-28',            
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -210,9 +210,9 @@ export class TurnoService {
       encuesta: 'no'
     },
 
-     {
+    {
       idTurno: '105',
-      fecha: '2025-06-25',      
+      fecha: '2025-06-25',
       hora: '09:30',
       especialidadNombre: 'Cardiología',
       especialistaNombreApell: 'Dra. Ana Pérez',
@@ -227,7 +227,7 @@ export class TurnoService {
     },
     {
       idTurno: '106',
-      fecha: '2025-06-28',            
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -240,9 +240,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '107',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -255,9 +255,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '108',
-      fecha: '2025-06-28',            
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -270,9 +270,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-        {
+    {
       idTurno: '109',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -285,9 +285,9 @@ export class TurnoService {
       calificacionDelPaciente: 9,
       encuesta: 'no'
     },
-     {
+    {
       idTurno: '110',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -303,7 +303,7 @@ export class TurnoService {
 
     {
       idTurno: '111',
-      fecha: '2025-06-28',            
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Hernandez',
@@ -318,7 +318,7 @@ export class TurnoService {
     },
     {
       idTurno: '112',
-      fecha: '2025-06-28',           
+      fecha: '2025-06-28',
       hora: '15:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Hernandez',
@@ -333,7 +333,7 @@ export class TurnoService {
     },
     {
       idTurno: '113',
-      fecha: '2025-06-28',             
+      fecha: '2025-06-28',
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -345,7 +345,163 @@ export class TurnoService {
       comentarioPaciente: 'Volvería sin dudar',
       calificacionDelPaciente: 9,
       encuesta: 'no'
-    }
+    },
+
+    //--------------------- laura gimenez ----------------------
+
+    {
+      idTurno: '114',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '6',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '115',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '6',
+      estado: 'rechazado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '116',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '6',
+      estado: 'rechazado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '117',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '6',
+      estado: 'rechazado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+
+    // ----------------- marcela mendez ---------------------
+
+     {
+      idTurno: '118',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'rechazado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+        {
+      idTurno: '119',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+        {
+      idTurno: '120',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'cancelado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+            {
+      idTurno: '121',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'cancelado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+            {
+      idTurno: '122',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'cancelado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '123',
+      fecha: '2025-06-28',
+      hora: '14:00',
+      especialidadNombre: 'Cardiologia',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'cancelado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
 
   ];
 
