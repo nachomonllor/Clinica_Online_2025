@@ -15,6 +15,10 @@ import { Turno } from '../../models/turno.model';
 
 import { GoogleChartComponent } from 'ng2-google-charts';
 
+import { MatChipsModule } from '@angular/material/chips';
+
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 @Component({
   standalone: true,
@@ -23,7 +27,10 @@ import { GoogleChartComponent } from 'ng2-google-charts';
     CommonModule,
     Ng2GoogleChartsModule,
     MatCardModule,
-    MatTableModule      // ← Angular Material table
+    MatTableModule,      // ← Angular Material table
+    MatChipsModule,
+    MatButtonToggleModule,
+
   ],
   templateUrl: './reporte-visitas-paciente.component.html',
   styleUrls: ['./reporte-visitas-paciente.component.scss']

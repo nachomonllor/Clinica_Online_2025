@@ -1,16 +1,24 @@
-
 <!-- reporte-visitas-paciente.component.html -->
+
+
 <div class="p-4">
   <label>Seleccionar paciente:</label>
-  <div class="pill-group mb-4">
-    <button
+  <!-- <div class="pill-group mb-4">
+    <button 
       *ngFor="let p of pacientes"
       (click)="selectPaciente(p.idPaciente)"
       [class.active]="selectedPacienteId === p.idPaciente"
     >
       {{ p.nombre }} {{ p.apellido }} ({{ p.idPaciente }})
     </button>
-  </div>
+  </div> -->
+
+  <mat-button-toggle-group [(value)]="selectedPacienteId" (change)="selectPaciente($event.value)" class="pill-group mb-4"  >
+    <mat-button-toggle *ngFor="let p of pacientes" [value]="p.idPaciente" >
+      {{ p.nombre }} {{ p.apellido }} ({{ p.idPaciente }})
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
 
   <div class="reporte-wrapper" *ngIf="turnos.length">
     <!-- columna de datos usando Mat-Table -->
@@ -42,7 +50,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row        *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </mat-card>
 
@@ -103,4 +111,3 @@
     </div>
   </div>
 </div> -->
-
