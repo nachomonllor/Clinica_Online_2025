@@ -1,18 +1,26 @@
-.pill-group {
+
+
+/* reporte-visitas-paciente.component.scss */
+
+.reporte-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 1rem;
+  /* opcional: un poco de padding interno */
+  padding-right: 1rem;
 }
 
-.pill {
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  background-color: #eee;
-  cursor: pointer;
-  border: none;
+.turnos-listado {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-y: auto;
 }
 
-.pill.active {
-  background-color: #007bff;
-  color: white;
+.turnos-chart-container {
+  /* ancho fijo (ajusta a tu gusto) */
+  flex: 2 10 300px;
+  /* mueve el chart 1rem hacia la izquierda respecto al borde */
+  margin-right: 5rem;
 }
+

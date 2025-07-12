@@ -20,7 +20,7 @@ export class TurnoService {
   mockPacientes: Paciente[] = [
     {
       idPaciente: '3',
-      avatarUrl: 'assets/avatars/ramon.png',
+      avatarUrl: 'assets/avatars/gerardo.JPG',
       nombre: 'Ramón',
       apellido: 'Ruiz',
       edad: 40,
@@ -28,24 +28,82 @@ export class TurnoService {
       obraSocial: 'IOMA',
       email: 'ramon@ruiz.com',
       password: 'pass123',
-      imagenPerfil1: 'assets/avatars/ramon1.png',
-      imagenPerfil2: 'assets/avatars/ramon2.png',
+      imagenPerfil1: 'assets/avatars/gerardo.JPG',
+      imagenPerfil2: 'assets/avatars/gerardo.JPG',
       id: '1'
     },
     {
       idPaciente: '4',
-      avatarUrl: 'assets/avatars/fernando.png',
-      nombre: 'Fernando',
+      avatarUrl: 'assets/avatars/leonardo.JPG',
+      nombre: 'Leonardo',
       apellido: 'Márquez',
       edad: 37,
       dni: '6666777755',
       obraSocial: 'OSDE',
       email: 'fernando@marquez.com',
       password: 'pass456',
-      imagenPerfil1: 'assets/avatars/fernando1.png',
-      imagenPerfil2: 'assets/avatars/fernando2.png',
+      imagenPerfil1: 'assets/avatars/leonardo.JPG',
+      imagenPerfil2: 'assets/avatars/leonardo.JPG',
       id: '2'
-    }
+    },
+    {
+      idPaciente: '5',
+      avatarUrl: 'assets/avatars/angel.jpg',
+      nombre: 'Angel',
+      apellido: 'Hernandez',
+      edad: 37,
+      dni: '6666777755',
+      obraSocial: 'OSDE',
+      email: 'angel@gmail.com',
+      password: 'pass456',
+      imagenPerfil1: 'assets/avatars/angel.JPG',
+      imagenPerfil2: 'assets/avatars/angel.jpg',
+      id: '3'
+    },
+    {
+      idPaciente: '6',
+      avatarUrl: 'assets/avatars/laura.JPG',
+      nombre: 'Laura',
+      apellido: 'Gimenez',
+      edad: 37,
+      dni: '6666777755',
+      obraSocial: 'OSDE',
+      email: 'laura_gimenez@gmail.com',
+      password: 'pass456',
+      imagenPerfil1: 'assets/avatars/laura.JPG',
+      imagenPerfil2: 'assets/avatars/laura.JPG',
+      id: '4'
+    },
+        {
+      idPaciente: '7',
+      avatarUrl: 'assets/avatars/juliana.JPG',
+      nombre: 'Juliana',
+      apellido: 'Juarez',
+      edad: 37,
+      dni: '6666777755',
+      obraSocial: 'OSDE',
+      email: 'juarez@gmail.com',
+      password: 'pass456',
+      imagenPerfil1: 'assets/avatars/juliana.JPG',
+      imagenPerfil2: 'assets/avatars/juliana.JPG',
+      id: '5'
+    },
+        {
+      idPaciente: '8',
+      avatarUrl: 'assets/avatars/marcela.JPG',
+      nombre: 'Marcela',
+      apellido: 'Mendez',
+      edad: 37,
+      dni: '6666777755',
+      obraSocial: 'OSDE',
+      email: 'amicuchi@gmail.com',
+      password: 'pass456',
+      imagenPerfil1: 'assets/avatars/marcela.JPG',
+      imagenPerfil2: 'assets/avatars/marcela.JPG',
+      id: '6'
+    },
+
+
   ];
 
   /** Mock de Especialistas */
@@ -78,7 +136,7 @@ export class TurnoService {
   mockTurnos: Turno[] = [
     {
       idTurno: '100',
-      fecha: '2025-06-25',      //  new Date('2025-06-25'),
+      fecha: '2025-06-25',     
       hora: '09:30',
       especialidadNombre: 'Cardiología',
       especialistaNombreApell: 'Dra. Ana Pérez',
@@ -93,7 +151,7 @@ export class TurnoService {
     },
     {
       idTurno: '101',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',            
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
@@ -108,11 +166,11 @@ export class TurnoService {
     },
         {
       idTurno: '102',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',             
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e3',
       pacienteId: '4',
       estado: 'rechazado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -123,11 +181,11 @@ export class TurnoService {
     },
         {
       idTurno: '103',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',             
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e4',
       pacienteId: '4',
       estado: 'aceptado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -138,11 +196,11 @@ export class TurnoService {
     },
         {
       idTurno: '104',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',            
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e5',
       pacienteId: '4',
       estado: 'realizado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -154,11 +212,11 @@ export class TurnoService {
 
      {
       idTurno: '105',
-      fecha: '2025-06-25',      //  new Date('2025-06-25'),
+      fecha: '2025-06-25',      
       hora: '09:30',
       especialidadNombre: 'Cardiología',
       especialistaNombreApell: 'Dra. Ana Pérez',
-      especialistaId: 'e1',
+      especialistaId: 'e6',
       pacienteId: '3',
       estado: 'aceptado' as TurnoEstado,
       resenaEspecialista: 'Paciente estable, sin complicaciones.',
@@ -169,11 +227,11 @@ export class TurnoService {
     },
     {
       idTurno: '106',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',            
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e7',
       pacienteId: '3',
       estado: 'aceptado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -184,11 +242,11 @@ export class TurnoService {
     },
         {
       idTurno: '107',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',             
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e8',
       pacienteId: '3',
       estado: 'rechazado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -199,11 +257,11 @@ export class TurnoService {
     },
         {
       idTurno: '108',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',            
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e9',
       pacienteId: '3',
       estado: 'aceptado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -214,11 +272,11 @@ export class TurnoService {
     },
         {
       idTurno: '109',
-      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      fecha: '2025-06-28',             
       hora: '14:00',
       especialidadNombre: 'Dermatología',
       especialistaNombreApell: 'Dr. Luis Gómez',
-      especialistaId: 'e2',
+      especialistaId: 'e10',
       pacienteId: '3',
       estado: 'realizado' as TurnoEstado,
       resenaEspecialista: 'Tratamiento seguido correctamente.',
@@ -226,9 +284,68 @@ export class TurnoService {
       comentarioPaciente: 'Volvería sin dudar',
       calificacionDelPaciente: 9,
       encuesta: 'no'
+    },
+     {
+      idTurno: '110',
+      fecha: '2025-06-28',             
+      hora: '14:00',
+      especialidadNombre: 'Dermatología',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e3',
+      pacienteId: '5',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 9,
+      encuesta: 'no'
+    },
+
+    {
+      idTurno: '111',
+      fecha: '2025-06-28',            
+      hora: '14:00',
+      especialidadNombre: 'Dermatología',
+      especialistaNombreApell: 'Dr. Luis Hernandez',
+      especialistaId: 'e4',
+      pacienteId: '7',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido con interrupciones.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 9,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '112',
+      fecha: '2025-06-28',           
+      hora: '15:00',
+      especialidadNombre: 'Dermatología',
+      especialistaNombreApell: 'Dr. Luis Hernandez',
+      especialistaId: 'e4',
+      pacienteId: '8',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido con interrupciones.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 10,
+      encuesta: 'no'
+    },
+    {
+      idTurno: '113',
+      fecha: '2025-06-28',             
+      hora: '14:00',
+      especialidadNombre: 'Dermatología',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e4',
+      pacienteId: '6',
+      estado: 'rechazado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'excelente doc.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 9,
+      encuesta: 'no'
     }
-
-
 
   ];
 
