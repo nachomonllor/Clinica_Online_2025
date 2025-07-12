@@ -1,17 +1,20 @@
 
 // reporte-visitas-paciente.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   Ng2GoogleChartsModule,
   GoogleChartInterface
 } from 'ng2-google-charts';
 import { MatTableModule } from '@angular/material/table';
-import { MatCardModule }  from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 import { TurnoService } from '../../services/turno.service';
-import { Paciente }     from '../../models/paciente.model';
-import { Turno }        from '../../models/turno.model';
+import { Paciente } from '../../models/paciente.model';
+import { Turno } from '../../models/turno.model';
+
+import { GoogleChartComponent } from 'ng2-google-charts';
+
 
 @Component({
   standalone: true,
@@ -31,16 +34,68 @@ export class ReporteVisitasPacienteComponent implements OnInit {
   turnos: Turno[] = [];
 
   // Configuración de la Mat-Table
-  displayedColumns: string[] = ['fecha','especialidad','estado'];
+  displayedColumns: string[] = ['fecha', 'especialidad', 'estado'];
   dataSource = this.turnos;  // ¡podría ser también new MatTableDataSource<Turno>()!
 
   public turnosChart: GoogleChartInterface = {
     chartType: 'PieChart',
-    dataTable: [['Estado','Cantidad']],
+    dataTable: [['Estado', 'Cantidad']],
     options: { title: 'Turnos por estado', height: 300 }
   };
 
-  constructor(private turnoSvc: TurnoService) {}
+  //-------------------------------------
+
+  @ViewChild(GoogleChartComponent, { static: false })
+  private chartComponent!: GoogleChartComponent;
+
+  selectPaciente(id: string) {
+    this.selectedPacienteId = id;
+    this.turnoSvc.getTurnosPorPaciente(id).subscribe(lista => {
+      console.log('► selectPaciente id=', id, 'turnos=', lista);
+      this.turnos = lista;
+      this.dataSource = lista;
+      this.actualizarChart(lista);
+      // Tras actualizar la propiedad, fuerzo redraw:
+      setTimeout(() => {
+        console.log('► redraw chart con:', this.turnosChart.dataTable);
+        this.chartComponent!.draw();
+      });
+    });
+  }
+
+  actualizarChart(lista: Turno[]) {
+    const contador: Record<string, number> = {};
+    lista.forEach(t => (contador[t.estado] = (contador[t.estado] || 0) + 1));
+
+    const data: any[][] = [['Estado', 'Cantidad']];
+    for (const estado in contador) {
+      data.push([estado, contador[estado]]);
+    }
+    console.log('  → actualizarChart construye tabla:', data);
+
+    // Reasignamos todo el objeto
+    this.turnosChart = {
+      chartType: 'PieChart',
+      dataTable: data,
+      options: { title: 'Turnos por estado', height: 300 }
+    };
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //---------------------------------------
+
+  constructor(private turnoSvc: TurnoService) { }
 
   ngOnInit() {
     this.turnoSvc.getPacientes().subscribe(ps => {
@@ -49,26 +104,28 @@ export class ReporteVisitasPacienteComponent implements OnInit {
     });
   }
 
-  selectPaciente(id: string) {
-    this.selectedPacienteId = id;
-    this.turnoSvc.getTurnosPorPaciente(id).subscribe(lista => {
-      this.turnos = lista;
-      this.dataSource = lista;           // actualiza dataSource
-      this.actualizarChart(lista);
-    });
-  }
+  // selectPaciente(id: string) {
+  //   this.selectedPacienteId = id;
+  //   this.turnoSvc.getTurnosPorPaciente(id).subscribe(lista => {
+  //     this.turnos = lista;
+  //     this.dataSource = lista;           // actualiza dataSource
+  //     this.actualizarChart(lista);
+  //   });
+  // }
 
-  private actualizarChart(lista: Turno[]) {
-    const contador: Record<string, number> = {};
-    lista.forEach(t => contador[t.estado] = (contador[t.estado]||0)+1);
-    const data: any[][] = [['Estado','Cantidad']];
-    for (const e in contador) data.push([e,contador[e]]);
-    this.turnosChart = {
-      chartType: 'PieChart',
-      dataTable: data,
-      options: { title: 'Turnos por estado', height: 300 }
-    };
-  }
+  // private actualizarChart(lista: Turno[]) {
+  //   const contador: Record<string, number> = {};
+  //   lista.forEach(t => contador[t.estado] = (contador[t.estado]||0)+1);
+  //   const data: any[][] = [['Estado','Cantidad']];
+  //   for (const e in contador) data.push([e,contador[e]]);
+  //   this.turnosChart = {
+  //     chartType: 'PieChart',
+  //     dataTable: data,
+  //     options: { title: 'Turnos por estado', height: 300 }
+  //   };
+  // }
+
+
 }
 
 
