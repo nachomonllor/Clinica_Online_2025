@@ -44,7 +44,6 @@ export class TurnosEspecialidadComponent implements OnInit {
     });
 }
 
-
   private actualizarChart(counts: [string, number][]) {
     // labels: string[]
     this.barChartData.labels = counts.map(c => c[0]);

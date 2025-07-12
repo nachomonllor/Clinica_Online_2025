@@ -32,20 +32,6 @@ export const routes: Routes = [
 
 
   { path: '', redirectTo: 'logs', pathMatch: 'full' },
-  // {
-  //   path: 'logs',
-  //   loadComponent: () =>
-  //     import('./app/log-table/log-table.component')
-  //       .then(c => c.LogTableComponent)
-  // },
-  // {
-  //   path: 'especialidades',
-  //   loadComponent: () =>
-  //     import('./app/turnos-especialidad/turnos-especialidad.component')
-  //       .then(c => c.TurnosEspecialidadComponent)
-  // },
-
-
 
   //{ path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login-paciente', component: LoginPacienteComponent },
