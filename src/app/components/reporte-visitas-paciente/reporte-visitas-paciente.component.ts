@@ -3,27 +3,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ng2GoogleChartsModule, GoogleChartInterface } from 'ng2-google-charts';
-import { TurnoService } from '../../services/turno.service';
 import { Turno } from '../../models/turno.model';
 import { Paciente } from '../../models/paciente.model';
+import { TurnoService } from '../../services/turno.service';
 
 @Component({
   standalone: true,
   selector: 'app-reporte-visitas-paciente',
   imports: [CommonModule, Ng2GoogleChartsModule],
-  templateUrl: './reporte-visitas-paciente.component.html'
+  templateUrl: './reporte-visitas-paciente.component.html',
+  styleUrl: './reporte-visitas-paciente.component.scss'
 })
+
 export class ReporteVisitasPacienteComponent implements OnInit {
   pacientes: Paciente[] = [];
   selectedPacienteId: string | null = null;
   turnos: Turno[] = [];
-
-  // Inicializamos con un chart "vacío"
-  // public turnosChart: GoogleChartInterface = {
-  //   chartType: 'PieChart',
-  //   dataTable: [['Estado','Cantidad']],
-  //   options: { title: 'Turnos por estado', height: 300 }
-  // };
 
   public turnosChart: GoogleChartInterface = {
     chartType: 'PieChart',
@@ -32,23 +27,15 @@ export class ReporteVisitasPacienteComponent implements OnInit {
     options: { title: 'Turnos por estado', height: 300 }
   };
 
-  constructor(private turnosSvc: TurnoService) { }
+  constructor(private turnoSvc: TurnoService) { }
 
   ngOnInit() {
     // Cargamos sólo los pacientes, NO el chart global
-    this.turnosSvc.getPacientes().subscribe(ps => this.pacientes = ps);
+    this.turnoSvc.getPacientes().subscribe((ps: Paciente[]) => this.pacientes = ps);
   }
 
-  // selectPaciente(id: string) {
-  //   this.selectedPacienteId = id;
-  //   this.turnosSvc.getTurnosPorPaciente(id).subscribe(lista => {
-  //     this.turnos = lista;
-  //     this.actualizarChart(lista);
-  //   });
-  // }
-
-  selectPaciente(id: string) {
-    this.turnosSvc.getTurnosPorPaciente(id).subscribe(lista => {
+  public selectPaciente(id: string) {
+    this.turnoSvc.getTurnosPorPaciente(id).subscribe((lista: Turno[]) => {
       console.log('turnos de', id, lista);
       this.turnos = lista;
       this.actualizarChart(lista);

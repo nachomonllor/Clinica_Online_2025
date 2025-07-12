@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Turno } from '../../models/turno.model';
 import { Router } from '@angular/router';
 import { TurnoService } from '../../services/turno.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-mis-turnos-paciente',
@@ -38,106 +39,57 @@ export class MisTurnosPacienteComponent implements OnInit {
     'id', 'fecha', 'hora', 'especialidad', 'especialista', 'estado', 'acciones'
   ];
 
-  dataSource = new MatTableDataSource<Turno>([]);
+  filtroCtrl = new FormControl<string>('', { nonNullable: true });
 
-  // --- Datos mock para pruebas ---
-  private mockTurnos: Turno[] = [
-    {
-      id: 100,
-      fecha: new Date('2025-06-25'),
-      hora: '09:30',
-      especialidad: 'Cardio',
-      especialista: 'Dra. Pérez',
-      estado: 'aceptado',
-      resena: 'Muy bien',
-      encuesta: false,
-      pacienteId: '1',
-      calificacion: 10
-    },
-
-    {
-      id: 101,
-      fecha: new Date('2025-06-25'),
-      hora: '09:30',
-      especialidad: 'Cardiología',
-      especialista: 'Dra. Pérez',
-      estado: 'aceptado',
-      resena: 'Excelente atención, muy profesional.',
-      encuesta: false,
-      pacienteId: '2',
-      calificacion: 9
-    },
-    {
-      id: 102,
-      fecha: new Date('2025-06-28'),
-      hora: '14:00',
-      especialidad: 'Dermatología',
-      especialista: 'Dr. Gómez',
-      estado: 'realizado',
-      resena: 'Me gustó mucho la consulta.',
-      encuesta: true,
-      pacienteId: '3',
-      calificacion: 7
-    },
-    {
-      id: 103,
-      fecha: new Date('2025-07-02'),
-      hora: '11:15',
-      especialidad: 'Pediatría',
-      especialista: 'Dra. Ruiz',
-      estado: 'pendiente',
-      // sin reseña aún
-      encuesta: false,
-      pacienteId: '4',
-      resena: '',
-      calificacion: 10
-    },
-    {
-      id: 104,
-      fecha: new Date('2025-09-02'),
-      hora: '11:15',
-      especialidad: 'Cardiologia',
-      especialista: 'Dra. Nora Da Puente',
-      estado: 'pendiente',
-      // sin reseña aún
-      encuesta: false,
-      pacienteId: '5',
-      resena: '',
-      calificacion: 10
-    },
-    {
-      id: 105,
-      fecha: new Date('2025-06-22'),
-      hora: '11:15',
-      especialidad: 'Diabetóloga',
-      especialista: 'Dra. Florencia De Césare',
-      estado: 'pendiente',
-      // sin reseña aún
-      encuesta: false,
-      pacienteId: '6',
-      resena: '',
-      calificacion: 10
-    }
-  ];
+  //dataSource = new MatTableDataSource<Turno>([]);
+  dataSource = new MatTableDataSource<Turno>();
 
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<unknown>;
-
 
   constructor(
     private turnoService: TurnoService,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
+
   ) { }
 
+  // ngOnInit(): void {
+  //   // en lugar de un mock local, llamo al servicio
+  //   this.turnoService.getTurnos().subscribe(ts => {
+  //     this.dataSource.data = ts;
+  //     this.dataSource.filterPredicate = (t, f) =>
+  //       t.especialidadNombre.toLowerCase().includes(f) ||
+  //       t.especialistaNombreApell.toLowerCase().includes(f);
+  //   });
+  // }
+
+
   ngOnInit(): void {
-    // en lugar de un mock local, llamo al servicio
-    this.turnoService.getMockTurnos().subscribe(ts => {
-      this.dataSource.data = ts;
-      this.dataSource.filterPredicate = (t, f) =>
-        t.especialidad.toLowerCase().includes(f) ||
-        t.especialista.toLowerCase().includes(f);
+    // primero obtengo al usuario (firebase.User) y su uid
+    this.authService.user$.subscribe(user => {
+      if (!user) return;               // si no hay usuario logueado, nada
+      const pacienteId = user.uid;     // uid como id de paciente
+
+      // luego llamo al service con ese id
+      this.turnoService.getTurnosPorPaciente(pacienteId)
+        .subscribe(ts => {
+          this.dataSource.data = ts;
+          this.setupFilter();
+        });
     });
+  }
+
+  private setupFilter() {
+    this.dataSource.filterPredicate = (t: Turno, f: string) =>
+      t.especialidadNombre.toLowerCase().includes(f) ||
+      t.especialistaNombreApell.toLowerCase().includes(f);
+
+    // si tienes un formControl para el filtro:
+    this.filtroCtrl.valueChanges.subscribe(texto =>
+      this.dataSource.filter = texto.trim().toLowerCase()
+    );
   }
 
   /** Buscar */
@@ -148,27 +100,27 @@ export class MisTurnosPacienteComponent implements OnInit {
   /** Cancelar turno (solo si no está realizado) */
   public cancelarTurno(turno: Turno): void {
     const ref = this.dialog.open(this.confirmDialog, {
-      data: { message: `¿Cancelar turno #${turno.id}?` }
+      data: { message: `¿Cancelar turno #${turno.idTurno}?` }
     });
 
     ref.afterClosed().subscribe(ok => {
       if (ok) {
         turno.estado = 'cancelado';
-        this.snackBar.open(`Turno ${turno.id} cancelado`, 'Cerrar', { duration: 2000 });
+        this.snackBar.open(`Turno ${turno.idTurno} cancelado`, 'Cerrar', { duration: 2000 });
         this.dataSource.data = [...this.dataSource.data];
       }
     });
   }
 
   public verResena(turno: Turno): void {
-    this.router.navigate(['/resenia', turno.id]);
+    this.router.navigate(['/resenia', turno.idTurno]);
   }
 
   /** Abrir la encuesta para el turno seleccionado */
   public completarEncuesta(turno: Turno): void {
     // Asumiendo que en routing esta esto:
     // { path: 'encuesta-atencion/:id', component: EncuestaAtencionComponent }
-    this.router.navigate(['/encuesta-atencion', turno.id]);
+    this.router.navigate(['/encuesta-atencion', turno.idTurno]);
   }
 
   /** Calificar atención */

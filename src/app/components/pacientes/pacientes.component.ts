@@ -45,7 +45,6 @@ export class PacientesComponent implements OnInit {
   especialistaId!: string;
 
   constructor(
-    private auth: AuthService,
     private svc: PacienteService
   ) {}
 
@@ -67,9 +66,9 @@ export class PacientesComponent implements OnInit {
 
   seleccionarPaciente(p: Paciente) {
     this.pacienteSeleccionado = p;
-    this.svc.getTurnosDePaciente(p.id, this.especialistaId)
+    this.svc.getTurnosDePaciente(p.idPaciente, this.especialistaId)
       .subscribe(t => this.turnos = t);
-    this.svc.getHistoriaClinica(p.id)
+    this.svc.getHistoriaClinica(p.idPaciente)
       .subscribe(h => this.historia = h);
   }
 

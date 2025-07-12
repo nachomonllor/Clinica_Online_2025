@@ -1,5 +1,5 @@
 // turno.model.ts
-export type TurnoEstado = 
+export type TurnoEstado =
   | 'pendiente'
   | 'realizado'
   | 'cancelado'
@@ -7,33 +7,21 @@ export type TurnoEstado =
   | 'aceptado';
 
 export interface Turno {
-  id: number;
-  fecha: Date;
+  idTurno: string;
+  fecha: string;
   hora: string;
-  especialidad: string;
-  especialista: string;
-  pacienteId: string;
+  especialidadNombre: string;
+  especialistaNombreApell: string;
+  especialistaId: string;  // FK
+  pacienteId: string; //FK
   estado: TurnoEstado;
   // reseña que deja el especialista
   resenaEspecialista?: string;
-  resena:string;
-  calificacion: number;
+  resenaPaciente: string;
   // comentario / calificación del paciente (opcional, si los usas)
   comentarioPaciente?: string;
-  calificacionPaciente?: number;
-  encuesta?: boolean;
+  calificacionDelPaciente?: number;
+  encuesta?: string;
 }
 
-export interface TurnoDto {
-  pacienteId: string;
-  id: number;
-  fecha: string;
-  hora: string;
-  especialidad: string;
-  especialista: string;
-  estado: TurnoEstado;     // ← ahora es el mismo union
-  resena?: string;
-  encuesta?: boolean;
-  calificacion?: number;
-}
 

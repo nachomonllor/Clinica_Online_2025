@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-resenia-especialista',
-//   imports: [],
-//   templateUrl: './resenia-especialista.component.html',
-//   styleUrl: './resenia-especialista.component.scss'
-// })
-// export class ReseniaEspecialistaComponent {
-
-// }
-
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -25,9 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { TurnoService } from '../../services/turno.service';
-import { Turno } from '../../models/turno.model';
 
 @Component({
   selector: 'app-resenia-especialista',
@@ -41,11 +26,14 @@ import { Turno } from '../../models/turno.model';
     MatButtonModule,
     MatSnackBarModule
   ],
-   templateUrl: './resenia-especialista.component.html',
-   styleUrl: './resenia-especialista.component.scss'
+  templateUrl: './resenia-especialista.component.html',
+  styleUrl: './resenia-especialista.component.scss'
 })
 export class ReseniaEspecialistaComponent implements OnInit {
-  turnoId!: number;
+  //turnoId: string = '';
+
+  turnoId: string | null = null;   // ahora puede ser null
+
   form!: FormGroup;
 
   constructor(
@@ -54,23 +42,25 @@ export class ReseniaEspecialistaComponent implements OnInit {
     private turnoService: TurnoService,
     private snackBar: MatSnackBar,
     public router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // 1) Leer el ID de la URL
-    this.turnoId = Number(this.route.snapshot.paramMap.get('id'));
-
+    // this.turnoId = Number(this.route.snapshot.paramMap.get('id'));
+    this.turnoId = this.route.snapshot.paramMap.get('id');
     // 2) Crear el formulario
     this.form = this.fb.group({
       resena: ['', Validators.required]
     });
 
     // 3) (Opcional) cargar reseña previa si existe
-    this.turnoService.getMockTurnoById(this.turnoId).subscribe(t => {
+    this.turnoService.getMockTurnoById(this.turnoId!).subscribe(t => {
+      // t es Turno | undefined
       if (t?.resenaEspecialista) {
         this.form.patchValue({ resena: t.resenaEspecialista });
       }
     });
+
   }
 
   onSubmit(): void {
@@ -82,10 +72,24 @@ export class ReseniaEspecialistaComponent implements OnInit {
 
     // Aquí actualizarías el turno en Firebase; con mock:
     this.turnoService
-      .setResenaEspecialista(this.turnoId, texto)
+      .setResenaEspecialista(this.turnoId!, texto)
       .subscribe(() => {
         this.snackBar.open('Reseña guardada', 'Cerrar', { duration: 2000 });
         this.router.navigate(['/mis-turnos-especialista']);
       });
   }
 }
+
+
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-resenia-especialista',
+//   imports: [],
+//   templateUrl: './resenia-especialista.component.html',
+//   styleUrl: './resenia-especialista.component.scss'
+// })
+// export class ReseniaEspecialistaComponent {
+
+// }

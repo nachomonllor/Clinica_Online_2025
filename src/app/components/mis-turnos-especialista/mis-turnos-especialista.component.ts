@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-mis-turnos-especialista',
-//   imports: [],
-//   templateUrl: './mis-turnos-especialista.component.html',
-//   styleUrl: './mis-turnos-especialista.component.scss'
-// })
-// export class MisTurnosEspecialistaComponent {
-
-// }
-
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,10 +10,16 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 
-import { Turno } from '../../models/turno.model';
-import { TurnoService } from '../../services/turno.service';
 import { Router } from '@angular/router';
 import { TurnoEspecialista } from '../../models/turno-especialista.model';
+import { Turno } from '../../models/turno.model';
+import { TurnoService } from '../../services/turno.service';
+import { AuthService } from '../../services/auth.service';
+
+import { switchMap, filter } from 'rxjs/operators';
+
+import firebase from 'firebase/compat/app';
+
 
 @Component({
   selector: 'app-mis-turnos-especialista',
@@ -48,8 +41,6 @@ import { TurnoEspecialista } from '../../models/turno-especialista.model';
   ]
 })
 export class MisTurnosEspecialistaComponent implements OnInit {
-  //dataSource = new MatTableDataSource<Turno>([]);
-  //dataSource = new MatTableDataSource<(Turno & { pacienteNombre: string })>([]);
 
   dataSource = new MatTableDataSource<TurnoEspecialista>([]);
 
@@ -63,19 +54,32 @@ export class MisTurnosEspecialistaComponent implements OnInit {
     private turnoService: TurnoService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public router: Router
+    public router: Router,
+    private auth: AuthService
 
   ) { }
+
+  turnos: Turno[] = [];
+
+  ngOnInit(): void {
+
+    this.auth.user$
+      .pipe(
+        filter((u): u is firebase.User => u !== null),
+        switchMap(u => this.turnoService.getMockTurnosEspecialista(u.uid))
+      )
+      .subscribe(turnos => this.turnos = turnos);
+  }
 
   /** Rechazar turno: abre diálogo y deja comentario */
   rechazarTurno(turno: Turno): void {
     const ref = this.dialog.open(this.confirmDialog, {
-      data: { message: `Indica motivo de rechazo para el turno #${turno.id}` }
+      data: { message: `Indica motivo de rechazo para el turno #${turno.idTurno}` }
     });
     ref.afterClosed().subscribe(ok => {
       if (ok) {
         turno.estado = 'rechazado';
-        this.snackBar.open(`Turno ${turno.id} rechazado`, 'Cerrar', { duration: 2000 });
+        this.snackBar.open(`Turno ${turno.idTurno} rechazado`, 'Cerrar', { duration: 2000 });
         this.dataSource.data = [...this.dataSource.data];
       }
     });
@@ -84,12 +88,12 @@ export class MisTurnosEspecialistaComponent implements OnInit {
   /** Cancelar turno: abre diálogo y deja comentario */
   cancelarTurno(turno: Turno): void {
     const ref = this.dialog.open(this.confirmDialog, {
-      data: { message: `Indica motivo de cancelación para el turno #${turno.id}` }
+      data: { message: `Indica motivo de cancelación para el turno #${turno.idTurno}` }
     });
     ref.afterClosed().subscribe(ok => {
       if (ok) {
         turno.estado = 'cancelado';
-        this.snackBar.open(`Turno ${turno.id} cancelado`, 'Cerrar', { duration: 2000 });
+        this.snackBar.open(`Turno ${turno.idTurno} cancelado`, 'Cerrar', { duration: 2000 });
         this.dataSource.data = [...this.dataSource.data];
       }
     });
@@ -98,33 +102,13 @@ export class MisTurnosEspecialistaComponent implements OnInit {
   /** Finalizar turno: abre confirm y navega a formulario de reseña */
   finalizarTurno(turno: Turno): void {
     const ref = this.dialog.open(this.confirmDialog, {
-      data: { message: `¿Quieres dejar reseña para el turno #${turno.id}?` }
+      data: { message: `¿Quieres dejar reseña para el turno #${turno.idTurno}?` }
     });
     ref.afterClosed().subscribe(ok => {
       if (ok) {
-        this.router.navigate(['/resena-especialista', turno.id]);
+        this.router.navigate(['/resena-especialista', turno.idTurno]);
       }
     });
-  }
-
-  // ngOnInit(): void {
-  //   this.turnoService.getMockTurnosEspecialista()
-  //     .subscribe(list => {
-  //       this.dataSource.data = list;
-  //       this.dataSource.filterPredicate = (t, f) =>
-  //         t.especialidad.toLowerCase().includes(f) ||
-  //         t.paciente.toLowerCase().includes(f);
-  //     });
-  // }
-
-  ngOnInit(): void {
-    this.turnoService.getMockTurnosEspecialista()
-      .subscribe((list: TurnoEspecialista[]) => {
-        this.dataSource.data = list;
-        this.dataSource.filterPredicate = (t, f) =>
-          t.especialidad.toLowerCase().includes(f) ||
-          t.paciente.toLowerCase().includes(f);
-      });
   }
 
   applyFilter(value: string): void {
@@ -142,3 +126,16 @@ export class MisTurnosEspecialistaComponent implements OnInit {
   }
 
 }
+
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-mis-turnos-especialista',
+//   imports: [],
+//   templateUrl: './mis-turnos-especialista.component.html',
+//   styleUrl: './mis-turnos-especialista.component.scss'
+// })
+// export class MisTurnosEspecialistaComponent {
+
+// }

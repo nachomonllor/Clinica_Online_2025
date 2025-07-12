@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 
 import { AngularFireStorage }       from '@angular/fire/compat/storage';
 import { createUserWithEmailAndPassword, Auth } from '@angular/fire/auth';
-import { forkJoin, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { FirestoreService } from '../../services/firestore.service';
 
 @Component({

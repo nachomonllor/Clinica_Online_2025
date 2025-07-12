@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Especialista } from '../../models/especialista.model';
 
 export interface AvailableSlot {
   date: string;     // 'YYYY-MM-DD'
   times: string[];  // ['08:00','09:00',…]
 }
 
-export interface Especialista {
-  id: number;
-  nombre: string;
-  especialidad: string;
-  imagenPerfil: string;
-  // …otros campos…
-  availableSlots?: AvailableSlot[];
-}
+// export interface Especialista {
+//   id: number;
+//   nombre: string;
+//   especialidad: string;
+//   imagenPerfil: string;
+//   // …otros campos…
+//   availableSlots?: AvailableSlot[];
+// }
 
 @Component({
-    selector: 'app-solicitar-turno',
-    standalone:true,
-    imports: [CommonModule, ReactiveFormsModule],
-    templateUrl: './solicitar-turno.component.html',
-    styleUrls: ['./solicitar-turno.component.css']
+  selector: 'app-solicitar-turno',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './solicitar-turno.component.html',
+  styleUrls: ['./solicitar-turno.component.css']
 })
 export class SolicitarTurnoComponent implements OnInit {
   // -------------------------------------------
@@ -30,9 +31,39 @@ export class SolicitarTurnoComponent implements OnInit {
   especialidades = ['Cardiología', 'Dermatología', 'Neurología'];
 
   especialistas: Especialista[] = [
-    { id:1, nombre:'Dr. Juan Pérez', especialidad:'Cardiología',    imagenPerfil:'/assets/icons/doctor1.JPG' },
-    { id:2, nombre:'Dra. Marta López', especialidad:'Dermatología', imagenPerfil:'/assets/icons/doctor2.JPG' },
-    { id:3, nombre:'Dr. Carlos Ruiz', especialidad:'Neurología',    imagenPerfil:'/assets/icons/healthcare.JPG' }
+    {
+      idEspecialista: '1',
+      nombre: 'Juan',
+      apellido: 'Lopez',
+      edad: 33,
+      dni: '1111',
+      especialidadNombre: 'Cardiología',
+      mail: 'juan@hotmail.com',
+      password: '1223444',
+      imagenPerfil: '/assets/icons/doctor1.JPG'
+    },
+    {
+      idEspecialista: '2',
+      nombre: 'Ramon',
+      apellido: 'Fernandez',
+      edad: 44,
+      dni: '2222',
+      especialidadNombre: 'Dermatología',
+      mail: 'ramon@hotmail.com',
+      imagenPerfil: '/assets/icons/doctor2.JPG',
+      password: '4455566666'
+    },
+    {
+      idEspecialista: '3',
+      nombre: 'Gilberto',
+      apellido: 'Gonzales',
+      edad: 55,
+      dni: '3333333',
+      especialidadNombre: 'Neurología',
+      mail: 'gilberto@hotmaail.com',
+      imagenPerfil: '/assets/icons/healthcare.JPG',
+      password: '776665555444'
+    }
   ];
 
   constructor(private fb: FormBuilder) {
@@ -45,7 +76,6 @@ export class SolicitarTurnoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Genera slots para los 3 especialistas
     this.especialistas.forEach(e => {
       e.availableSlots = this.generateSlots(15);
     });
@@ -60,7 +90,7 @@ export class SolicitarTurnoComponent implements OnInit {
       d.setDate(base.getDate() + i);
       const iso = d.toISOString().split('T')[0]; // 'YYYY-MM-DD'
       // Horarios cada hora de 08 a 16
-      const times = Array.from({length: 9}, (_, k) => {
+      const times = Array.from({ length: 9 }, (_, k) => {
         const h = k + 8;
         return (h < 10 ? '0' + h : h) + ':00';
       });
@@ -72,7 +102,7 @@ export class SolicitarTurnoComponent implements OnInit {
   /** Getter: especialistas filtrados por especialidad */
   get especialistasFiltrados(): Especialista[] {
     const esp = this.turnoForm.get('especialidad')?.value;
-    return this.especialistas.filter(e => e.especialidad === esp);
+    return this.especialistas.filter(e => e.especialidadNombre === esp);
   }
 
   /** Getter: especialista seleccionado */
@@ -139,5 +169,8 @@ export class SolicitarTurnoComponent implements OnInit {
     // Opcional: resetear formularios para nueva reserva
     this.turnoForm.reset();
   }
+
 }
+
+
 

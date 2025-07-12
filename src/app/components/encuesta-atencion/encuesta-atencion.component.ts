@@ -41,10 +41,10 @@ export class EncuestaAtencionComponent implements OnInit {
 
   ngOnInit(): void {
     this.encuestaForm = this.fb.group({
-      comentario: ['', Validators.required],               // 1. cuadro de texto
-      calificacion: [0, [Validators.required, Validators.min(1)]], // 2. estrellas
-      opcion: ['', Validators.required],                  // 3. radio button
-      aspectos: this.fb.group({                           // 4. checkboxes
+      comentario: ['', Validators.required],                        // 1. cuadro de texto
+      calificacion: [0, [Validators.required, Validators.min(1)]],  // 2. estrellas
+      opcion: ['', Validators.required],                            // 3. radio button
+      aspectos: this.fb.group({                                     // 4. checkboxes
         puntualidad: [false],
         amabilidad: [false],
         limpieza: [false],

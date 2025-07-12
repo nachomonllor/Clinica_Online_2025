@@ -1,28 +1,9 @@
 // src/app/services/turno.service.ts
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from './auth.service'; // tu servicio de autenticación
-import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap, filter } from 'rxjs/operators';
-import { Turno } from '../models/turno.model';
-
-import { of } from 'rxjs';
+import { Turno, TurnoEstado } from '../models/turno.model';
+import { Observable, of } from 'rxjs';
 import { Paciente } from '../models/paciente.model';
-import { TurnoEspecialista } from '../models/turno-especialista.model';
 import { Especialista } from '../models/especialista.model';
-
-interface TurnoDto {
-  pacienteId: string;
-  id: number;
-  fecha: string;
-  hora: string;
-  especialidad: string;
-  especialista: string;
-  estado: string;
-  resena?: string;
-  encuesta?: boolean;
-  calificacion?: number;
-}
 
 /**
  * Estructura para devolver conteos agrupados
@@ -32,272 +13,196 @@ export interface CountByKey {
   count: number;
 }
 
+// turnos.service.ts
 @Injectable({ providedIn: 'root' })
 export class TurnoService {
-  private coleccion = 'turnos';
 
-  constructor(
-    private afs: AngularFirestore,
-    private auth: AuthService
-  ) { }
-
-  // → aquí el mock único para toda la app
-  private mockTurnos: Turno[] = [
-    { id: 100, fecha: new Date('2025-06-25'), hora: '09:30', especialidad: 'Cardiología', especialista: 'Dra. Pérez', estado: 'aceptado', resena: 'Excelente atención, muy profesional.', encuesta: false, calificacion: 10, pacienteId: '3' },
-    { id: 101, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología', especialista: 'Dr. Gómez', pacienteId: '4', estado: 'aceptado', resena: 'Me gustó mucho la consulta.', encuesta: true, calificacion: 10 },
-    { id: 102, fecha: new Date('2025-06-28'), hora: '14:00', especialidad: 'Dermatología', especialista: 'Dr. Gómez', pacienteId: '4', estado: 'realizado', resena: 'Me gustó mucho la consulta.', encuesta: true, calificacion: 10 },
-    { id: 103, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
-    { id: 104, fecha: new Date('2025-07-02'), hora: '11:15', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
-    { id: 105, fecha: new Date('2025-07-02'), hora: '15:20', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'pendiente', resena: "prueba res", encuesta: false, calificacion: 8 },
-    { id: 106, fecha: new Date('2025-07-02'), hora: '11:45', especialidad: 'Neurologia', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'realizado', resena: "prueba res", encuesta: false, calificacion: 8 },
-    { id: 107, fecha: new Date('2025-07-02'), hora: '11:30', especialidad: 'Pediatría', especialista: 'Dra. Ruiz', pacienteId: '4', estado: 'realizado', resena: "prueba res", encuesta: false, calificacion: 8 },
-    { id: 108, fecha: new Date('2025-09-02'), hora: '12:15', especialidad: 'Cardiologia', especialista: 'Dra. Nora Da Puente', pacienteId: '5', estado: 'realizado', resena: 'Reseña de prueba', encuesta: false, calificacion: 9 },
-    { id: 109, fecha: new Date('2025-06-22'), hora: '13:15', especialidad: 'Diabetóloga', especialista: 'Dra. Florencia De Césare', estado: 'realizado', resena: 'Reseña de prueba', encuesta: false, pacienteId: '6', calificacion: 10 }
-
-  ];
-
-  // // → mock de pacientes que atiende este especialista
-  private mockPacientes: Paciente[] = [
-    { id: '3', avatarUrl: 'avatar1', nombre: 'Ramon', apellido: 'Ruiz', edad: 40, dni: '7777888999', obraSocial: 'IOMA', email: 'ramon@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '4', avatarUrl: 'avatarx', nombre: 'Fernando', apellido: 'Marquez', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '5', avatarUrl: 'avatarx', nombre: 'Francisco', apellido: 'Torres', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' },
-    { id: '6', avatarUrl: 'avatarx', nombre: 'Edgardo', apellido: 'Amicucci', edad: 40, dni: '6666777755', obraSocial: 'OSDE', email: 'juan@ruiz.com', password: '123456', imagenPerfil1: 'assets/avatar.JPG', imagenPerfil2: 'assets/avatar.JPG' }
-    // agrega los demás según tu mock de turnos…
-  ];
-
-  // Mock de especialistas
-  private especialistasMock: Especialista[] = [
-    { id: 1, nombre: 'Ana', apellido: 'Pérez', edad: 40, dni: '12345678', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
-    { id: 2, nombre: 'Luis', apellido: 'Gómez', edad: 38, dni: '87654321', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
-    { id: 3, nombre: 'María', apellido: 'López', edad: 45, dni: '11223344', especialidad: 'Cardiología', mail: '', password: '', imagenPerfil: '' },
-    { id: 4, nombre: 'Carlos', apellido: 'Fernández', edad: 50, dni: '44332211', especialidad: 'Dermatología', mail: '', password: '', imagenPerfil: '' },
-    { id: 5, nombre: 'Sofía', apellido: 'Suárez', edad: 35, dni: '55667788', especialidad: 'Pediatría', mail: '', password: '', imagenPerfil: '' },
-    // … más especialistas
-  ];
-
-  /** Devuelve todos los pacientes mock */
-  getMockPacientes(): Observable<Paciente[]> {
-    return of(this.mockPacientes);
-  }
-
-
-  /**
-   * Devuelve los turnos enriquecidos con el nombre completo del paciente
-   * Sólo para MisTurnosEspecialistaComponent
-   */
-  getMockTurnosConPaciente(): Observable<(Turno & { pacienteNombre: string })[]> {
-    return forkJoin({
-      turnos: this.getMockTurnos(),
-      pacientes: this.getMockPacientes()
-    }).pipe(
-      map(({ turnos, pacientes }) =>
-        turnos.map(t => {
-          const p = pacientes.find(x => x.id === t.pacienteId);
-          return {
-            ...t,
-            pacienteNombre: p ? `${p.nombre} ${p.apellido}` : '—'
-          };
-        })
-      )
-    );
-  }
-
-  /** Devuelve todos los turnos (mock) */
-  getMockTurnos(): Observable<Turno[]> {
-    return of(this.mockTurnos);
-  }
-
-  /** Devuelve sólo el turno con el id indicado */
-  getMockTurnoById(id: number): Observable<Turno | undefined> {
-    return of(this.mockTurnos.find(t => t.id === id));
-  }
-
-  getTurnosPaciente(): Observable<Turno[]> {
-    return this.auth.user$.pipe(
-      filter(u => !!u),  // sólo usuarios no null
-      switchMap(u =>
-        this.afs
-          .collection<Turno>(this.coleccion, ref =>
-            ref.where('pacienteId', '==', u!.uid)
-          )
-          .valueChanges({ idField: 'id' })
-      )
-    );
-  }
-
-  /** Actualiza campos de un turno */
-  actualizarTurno(id: string, data: Partial<Turno>) {
-    return this.afs.doc(`${this.coleccion}/${id}`).update(data);
-  }
-
-  /** Todos los turnos */
-  getAllTurnos(): Observable<Turno[]> {
-    return this.afs
-      .collection<Turno>(this.coleccion)
-      .valueChanges({ idField: 'id' });
-  }
-
-  /** Cantidad de turnos por especialidad */
-  getTurnosByEspecialidad(): Observable<CountByKey[]> {
-    return this.getAllTurnos().pipe(
-      map(turnos => {
-        const mapCount = new Map<string, number>();
-        turnos.forEach(t => {
-          const esp = t.especialidad || 'Sin especialidad';
-          mapCount.set(esp, (mapCount.get(esp) ?? 0) + 1);
-        });
-        return Array.from(mapCount.entries()).map(([key, count]) => ({ key, count }));
-      })
-    );
-  }
-
-  /** Cantidad de turnos por día (YYYY-MM-DD) */
-  getTurnosByDia(): Observable<CountByKey[]> {
-    return this.getAllTurnos().pipe(
-      map((turnos: any[]) => {
-        const mapCount = new Map<string, number>();
-        turnos.forEach(t => {
-          const fechaISO = new Date(t.fecha).toISOString().split('T')[0];
-          mapCount.set(fechaISO, (mapCount.get(fechaISO) ?? 0) + 1);
-        });
-        return Array.from(mapCount.entries()).map(([key, count]) => ({ key, count }));
-      })
-    );
-  }
-
-  /**
-   * Turnos de un médico en un rango de fechas, filtrados por estado (solicitado | finalizado)
-   */
-  // getTurnosPorMedico(
-  //   medicoId: string,
-  //   from: Date,
-  //   to: Date,
-  //   estado: 'solicitado' | 'finalizado'
-  // ): Observable<Turno[]> {
-  //   return this.afs
-  //     .collection<Turno>(this.coleccion, ref =>
-  //       ref
-  //         .where('medicoId', '==', medicoId)
-  //         .where('fecha', '>=', from.toISOString())
-  //         .where('fecha', '<=', to.toISOString())
-  //         .where('estado', '==', estado)
-  //     )
-  //     .valueChanges({ idField: 'id' });
-  // }
-
-  /** Solo DTOs: lee crudo desde Firebase */
-  getTurnosPacienteDto(pacienteId: string): Observable<TurnoDto[]> {
-    return this.afs
-      .collection<TurnoDto>(this.coleccion, ref =>
-        ref.where('pacienteId', '==', pacienteId)
-      )
-      .valueChanges();
-  }
-
-  // turno.service.ts
-  setResenaEspecialista(id: number, texto: string): Observable<void> {
-    const turno = this.mockTurnos.find(t => t.id === id);
-    if (turno) {
-      turno.resenaEspecialista = texto;
+  mockPacientes: Paciente[] = [
+    {
+      idPaciente: '3',
+      avatarUrl: 'assets/avatars/ramon.png',
+      nombre: 'Ramón',
+      apellido: 'Ruiz',
+      edad: 40,
+      dni: '7777888999',
+      obraSocial: 'IOMA',
+      email: 'ramon@ruiz.com',
+      password: 'pass123',
+      imagenPerfil1: 'assets/avatars/ramon1.png',
+      imagenPerfil2: 'assets/avatars/ramon2.png',
+      id: '1'
+    },
+    {
+      idPaciente: '4',
+      avatarUrl: 'assets/avatars/fernando.png',
+      nombre: 'Fernando',
+      apellido: 'Márquez',
+      edad: 37,
+      dni: '6666777755',
+      obraSocial: 'OSDE',
+      email: 'fernando@marquez.com',
+      password: 'pass456',
+      imagenPerfil1: 'assets/avatars/fernando1.png',
+      imagenPerfil2: 'assets/avatars/fernando2.png',
+      id: '2'
     }
-    return of(void 0);
+  ];
+
+  /** Mock de Especialistas */
+  mockEspecialistas: Especialista[] = [
+    {
+      idEspecialista: 'e1',
+      nombre: 'Ana',
+      apellido: 'Pérez',
+      edad: 45,
+      dni: '11223344',
+      especialidadNombre: 'Cardiología',
+      mail: 'ana.perez@clinica.com',
+      password: 'cardio123',
+      imagenPerfil: 'assets/especialistas/ana.png'
+    },
+    {
+      idEspecialista: 'e2',
+      nombre: 'Luis',
+      apellido: 'Gómez',
+      edad: 50,
+      dni: '22334455',
+      especialidadNombre: 'Dermatología',
+      mail: 'luis.gomez@clinica.com',
+      password: 'derma456',
+      imagenPerfil: 'assets/especialistas/luis.png'
+    }
+  ];
+
+  /** Mock de Turnos */
+  mockTurnos: Turno[] = [
+    {
+      idTurno: '100',
+      fecha: '2025-06-25',      //  new Date('2025-06-25'),
+      hora: '09:30',
+      especialidadNombre: 'Cardiología',
+      especialistaNombreApell: 'Dra. Ana Pérez',
+      especialistaId: 'e1',
+      pacienteId: '3',
+      estado: 'aceptado' as TurnoEstado,
+      resenaEspecialista: 'Paciente estable, sin complicaciones.',
+      resenaPaciente: 'Excelente atención, muy profesional.',
+      comentarioPaciente: 'Muy recomendable',
+      calificacionDelPaciente: 10,
+      encuesta: 'si'
+    },
+    {
+      idTurno: '101',
+      fecha: '2025-06-28',            // new Date('2025-06-28'),
+      hora: '14:00',
+      especialidadNombre: 'Dermatología',
+      especialistaNombreApell: 'Dr. Luis Gómez',
+      especialistaId: 'e2',
+      pacienteId: '4',
+      estado: 'realizado' as TurnoEstado,
+      resenaEspecialista: 'Tratamiento seguido correctamente.',
+      resenaPaciente: 'La consulta fue muy efectiva.',
+      comentarioPaciente: 'Volvería sin dudar',
+      calificacionDelPaciente: 9,
+      encuesta: 'no'
+    }
+  ];
+
+  // src/app/services/turno.service.ts
+  getMapaEspecialidades(): Record<string, string> {
+    const mapaEsp: Record<string, string> = {};
+
+    this.mockEspecialistas.forEach(e => {
+      // solo si ambos valores están definidos
+      if (e.idEspecialista && e.especialidadNombre) {
+        mapaEsp[e.idEspecialista] = e.especialidadNombre;
+      }
+    });
+
+    return mapaEsp;
   }
 
-  getMockTurnosEspecialista(): Observable<TurnoEspecialista[]> {
-    return forkJoin({
-      turnos: of(this.mockTurnos),
-      pacientes: of(this.mockPacientes)
-    }).pipe(
-      map(({ turnos, pacientes }) =>
-        turnos.map(t => {
-          // formateo manual dd/MM/yyyy
-          const d = t.fecha instanceof Date ? t.fecha : new Date(t.fecha);
-          const fechaStr = [
-            d.getDate().toString().padStart(2, '0'),
-            (d.getMonth() + 1).toString().padStart(2, '0'),
-            d.getFullYear()
-          ].join('/');
-
-          const p = pacientes.find(x => x.id === t.pacienteId);
-          const pacienteStr = p
-            ? `${p.nombre} ${p.apellido} (ID:${p.id})`
-            : 'Paciente no asignado';
-
-          return {
-            id: t.id,
-            fecha: fechaStr,        // <-- ahora un string dd/MM/yyyy
-            hora: t.hora,
-            especialidad: t.especialidad,
-            paciente: pacienteStr,
-            estado: t.estado,
-            resena: t.resenaEspecialista
-          } as TurnoEspecialista;
-        })
-      )
-    );
-  }
-
-  /** Devuelve todos los especialistas */
-  getEspecialistas(): Observable<Especialista[]> {
-    // Reemplaza `of` por tu llamada real a la API si la tienes
-    return of(this.especialistasMock);
-  }
-
-  /** Cuenta cuántos especialistas hay por especialidad */
-  getEspecialistasPorEspecialidad(): Observable<[string, number][]> {
-    return this.getEspecialistas().pipe(
-      map(lista => {
-        const contador: Record<string, number> = {};
-        lista.forEach(e => {
-          const esp = e.especialidad || 'Sin especialidad';
-          contador[esp] = (contador[esp] || 0) + 1;
-        });
-        // Convertimos a array de tuplas
-        return Object.entries(contador);
-      })
-    );
-  }
-
-  /** Devuelve todos los pacientes (para el select) */
-  getPacientes(): Observable<Paciente[]> {
-    return of(this.mockPacientes);
-  }
-
-  // /** Devuelve todos los turnos (para conteos globales) */
-  // getAllTurnos(): Observable<Turno[]> {
-  //   return of(this.mockTurnos);
-  // }
-
-  /** Filtra los turnos por pacienteId */
-  getTurnosPorPaciente(pacienteId: string): Observable<Turno[]> {
-    const resultado: Turno[] = [];
-    for (let i = 0; i < this.mockTurnos.length; i++) {
-      if (this.mockTurnos[i].pacienteId === pacienteId) {
-        resultado.push(this.mockTurnos[i]);
+  /**
+   * Cuenta visitas por especialidad (cruzando turno → especialista → especialidad)
+   */
+  getVisitasPorEspecialidad(): Observable<[string, number][]> {
+    // 1) Armo un mapa especialistasId → especialidad
+    const mapaEsp: Record<string, string> = {};
+    for (let i = 0; i < this.mockEspecialistas.length; i++) {
+      const e = this.mockEspecialistas[i];
+      if (e.idEspecialista && e.especialidadNombre) {
+        mapaEsp[e.idEspecialista] = e.especialidadNombre;
       }
     }
-    return of(resultado);
-  }
 
-  /** Cuenta cuántas visitas hay por especialidad en todos los turnos */
-  getVisitasPorEspecialidad(): Observable<[string, number][]> {
+    // 2) Cuento con diccionario “C# style”
     const contador: Record<string, number> = {};
-    for (let i = 0; i < this.mockTurnos.length; i++) {
-      const esp = this.mockTurnos[i].especialidad;
+    for (let j = 0; j < this.mockTurnos.length; j++) {
+      const t = this.mockTurnos[j];
+      const esp = mapaEsp[t.especialistaId] || 'Sin especialidad';
       if (contador.hasOwnProperty(esp)) {
         contador[esp]++;
       } else {
         contador[esp] = 1;
       }
     }
-    const arr: [string, number][] = [];
-    for (const esp in contador) {
-      if (contador.hasOwnProperty(esp)) {
-        arr.push([esp, contador[esp]]);
+
+    // 3) Lo paso a tuplas para Google Charts
+    const result: [string, number][] = [];
+    for (const key in contador) {
+      if (contador.hasOwnProperty(key)) {
+        result.push([key, contador[key]]);
       }
     }
-    return of(arr);
+    return of(result);
+  }
+
+  /** Devuelve la lista simulada de pacientes */
+  getPacientes(): Observable<Paciente[]> {
+    return of(this.mockPacientes);
+  }
+
+  /** Devuelve lista simulada de especialistas */
+  getMockEspecialistas(): Observable<Especialista[]> {
+    return of(this.mockEspecialistas);
+  }
+
+  /** Devuelve lista simulada de turnos de un especialista */
+  getMockTurnosEspecialista(idEspecialista: string): Observable<Turno[]> {
+    return of(this.mockTurnos.filter(t => t.especialistaId === idEspecialista));
+  }
+
+  /** Devuelve un turno por su id */
+  getMockTurnoById(id: string): Observable<Turno | undefined> {
+    return of(this.mockTurnos.find(t => t.idTurno === id));
+  }
+
+  /** Actualiza un turno (por ejemplo calificación o estado) */
+  actualizarTurno(id: string, data: Partial<Turno>): Observable<Turno | undefined> {
+    const t = this.mockTurnos.find(t => t.idTurno === id);
+    if (t) Object.assign(t, data);
+    return of(t);
+  }
+
+  /** Turnos por paciente */
+  getTurnosPorPaciente(pacienteId: string): Observable<Turno[]> {
+    return of(this.mockTurnos.filter(t => t.pacienteId === pacienteId));
   }
 
 
+  /** Guarda la reseña que escribe el especialista */
+  setResenaEspecialista(id: string, comentario: string): Observable<void> {
+    const t = this.mockTurnos.find(t => t.idTurno === id);
+    if (t) {
+      t.resenaEspecialista = comentario;
+    }
+    return of(void 0);
+  }
+
+  // /** Obtiene un turno por ID */
+  // getMockTurnoById(id: string): Observable<Turno | undefined> {
+  //   return of(this.mockTurnos.find(t => t.idTurno === id));
+  // }
+
 }
+

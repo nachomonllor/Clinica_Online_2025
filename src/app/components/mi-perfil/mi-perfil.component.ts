@@ -142,34 +142,78 @@ export class MiPerfilComponent implements OnInit {
     { fecha: '2025-06-21', especialista: 'Dra. Nora Da Puente', motivo: 'Hipertension', notas: 'Se receto Alpertan 160' },
 
     { fecha: '2025-06-21', especialista: 'Dr. Francisco Martinez', motivo: 'Rectificacion cervical', notas: 'Se receto kinesiologia' },
-  
+
   ];
 
   /* ----- NUEVO MÉTODO ----- */
-  descargarPDF(): void {
+  // descargarPDF(): void {
 
+  //   const doc = new jsPDF();
+  //   const logo = new Image();
+  //   logo.src = 'assets/logo-clinica.JPG';    // usa tu ruta real
+
+  //   Encabezado
+  //   doc.addImage(logo, 'PNG', 10, 10, 30, 30);          // Logo
+  //   doc.setFontSize(18);
+  //   doc.text('Historia Clínica', 105, 20, { align: 'center' }); // Título
+  //   doc.setFontSize(11);
+  //   doc.text(`Emitido: ${new Date().toLocaleDateString()}`, 105, 28, { align: 'center' });
+
+  //   Tabla 
+  //   autoTable(doc, {
+  //     startY: 45,
+  //     head: [['Fecha', 'Especialista', 'Motivo', 'Notas']],
+  //     body: this.historiaClinica.map(r => [r.fecha, r.especialista, r.motivo, r.notas]),
+  //     styles: { fontSize: 10 }
+  //   });
+
+  //   Descargar 
+  //   doc.save('historia_clinica.pdf');
+  // }
+
+
+  descargarPDF(): void {
     const doc = new jsPDF();
     const logo = new Image();
-    logo.src = 'assets/logo-clinica.JPG';    // usa tu ruta real
+    logo.src = 'assets/logo-clinica.png';      // ① ruta válida
 
-    /* 1. Encabezado */
-    doc.addImage(logo, 'PNG', 10, 10, 30, 30);          // Logo
-    doc.setFontSize(18);
-    doc.text('Historia Clínica', 105, 20, { align: 'center' }); // Título
-    doc.setFontSize(11);
-    doc.text(`Emitido: ${new Date().toLocaleDateString()}`, 105, 28, { align: 'center' });
+    // ② si carga bien, dibuja todo y descarga
+    logo.onload = () => {
+      // Encabezado con logo
+      doc.addImage(logo, 'PNG', 10, 10, 30, 30);
+      doc.setFontSize(18);
+      doc.text('Historia Clínica', 105, 20, { align: 'center' });
+      doc.setFontSize(11);
+      doc.text(`Emitido: ${new Date().toLocaleDateString()}`, 105, 28, { align: 'center' });
 
-    /* 2. Tabla */
-    autoTable(doc, {
-      startY: 45,
-      head: [['Fecha', 'Especialista', 'Motivo', 'Notas']],
-      body: this.historiaClinica.map(r => [r.fecha, r.especialista, r.motivo, r.notas]),
-      styles: { fontSize: 10 }
-    });
+      // Tabla
+      autoTable(doc, {
+        startY: 45,
+        head: [['Fecha', 'Especialista', 'Motivo', 'Notas']],
+        body: this.historiaClinica.map(r => [r.fecha, r.especialista, r.motivo, r.notas]),
+        styles: { fontSize: 10 }
+      });
 
-    /* 3. Descargar */
-    doc.save('historia_clinica.pdf');
+      // Descargar
+      doc.save('historia_clinica.pdf');
+    };
+
+    // ③ fallback si no encuentra la imagen
+    logo.onerror = () => {
+      console.warn('No se encontró el logo, generando PDF sin encabezado gráfico');
+      doc.setFontSize(18);
+      doc.text('Historia Clínica', 105, 20, { align: 'center' });
+      // …mismo flujo de tabla y save()…
+      autoTable(doc, {
+        startY: 30,
+        head: [['Fecha', 'Especialista', 'Motivo', 'Notas']],
+        body: this.historiaClinica.map(r => [r.fecha, r.especialista, r.motivo, r.notas]),
+        styles: { fontSize: 10 }
+      });
+      doc.save('historia_clinica.pdf');
+    };
   }
+
 
 }
 

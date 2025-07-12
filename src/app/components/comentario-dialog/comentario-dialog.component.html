@@ -1,0 +1,26 @@
+
+<h2 mat-dialog-title>Cancelar turno</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motivo de cancelación</mat-label>
+    <textarea
+      matInput
+      [formControl]="motivoCtrl"
+      rows="4"
+      placeholder="Escribe aquí el motivo..."
+    ></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()">Volver</button>
+  <button
+    mat-raised-button
+    color="warn"
+    [disabled]="!motivoCtrl.value.trim()"
+    (click)="onAceptar()"
+  >
+    Confirmar
+  </button>
+</mat-dialog-actions>

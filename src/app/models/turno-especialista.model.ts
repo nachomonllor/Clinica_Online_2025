@@ -1,3 +1,4 @@
+import { TurnoEstado } from "./turno.model";
 
 // src/app/models/turno-especialista.model.ts
 export interface TurnoEspecialista {
@@ -6,7 +7,7 @@ export interface TurnoEspecialista {
   hora: string;
   especialidad: string;
   paciente: string; // aquí guardas el nombre o “Nombre Apellido (ID)”
-  estado: 'pendiente' | 'aceptado' | 'realizado' | 'cancelado' | 'rechazado';
+  estado: TurnoEstado; //  'pendiente' | 'aceptado' | 'realizado' | 'cancelado' | 'rechazado';
   resena?: string;  // la reseña que deja el especialista
 }
 

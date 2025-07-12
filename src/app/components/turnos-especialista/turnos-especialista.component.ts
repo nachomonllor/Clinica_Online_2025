@@ -77,43 +77,6 @@ export class TurnosEspecialistaComponent implements OnInit {
     this.dataSource = this.filteredTurnos; // <-- volvemos a asignar
   }
 
-
-  // cancelarTurno(turno: TurnoEspecialista): void {
-  //   if (confirm(`¿Estás seguro de cancelar el turno ${turno.id}?`)) {
-  //     const comentario = prompt("Ingresa el comentario de cancelación:");
-  //     if (comentario) {
-  //       console.log(`Turno ${turno.id} cancelado por: ${comentario}`);
-  //       turno.estado = 'cancelado';
-  //     }
-  //   }
-  // }
-
-  // rechazarTurno(turno: TurnoEspecialista): void {
-  //   if (confirm(`¿Estás seguro de rechazar el turno ${turno.id}?`)) {
-  //     const comentario = prompt("Ingresa el comentario de rechazo:");
-  //     if (comentario) {
-  //       console.log(`Turno ${turno.id} rechazado por: ${comentario}`);
-  //       turno.estado = 'rechazado';
-  //     }
-  //   }
-  // }
-
-  // aceptarTurno(turno: TurnoEspecialista): void {
-  //   if (confirm(`¿Deseas aceptar el turno ${turno.id}?`)) {
-  //     turno.estado = 'aceptado';
-  //     console.log(`Turno ${turno.id} aceptado.`);
-  //   }
-  // }
-
-  // finalizarTurno(turno: TurnoEspecialista): void {
-  //   const comentario = prompt(`Finaliza el turno ${turno.id}. Ingresa la reseña o comentario de la consulta y diagnóstico:`);
-  //   if (comentario) {
-  //     turno.resena = comentario;
-  //     turno.estado = 'realizado';
-  //     console.log(`Turno ${turno.id} finalizado con reseña: ${comentario}`);
-  //   }
-  // }
-
   // Nuevo: confirma antes de cancelar
   confirmarCancelar(turno: TurnoEspecialista): void {
     Swal.fire({
@@ -186,7 +149,7 @@ export class TurnosEspecialistaComponent implements OnInit {
 
   verResena(turno: TurnoEspecialista): void {
     Swal.fire({
-      title: `Reseña del turno #${turno.id}`,   // título
+      title: `Reseña del turno #${turno.id}`,    // título
       text: turno.resena,                        // contenido
       icon: 'info',                              // icono (info, success, warning, error, question)
       confirmButtonText: 'Cerrar'                // texto del botón
@@ -198,3 +161,40 @@ export class TurnosEspecialistaComponent implements OnInit {
   }
 
 }
+
+
+  // cancelarTurno(turno: TurnoEspecialista): void {
+  //   if (confirm(`¿Estás seguro de cancelar el turno ${turno.id}?`)) {
+  //     const comentario = prompt("Ingresa el comentario de cancelación:");
+  //     if (comentario) {
+  //       console.log(`Turno ${turno.id} cancelado por: ${comentario}`);
+  //       turno.estado = 'cancelado';
+  //     }
+  //   }
+  // }
+
+  // rechazarTurno(turno: TurnoEspecialista): void {
+  //   if (confirm(`¿Estás seguro de rechazar el turno ${turno.id}?`)) {
+  //     const comentario = prompt("Ingresa el comentario de rechazo:");
+  //     if (comentario) {
+  //       console.log(`Turno ${turno.id} rechazado por: ${comentario}`);
+  //       turno.estado = 'rechazado';
+  //     }
+  //   }
+  // }
+
+  // aceptarTurno(turno: TurnoEspecialista): void {
+  //   if (confirm(`¿Deseas aceptar el turno ${turno.id}?`)) {
+  //     turno.estado = 'aceptado';
+  //     console.log(`Turno ${turno.id} aceptado.`);
+  //   }
+  // }
+
+  // finalizarTurno(turno: TurnoEspecialista): void {
+  //   const comentario = prompt(`Finaliza el turno ${turno.id}. Ingresa la reseña o comentario de la consulta y diagnóstico:`);
+  //   if (comentario) {
+  //     turno.resena = comentario;
+  //     turno.estado = 'realizado';
+  //     console.log(`Turno ${turno.id} finalizado con reseña: ${comentario}`);
+  //   }
+  // }

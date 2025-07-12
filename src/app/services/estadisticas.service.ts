@@ -20,56 +20,56 @@ export class EstadisticasService {
 
   private especialistasMock: Record<string, Especialista> = {
     '1': {
-      id: 1,
+      idEspecialista: '1',
       nombre: 'Ana',
       apellido: 'Pérez',
       edad: 40,
       dni: '12345678',
-      especialidad: 'Cardiología',
+      especialidadNombre: 'Cardiología',
       mail: '',
       password: '',
       imagenPerfil: ''
     },
     '2': {
-      id: 2,
+      idEspecialista: '2',
       nombre: 'Luis',
       apellido: 'Gómez',
       edad: 38,
       dni: '87654321',
-      especialidad: 'Pediatría',
+      especialidadNombre: 'Pediatría',
       mail: '',
       password: '',
       imagenPerfil: ''
     },
     '3': {
-      id: 3,
+      idEspecialista: '3',
       nombre: 'María',
       apellido: 'López',
       edad: 45,
       dni: '11223344',
-      especialidad: 'Cardiología',
+      especialidadNombre: 'Cardiología',
       mail: '',
       password: '',
       imagenPerfil: ''
     },
     '4': {
-      id: 4,
+      idEspecialista: '4',
       nombre: 'Carlos',
       apellido: 'Fernández',
       edad: 50,
       dni: '44332211',
-      especialidad: 'Dermatología',
+      especialidadNombre: 'Dermatología',
       mail: '',
       password: '',
       imagenPerfil: ''
     },
     '5': {
-      id: 5,
+      idEspecialista: '5',
       nombre: 'Sofía',
       apellido: 'Suárez',
       edad: 35,
       dni: '55667788',
-      especialidad: 'Pediatría',
+      especialidadNombre: 'Pediatría',
       mail: '',
       password: '',
       imagenPerfil: ''
@@ -225,7 +225,7 @@ export class EstadisticasService {
         const contador: Record<string, number> = {};
         // Bucle “a lo C#”
         for (let i = 0; i < lista.length; i++) {
-          const esp = lista[i].especialidad || 'Sin especialidad';
+          const esp = lista[i].especialidadNombre || 'Sin especialidad';
           if (contador.hasOwnProperty(esp)) {
             contador[esp] += 1;
           } else {
@@ -243,8 +243,6 @@ export class EstadisticasService {
       })
     );
   }
-
-  
 
 }
 
