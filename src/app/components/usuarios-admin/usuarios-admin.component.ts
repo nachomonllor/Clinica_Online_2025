@@ -33,26 +33,26 @@ export interface Usuario {
 }
 
 @Component({
-    selector: 'app-usuarios-admin',
-    standalone:true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        // Material
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatIconModule
-    ],
-    templateUrl: './usuarios-admin.component.html',
-    styleUrls: ['./usuarios-admin.component.css']
+  selector: 'app-usuarios-admin',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    // Material
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  templateUrl: './usuarios-admin.component.html',
+  styleUrls: ['./usuarios-admin.component.css']
 })
 export class UsuariosAdminComponent implements OnInit {
   usuarios: Usuario[] = [];
-  displayedColumns: string[] = ['id','perfil','nombre','apellido','email','acciones'];
+  displayedColumns: string[] = ['id', 'perfil', 'nombre', 'apellido', 'email', 'acciones'];
   dataSource = new MatTableDataSource<Usuario>([]);
 
   usuarioForm: FormGroup;
@@ -133,30 +133,30 @@ export class UsuariosAdminComponent implements OnInit {
   // }
 
   descargarExcel(): void {
-  // 1) Prepara un array sólo con los campos que quieres exportar
-  const exportData = this.usuarios.map(u => ({
-    id:          u.id,
-    perfil:      u.perfil,
-    nombre:      u.nombre,
-    apellido:    u.apellido,
-    edad:        u.edad,
-    dni:         u.dni,
-    email:       u.email,
-    obraSocial:  u.obraSocial || '',
-    especialidad:u.especialidad || '',
-    activo:      u.activo != null ? u.activo : ''
-  }));
+    // 1) Prepara un array sólo con los campos que quieres exportar
+    const exportData = this.usuarios.map(u => ({
+      id: u.id,
+      perfil: u.perfil,
+      nombre: u.nombre,
+      apellido: u.apellido,
+      edad: u.edad,
+      dni: u.dni,
+      email: u.email,
+      obraSocial: u.obraSocial || '',
+      especialidad: u.especialidad || '',
+      activo: u.activo != null ? u.activo : ''
+    }));
 
-  // 2) Crea la hoja y el workbook
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const workbook: XLSX.WorkBook = {
-    Sheets: { 'Usuarios': worksheet },
-    SheetNames: ['Usuarios']
-  };
+    // 2) Crea la hoja y el workbook
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'Usuarios': worksheet },
+      SheetNames: ['Usuarios']
+    };
 
-  // 3) Descarga
-  XLSX.writeFile(workbook, 'usuarios.xlsx');
-}
+    // 3) Descarga
+    XLSX.writeFile(workbook, 'usuarios.xlsx');
+  }
 
 
 }

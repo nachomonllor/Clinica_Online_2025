@@ -1,14 +1,5 @@
 // import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-turnos-admin',
-//   imports: [],
-//   templateUrl: './turnos-admin.component.html',
-//   styleUrl: './turnos-admin.component.scss'
-// })
-// export class TurnosAdminComponent {
-
-// }
 
 
 import { Component, OnInit } from '@angular/core';
@@ -51,8 +42,8 @@ export class TurnosAdminComponent implements OnInit {
     // custom filterPredicate que busca en especialidad y especialista
     this.dataSource.filterPredicate = (t: Turno, filtro: string) => {
       const term = filtro.trim().toLowerCase();
-      return t.especialidad.toLowerCase().includes(term)
-        || t.especialista.toLowerCase().includes(term);
+      return t.especialidadNombre.toLowerCase().includes(term)
+        || t.especialidadNombre.toLowerCase().includes(term);
     };
     // aplicar filtro cada vez que cambie el input
     this.filtroCtrl.valueChanges.subscribe(texto => {
@@ -87,3 +78,14 @@ export class TurnosAdminComponent implements OnInit {
     });
   }
 }
+
+// @Component({
+//   selector: 'app-turnos-admin',
+//   imports: [],
+//   templateUrl: './turnos-admin.component.html',
+//   styleUrl: './turnos-admin.component.scss'
+// })
+// export class TurnosAdminComponent {
+
+// }
+
