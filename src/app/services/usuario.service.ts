@@ -1,21 +1,23 @@
-// src/app/services/turno.service.ts
+
+// src/app/services/usuario.service.ts
 import { Injectable } from '@angular/core';
-import { Turno, TurnoEstado } from '../models/turno.model';
-import { Observable, of } from 'rxjs';
-import { Paciente } from '../models/paciente.model';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Usuario } from '../models/usuario.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AnyUser } from '../models/any-user.model';
+import { Administrador } from '../models/administrador.model';
 import { Especialista } from '../models/especialista.model';
+import { Paciente } from '../models/paciente.model';
+import { Turno, TurnoEstado } from '../models/turno.model';
+import { UsuarioRow } from '../models/usuario-row.model';
 
-/**
- * Estructura para devolver conteos agrupados
- */
-export interface CountByKey {
-  key: string;
-  count: number;
-}
 
-// turnos.service.ts
 @Injectable({ providedIn: 'root' })
-export class TurnoService {
+export class UsuarioService {
+  private usuarios: Usuario[] = [];
+  private usuarios$ = new BehaviorSubject<Usuario[]>([]);
+
+ //  private usuarios$ = new BehaviorSubject<AnyUser[]>([]);
 
   mockPacientes: Paciente[] = [
     {
@@ -505,125 +507,173 @@ export class TurnoService {
 
   ];
 
-  // src/app/services/turno.service.ts
-  getMapaEspecialidades(): Record<string, string> {
-    const mapaEsp: Record<string, string> = {};
+  // mockAdministradores: Administrador[] = [
+  //   {
+  //     id: '1',
+  //     nombre: 'Admin',
+  //     apellido: 'Principal',
+  //     email: 'admin@clinica.com'
+  //   }
+  // ];
 
-    this.mockEspecialistas.forEach(e => {
-      // solo si ambos valores están definidos
-      if (e.idEspecialista && e.especialidadNombre) {
-        mapaEsp[e.idEspecialista] = e.especialidadNombre;
-      }
-    });
 
-    return mapaEsp;
+
+  mockAdministradores = [
+    { id: '1', nombre: 'Admin', apellido: 'Principal', email: 'admin@clinica.com', imagenPerfil: '' }
+  ];
+
+  getUsuarios(): Observable<UsuarioRow[]> {
+    const pacientes: UsuarioRow[] = this.mockPacientes.map(p => ({
+      id:           p.idPaciente,
+      perfil:       'Paciente',
+      nombre:       p.nombre,
+      apellido:     p.apellido,
+      email:        p.email,
+      imagenPerfil: p.imagenPerfil1
+    }));
+
+    const especialistas: UsuarioRow[] = this.mockEspecialistas.map(e => ({
+      id:           e.idEspecialista,
+      perfil:       'Especialista',
+      nombre:       e.nombre,
+      apellido:     e.apellido,
+      email:        e.mail,
+      activo:       true,
+      imagenPerfil: e.imagenPerfil
+    }));
+
+    const administradores: UsuarioRow[] = this.mockAdministradores.map(a => ({
+      id:           a.id,
+      perfil:       'Administrador',
+      nombre:       a.nombre,
+      apellido:     a.apellido,
+      email:        a.email,
+      imagenPerfil: a.imagenPerfil
+    }));
+
+    return of([...pacientes, ...especialistas, ...administradores]);
   }
+  
 
-  /**
-   * Cuenta visitas por especialidad (cruzando turno → especialista → especialidad)
+
+
+  constructor(private afs: AngularFirestore) { }
+
+  /** 
+   * Lee una colección de Firestore, añade el campo 'perfil' y el 'id' del doc 
    */
-  getVisitasPorEspecialidad(): Observable<[string, number][]> {
-    // 1) Armo un mapa especialistasId → especialidad
-    const mapaEsp: Record<string, string> = {};
-    for (let i = 0; i < this.mockEspecialistas.length; i++) {
-      const e = this.mockEspecialistas[i];
-      if (e.idEspecialista && e.especialidadNombre) {
-        mapaEsp[e.idEspecialista] = e.especialidadNombre;
-      }
-    }
-
-    // 2) Cuento con diccionario “C# style”
-    const contador: Record<string, number> = {};
-    for (let j = 0; j < this.mockTurnos.length; j++) {
-      const t = this.mockTurnos[j];
-      const esp = mapaEsp[t.especialistaId] || 'Sin especialidad';
-      if (contador.hasOwnProperty(esp)) {
-        contador[esp]++;
-      } else {
-        contador[esp] = 1;
-      }
-    }
-
-    // 3) Lo paso a tuplas para Google Charts
-    const result: [string, number][] = [];
-    for (const key in contador) {
-      if (contador.hasOwnProperty(key)) {
-        result.push([key, contador[key]]);
-      }
-    }
-    return of(result);
-  }
-
-  /** Devuelve la lista simulada de pacientes */
-  getPacientes(): Observable<Paciente[]> {
-    return of(this.mockPacientes);
-  }
-
-  /** Devuelve lista simulada de especialistas */
-  getMockEspecialistas(): Observable<Especialista[]> {
-    return of(this.mockEspecialistas);
-  }
-
-  /** Devuelve lista simulada de turnos de un especialista */
-  getMockTurnosEspecialista(idEspecialista: string): Observable<Turno[]> {
-    return of(this.mockTurnos.filter(t => t.especialistaId === idEspecialista));
-  }
-
-  /** Devuelve un turno por su id */
-  getMockTurnoById(id: string): Observable<Turno | undefined> {
-    return of(this.mockTurnos.find(t => t.idTurno === id));
-  }
-
-  /** Actualiza un turno (por ejemplo calificación o estado) */
-  actualizarTurno(id: string, data: Partial<Turno>): Observable<Turno | undefined> {
-    const t = this.mockTurnos.find(t => t.idTurno === id);
-    if (t) Object.assign(t, data);
-    return of(t);
-  }
-
-  /** Turnos por paciente */
-  getTurnosPorPaciente(pacienteId: string): Observable<Turno[]> {
-    return of(this.mockTurnos.filter(t => t.pacienteId === pacienteId));
-  }
-
-
-  /** Guarda la reseña que escribe el especialista */
-  setResenaEspecialista(id: string, comentario: string): Observable<void> {
-    const t = this.mockTurnos.find(t => t.idTurno === id);
-    if (t) {
-      t.resenaEspecialista = comentario;
-    }
-    return of(void 0);
-  }
-
-  // /** Obtiene un turno por ID */
-  // getMockTurnoById(id: string): Observable<Turno | undefined> {
-  //   return of(this.mockTurnos.find(t => t.idTurno === id));
+  // private fetch<T>(path: string, perfil: string): Observable<AnyUser[]> {
+  //   return this.afs
+  //     .collection<T>(path)
+  //     .snapshotChanges()                             // para obtener id + datos
+  //     .pipe(
+  //       map(actions =>
+  //         actions.map(a => {
+  //           const data = a.payload.doc.data() as T;
+  //           const id = a.payload.doc.id;
+  //           // inyectamos el perfil y el id
+  //           return { id, perfil, ...data } as AnyUser;
+  //         })
+  //       )
+  //     );
   // }
 
 
-  /**
- * Devuelve todos los turnos (modo administrador)
- */
-  getTurnos(): Observable<Turno[]> {
-    // devuelve el array completo de mockTurnos
-    return of(this.mockTurnos);
+  // /** Emite el listado completo de usuarios */
+  //  getUsuarios(): Observable<Usuario[]> {
+  //    return this.usuarios$.asObservable();
+  //  }
+
+
+  // usuario.service.ts (mock version)
+  // getUsuarios(): Observable<AnyUser[]> {
+  //   const pacientes = this.mockPacientes.map(p => ({
+  //     id: p.idPaciente,
+  //     perfil: 'Paciente' as const,
+  //     nombre: p.nombre,
+  //     apellido: p.apellido,
+  //     email: p.email,      // ya existe
+  //     imagenPerfil: p.imagenPerfil1
+  //   }));
+
+  //   const especialistas = this.mockEspecialistas.map(e => ({
+  //     id: e.idEspecialista,
+  //     perfil: 'Especialista' as const,
+  //     nombre: e.nombre,
+  //     apellido: e.apellido,
+  //     email: e.mail,       // mapeo mail → email
+  //     imagenPerfil: e.imagenPerfil,
+  //     activo: true
+  //   }));
+
+  //   const administradores = this.mockAdministradores.map(a => ({
+  //     id: a.id,
+  //     perfil: 'Administrador' as const,
+  //     nombre: a.nombre,
+  //     apellido: a.apellido,
+  //     email: a.email
+  //   }));
+
+  //   return of([...pacientes, ...especialistas, ...administradores]);
+  // }
+
+
+  /** Crea un usuario y emite la nueva lista */
+  crearUsuario(u: Usuario): Observable<Usuario> {
+    const nuevo: Usuario = { ...u, id: (this.usuarios.length + 1).toString() };
+    this.usuarios.push(nuevo);
+    this.usuarios$.next([...this.usuarios]);
+    return of(nuevo);
   }
 
-  /**
-   * Cancela un turno, marcando su estado y guardando el motivo
-   */
-  cancelarTurno(id: string, motivo: string): Observable<void> {
-    const t = this.mockTurnos.find(t => t.idTurno === id);
-    if (t) {
-      // actualizamos el estado y asignamos el comentario
-      t.estado = 'cancelado' as TurnoEstado;
-      // asumimos que en Turno tienes un campo 'resena' para el motivo
-      (t as any).resena = motivo;
+  /** Invierte el flag activo en un especialista */
+  toggleActivo(id: string): Observable<Usuario | undefined> {
+    const u = this.usuarios.find(x => x.id === id);
+    if (u && u.perfil === 'Especialista') {
+      u.activo = !u.activo;
+      this.usuarios$.next([...this.usuarios]);
     }
-    return of(void 0);
+    return of(u);
   }
-
-
 }
 
+
+
+
+// // usuario.service.ts
+// import { Injectable } from '@angular/core';
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
+// import { Observable, combineLatest } from 'rxjs';
+// import { map } from 'rxjs/operators';
+
+// import { Paciente }      from '../models/paciente.model';
+// import { Especialista }  from '../models/especialista.model';
+// import { Administrador } from '../models/administrador.model';
+
+// // 3) Crea la unión
+// type AnyUser = Paciente | Especialista | Administrador;
+
+// @Injectable({ providedIn: 'root' })
+// export class UsuarioService {
+//   constructor(private afs: AngularFirestore) {}
+
+//   private fetch<T>(path: string, perfil: string): Observable<AnyUser[]> {
+//     return this.afs.collection<T>(path).valueChanges({ idField: 'id' })
+//       .pipe(
+//         map(list =>
+//           // inyectamos el campo perfil para poder diferenciar
+//           (list as any[]).map(u => ({ ...u, perfil }))
+//         )
+//       );
+//   }
+
+/** Trae y concatena pacientes, especialistas y administradores */
+// getUsuarios(): Observable<AnyUser[]> {
+//   const pac$ = this.fetch<Paciente>('pacientes',      'Paciente');
+//   const esp$ = this.fetch<Especialista>('especialistas','Especialista');
+//   const adm$ = this.fetch<Administrador>('administradores','Administrador');
+
+//   return combineLatest([pac$, esp$, adm$])
+//     .pipe(map(([p, e, a]) => [...p, ...e, ...a]));
+// }
+// }

@@ -1,37 +1,62 @@
-// import { Component } from '@angular/core';
-
-
-
+// turnos-admin.component.ts
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { Turno } from '../../models/turno.model';
-import { MatDialog } from '@angular/material/dialog';
-import { TurnoService } from '../../services/turno.service';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule }  from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule }     from '@angular/material/input';
+import { MatButtonModule }    from '@angular/material/button';
+import { MatIconModule }      from '@angular/material/icon';
+import { MatDialogModule }    from '@angular/material/dialog';
+import { MatDialog }          from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { TurnoService } from '../../services/turno.service';
+import { Turno, TurnoEstado }        from '../../models/turno.model';
 import { ComentarioDialogComponent } from '../comentario-dialog/comentario-dialog.component';
 
 @Component({
+  standalone: true,
   selector: 'app-turnos-admin',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+
+    MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule
+  ],
   templateUrl: './turnos-admin.component.html',
-  styleUrl: './turnos-admin.component.scss'
+  styleUrls: ['./turnos-admin.component.scss']  // <<-- Corrección aquí
 })
 export class TurnosAdminComponent implements OnInit {
-  // columnas a mostrar en la tabla
-  displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<Turno>([]);
 
-  // filtro de texto único
+  // turnos-admin.component.ts
+// displayedColumns = [
+//   'fecha',
+//   'hora',
+//   'especialidadNombre',
+//   'especialistaNombreApell',
+//   'pacienteId',
+//   'estado',
+//   'acciones'
+// ];
+
+  displayedColumns = ['fecha','hora','especialidad','especialista','paciente','estado','acciones'];
+  dataSource = new MatTableDataSource<Turno>([]);
   filtroCtrl = new FormControl('');
 
   constructor(
     private turnoService: TurnoService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    // 1) Cargar todos los turnos
     this.turnoService.getTurnos().subscribe(turnos => {
       this.dataSource.data = turnos;
       this.setupFilter();
@@ -39,27 +64,20 @@ export class TurnosAdminComponent implements OnInit {
   }
 
   private setupFilter() {
-    // custom filterPredicate que busca en especialidad y especialista
     this.dataSource.filterPredicate = (t: Turno, filtro: string) => {
       const term = filtro.trim().toLowerCase();
       return t.especialidadNombre.toLowerCase().includes(term)
-        || t.especialidadNombre.toLowerCase().includes(term);
+          || t.especialistaNombreApell.toLowerCase().includes(term);
     };
-    // aplicar filtro cada vez que cambie el input
     this.filtroCtrl.valueChanges.subscribe(texto => {
       this.dataSource.filter = texto ?? '';
     });
   }
 
-  /** 
-   * Decide si se muestra el botón "Cancelar" según el estado actual 
-   * (solo si NO es Aceptado, Realizado ni Rechazado)
-   */
   canCancel(turno: Turno): boolean {
-    return !['Aceptado', 'Realizado', 'Rechazado'].includes(turno.estado);
+    return !['aceptado','realizado','rechazado'].includes(turno.estado);
   }
 
-  /** Abre un diálogo para que el administrador escriba un motivo de cancelación */
   cancelarTurno(turno: Turno) {
     const ref = this.dialog.open(ComentarioDialogComponent, {
       width: '400px',
@@ -67,25 +85,102 @@ export class TurnosAdminComponent implements OnInit {
     });
     ref.afterClosed().subscribe(resultado => {
       if (resultado?.motivo) {
-        this.turnoService.cancelarTurno(turno.id, resultado.motivo)
+        this.turnoService.cancelarTurno(turno.idTurno, resultado.motivo)
           .subscribe(() => {
-            // refrescar lista o actualizar estado localmente
-            turno.estado = 'Cancelado';
-            turno.resena = resultado.motivo;
+            turno.estado = 'cancelado' as TurnoEstado;
+            turno.resenaPaciente = resultado.motivo;
             this.dataSource._updateChangeSubscription();
           });
       }
     });
   }
+
 }
+
+
+
+// import { Component, OnInit } from '@angular/core';
+// import { FormControl, FormsModule } from '@angular/forms';
+// import { MatTableDataSource } from '@angular/material/table';
+// import { Turno, TurnoEstado } from '../../models/turno.model';
+// import { MatDialog } from '@angular/material/dialog';
+// import { TurnoService } from '../../services/turno.service';
+// import { CommonModule } from '@angular/common';
+// import { ComentarioDialogComponent } from '../comentario-dialog/comentario-dialog.component';
+// import { MatFormField, MatLabel } from "@angular/material/form-field";
+// import { MatCard, MatCardTitle } from "@angular/material/card";
+// import { MatIcon } from "@angular/material/icon";
 
 // @Component({
 //   selector: 'app-turnos-admin',
-//   imports: [],
+//   imports: [CommonModule, FormsModule, MatFormField, MatLabel, MatCard, MatCardTitle, MatIcon],
 //   templateUrl: './turnos-admin.component.html',
 //   styleUrl: './turnos-admin.component.scss'
 // })
-// export class TurnosAdminComponent {
+// export class TurnosAdminComponent implements OnInit {
+//   // columnas a mostrar en la tabla
+//   displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
+//   dataSource = new MatTableDataSource<Turno>([]);
+
+//   // filtro de texto único
+//   filtroCtrl = new FormControl('');
+
+//   constructor(
+//     private turnoService: TurnoService,
+//     private dialog: MatDialog
+//   ) { }
+
+//   ngOnInit(): void {
+//     // 1) Cargar todos los turnos
+//     this.turnoService.getTurnos().subscribe(turnos => {
+//       this.dataSource.data = turnos;
+//       this.setupFilter();
+//     });
+//   }
+
+
+//   private setupFilter() {
+//     // custom filterPredicate que busca en especialidad y especialista
+//     this.dataSource.filterPredicate = (t: Turno, filtro: string) => {
+//       const term = filtro.trim().toLowerCase();
+//       return t.especialidadNombre.toLowerCase().includes(term)
+//         || t.especialidadNombre.toLowerCase().includes(term);
+//     };
+//     // aplicar filtro cada vez que cambie el input
+//     this.filtroCtrl.valueChanges.subscribe(texto => {
+//       this.dataSource.filter = texto ?? '';
+//     });
+//   }
+
+//   /** 
+//    * Decide si se muestra el botón "Cancelar" según el estado actual 
+//    * (solo si NO es Aceptado, Realizado ni Rechazado)
+//    */
+//   canCancel(turno: Turno): boolean {
+//     return !['Aceptado', 'Realizado', 'Rechazado'].includes(turno.estado);
+//   }
+
+//   /** Abre un diálogo para que el administrador escriba un motivo de cancelación */
+//   cancelarTurno(turno: Turno) {
+//     const ref = this.dialog.open(ComentarioDialogComponent, {
+//       width: '400px',
+//       data: { motivo: '' }
+//     });
+//     ref.afterClosed().subscribe(resultado => {
+//       if (resultado?.motivo) {
+//         this.turnoService.cancelarTurno(turno.idTurno, resultado.motivo)
+//           .subscribe(() => {
+//             // refrescar lista o actualizar estado localmente
+//             turno.estado = 'cancelado' as TurnoEstado;
+//             turno.resenaEspecialista = resultado.motivo;
+//             this.dataSource._updateChangeSubscription();
+//           });
+//       }
+//     });
+//   }
 
 // }
+
+
+
 

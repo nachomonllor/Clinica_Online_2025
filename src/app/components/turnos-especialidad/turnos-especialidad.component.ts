@@ -30,12 +30,6 @@ export class TurnosEspecialidadComponent implements OnInit {
     ]
   };
 
-  // ngOnInit(): void {
-  //   this.turnoService.getVisitasPorEspecialidad().subscribe((counts) => {
-  //     this.barChartData.labels = counts.map(c => c.key);
-  //     this.barChartData.datasets[0].data = counts.map(c => c.co);
-  //   });
-  // }
 
   ngOnInit(): void {
   this.turnoService.getVisitasPorEspecialidad()
