@@ -128,5 +128,21 @@
             "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
             "IMAGE_REQUIRED": "La imagen de perfil es obligatoria."
         }
+    },
+    "MIS_SHIFTS": {
+        "PATIENT": {
+            "TITLE": "Mis Turnos",
+            "FILTER": "Filtra por especialidad o especialista",
+            "SEARCH_PLACEHOLDER": "Buscar…",
+            "ID": "ID",
+            "ACTIONS": "Acciones",
+            "CONFIRM": "¿Cancelar turno #{{id}}?",
+            "CANCELED": "Turno #{{id}} cancelado",
+            "CANCEL_TOOLTIP": "Cancelar turno",
+            "VIEW_REVIEW_TOOLTIP": "Ver reseña",
+            "COMPLETE_SURVEY_TOOLTIP": "Completar encuesta",
+            "RATE_TOOLTIP": "Calificar atención",
+            "NO_DATA": "No se encontraron turnos."
+        }
     }
 }

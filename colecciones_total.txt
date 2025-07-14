@@ -1,0 +1,23 @@
+pacientes
+Guarda el perfil de cada paciente (nombre, apellido, edad, DNI, obraSocial, e-mail, contraseñas, URLs de imágenes, etc.) y puede tener como subcolección su historiaClínica. Clinica_Online_2025_Con…
+
+especialistas
+Perfil de cada profesional (nombre, apellido, edad, DNI, especialidades, e-mail, contraseña, URL de foto, disponibilidad horaria). La disponibilidad puede modelarse como un array dentro del doc o como subcolección horariosDisponibilidad. Clinica_Online_2025_Con…
+
+administradores
+Usuarios con permisos de gestión (mismo perfil de usuario, pero sin encuesta ni historia clínica asociada). Clinica_Online_2025_Con…
+
+turnos
+Cada documento es un turno: { pacienteId, especialistaId, fecha, hora, estado, resenaEspecialista?, resenaPaciente?, comentarioPaciente?, encuestaCompletada?, calificacion? }. Clinica_Online_2025_Con…
+
+historiaClinica (o historiales)
+Subcolección bajo cada paciente (o colección separada) con los registros de atención: datos fijos (altura, peso, temperatura, presión) y hasta 3 pares clave-valor. Clinica_Online_2025_Con…
+
+encuestas
+Respuestas de los pacientes tras atención (referenciadas por turnoId), con los distintos controles: texto, estrellas, radio, checkbox, rango. Clinica_Online_2025_Con…
+
+loginLogs
+Para el “log de ingresos al sistema”: cada vez que un usuario hace sign-in guardamos { userId, perfil, timestamp }. Clinica_Online_2025_Con…
+
+especialidades (opcional)
+Catálogo de especialidades (Cardiology, Dermatology, etc.), para poblar dropdowns y poder traducir dinámicamente. 
