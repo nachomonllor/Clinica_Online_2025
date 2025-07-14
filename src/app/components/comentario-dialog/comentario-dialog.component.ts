@@ -1,17 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-comentario-dialog',
-//   imports: [],
-//   templateUrl: './comentario-dialog.component.html',
-//   styleUrl: './comentario-dialog.component.scss'
-// })
-// export class ComentarioDialogComponent {
-
-// }
-
-
-
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -57,3 +43,16 @@ export class ComentarioDialogComponent implements OnInit {
     this.dialogRef.close({ motivo: this.motivoCtrl.value });
   }
 }
+
+
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-comentario-dialog',
+//   imports: [],
+//   templateUrl: './comentario-dialog.component.html',
+//   styleUrl: './comentario-dialog.component.scss'
+// })
+// export class ComentarioDialogComponent {
+
+// }

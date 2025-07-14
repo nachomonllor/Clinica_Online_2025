@@ -40,5 +40,19 @@
         "realizado": "Realizado",
         "rechazado": "Rechazado",
         "cancelado": "Cancelado"
+    },
+    "LOGIN": {
+        "TITLE": "Iniciar sesión",
+        "EMAIL_LABEL": "Correo electrónico",
+        "PASSWORD_LABEL": "Contraseña",
+        "SUBMIT": "Ingresar",
+        "ERROR": {
+            "EMAIL_REQUIRED": "El correo es obligatorio.",
+            "EMAIL_FORMAT": "Formato inválido.",
+            "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
+            "PASSWORD_MINLENGTH": "Mínimo 6 caracteres.",
+            "NOT_REGISTERED": "No estás registrado como paciente",
+            "UNEXPECTED": "Error inesperado"
+        }
     }
 }

@@ -40,5 +40,19 @@
         "realizado": "Completed",
         "rechazado": "Rejected",
         "cancelado": "Canceled"
+    },
+    "LOGIN": {
+        "TITLE": "Sign In",
+        "EMAIL_LABEL": "E-mail",
+        "PASSWORD_LABEL": "Password",
+        "SUBMIT": "Log In",
+        "ERROR": {
+            "EMAIL_REQUIRED": "E-mail is required.",
+            "EMAIL_FORMAT": "Invalid format.",
+            "PASSWORD_REQUIRED": "Password is required.",
+            "PASSWORD_MINLENGTH": "Minimum 6 characters.",
+            "NOT_REGISTERED": "You are not registered as a patient",
+            "UNEXPECTED": "Unexpected error"
+        }
     }
 }
