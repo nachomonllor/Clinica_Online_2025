@@ -32,7 +32,10 @@
     "SPECIALTIES": {
         "cardiology": "Cardiología",
         "dermatology": "Dermatología",
-        "neurology": "Neurología"
+        "neurology": "Neurología",
+        "gynecology": "Ginecología",
+        "pediatrics": "Pediatría",
+        "other": "Otra"
     },
     "STATUSES": {
         "pendiente": "Pendiente",
