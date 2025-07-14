@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  position: relative; /* para que los absolutos se refieran a este contenedor */
+}
+
+.language-switch {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+
+  button {
+    min-width: auto;
+    padding: 0 0.5rem;
+  }
+}
+
+.login-especialista-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.error {
+  color: #f44336;
+  margin-bottom: 1rem;
+  text-align: center;
+}

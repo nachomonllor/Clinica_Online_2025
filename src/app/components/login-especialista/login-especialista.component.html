@@ -1,1 +1,57 @@
-<p>login-especialista works!</p>
+
+
+<!-- Selector de idioma -->
+<div class="language-switch">
+  <button mat-button (click)="switchLang('es')">ES</button>
+  <button mat-button (click)="switchLang('en')">EN</button>
+  <button mat-button (click)="switchLang('pt')">PT</button>
+</div>
+
+<mat-card class="login-card">
+  <mat-card-title>{{ 'LOGIN_SPECIALIST.TITLE' | translate }}</mat-card-title>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <!-- E-mail -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'LOGIN_SPECIALIST.EMAIL_LABEL' | translate }}</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+        {{ 'LOGIN_SPECIALIST.ERROR.EMAIL_REQUIRED' | translate }}
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+        {{ 'LOGIN_SPECIALIST.ERROR.EMAIL_FORMAT' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Contraseña -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'LOGIN_SPECIALIST.PASSWORD_LABEL' | translate }}</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        {{ 'LOGIN_SPECIALIST.ERROR.PASSWORD_REQUIRED' | translate }}
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+        {{ 'LOGIN_SPECIALIST.ERROR.PASSWORD_MINLENGTH' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="full-width"
+      type="submit"
+      [disabled]="loginForm.invalid || loading"
+    >
+      <ng-container *ngIf="!loading; else spinner">
+        {{ 'LOGIN_SPECIALIST.SUBMIT' | translate }}
+      </ng-container>
+      <ng-template #spinner>
+        <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+      </ng-template>
+    </button>
+  </form>
+</mat-card>
+
+

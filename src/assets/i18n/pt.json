@@ -58,6 +58,20 @@
             "UNEXPECTED": "Erro inesperado"
         }
     },
+    "LOGIN_SPECIALIST": {
+        "TITLE": "Entrar (Especialista)",
+        "EMAIL_LABEL": "E-mail",
+        "PASSWORD_LABEL": "Senha",
+        "SUBMIT": "Entrar",
+        "ERROR": {
+            "EMAIL_REQUIRED": "E-mail é obrigatório.",
+            "EMAIL_FORMAT": "Formato de e-mail inválido.",
+            "PASSWORD_REQUIRED": "Senha é obrigatória.",
+            "PASSWORD_MINLENGTH": "Mínimo 6 caracteres.",
+            "NOT_REGISTERED": "Você não está registrado como especialista.",
+            "UNEXPECTED": "Erro inesperado."
+        }
+    },
     "REGISTER": {
         "TITLE": "Cadastro de Paciente",
         "FIRST_NAME": "Nome",

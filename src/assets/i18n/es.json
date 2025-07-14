@@ -89,6 +89,20 @@
             "PASSWORD_REQUIRED": "La contraseña es obligatoria."
         }
     },
+    "LOGIN_SPECIALIST": {
+        "TITLE": "Iniciar sesión (Especialista)",
+        "EMAIL_LABEL": "Correo electrónico",
+        "PASSWORD_LABEL": "Contraseña",
+        "SUBMIT": "Ingresar",
+        "ERROR": {
+            "EMAIL_REQUIRED": "El correo es obligatorio.",
+            "EMAIL_FORMAT": "Formato inválido.",
+            "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
+            "PASSWORD_MINLENGTH": "Mínimo 6 caracteres.",
+            "NOT_REGISTERED": "No estás registrado como especialista.",
+            "UNEXPECTED": "Error inesperado."
+        }
+    },
     "REGISTER_SPECIALIST": {
         "TITLE": "Registro de Especialista",
         "FIRST_NAME": "Nombre",

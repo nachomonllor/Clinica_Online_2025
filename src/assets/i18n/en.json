@@ -58,6 +58,20 @@
             "UNEXPECTED": "Unexpected error"
         }
     },
+    "LOGIN_SPECIALIST": {
+        "TITLE": "Specialist Sign In",
+        "EMAIL_LABEL": "E-mail",
+        "PASSWORD_LABEL": "Password",
+        "SUBMIT": "Log In",
+        "ERROR": {
+            "EMAIL_REQUIRED": "E-mail is required.",
+            "EMAIL_FORMAT": "Invalid e-mail format.",
+            "PASSWORD_REQUIRED": "Password is required.",
+            "PASSWORD_MINLENGTH": "Minimum 6 characters.",
+            "NOT_REGISTERED": "You are not registered as a specialist.",
+            "UNEXPECTED": "Unexpected error."
+        }
+    },
     "REGISTER": {
         "TITLE": "Patient Registration",
         "FIRST_NAME": "First Name",
