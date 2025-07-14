@@ -32,6 +32,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
+// Añade:
+
 @Component({
   selector: 'app-registro-paciente',
   standalone: true,
@@ -39,6 +41,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+ 
     MatInputModule,
     MatButtonModule,
     MatCardModule,

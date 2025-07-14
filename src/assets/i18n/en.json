@@ -85,5 +85,31 @@
             "EMAIL_FORMAT": "Invalid e-mail format.",
             "PASSWORD_REQUIRED": "Password is required."
         }
+    },
+    "REGISTER_SPECIALIST": {
+        "TITLE": "Specialist Registration",
+        "FIRST_NAME": "First Name",
+        "LAST_NAME": "Last Name",
+        "AGE": "Age",
+        "DNI": "ID Number",
+        "SPECIALTY": "Specialty",
+        "OTHER": "Other",
+        "EMAIL": "E-mail",
+        "PASSWORD": "Password",
+        "SELECT_IMAGE": "Select Profile Image",
+        "SUBMIT": "Register",
+        "ERROR": {
+            "FIRST_NAME_REQUIRED": "First name is required.",
+            "LAST_NAME_REQUIRED": "Last name is required.",
+            "AGE_REQUIRED": "Age is required.",
+            "AGE_MIN": "Age must be ≥ 0.",
+            "DNI_REQUIRED": "ID number is required.",
+            "SPECIALTY_REQUIRED": "Specialty is required.",
+            "OTHER_REQUIRED": "Please specify the specialty.",
+            "EMAIL_REQUIRED": "E-mail is required.",
+            "EMAIL_FORMAT": "Invalid format.",
+            "PASSWORD_REQUIRED": "Password is required.",
+            "IMAGE_REQUIRED": "Profile image is required."
+        }
     }
 }

@@ -1,22 +1,24 @@
 
 
-// main.ts
+// src/main.ts
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication }                from '@angular/platform-browser';
-import { provideRouter, RouterModule }         from '@angular/router';
-import { HttpClientModule, HttpClient }       from '@angular/common/http';
+import { provideRouter }                       from '@angular/router';
+import { HttpClientModule, HttpClient }        from '@angular/common/http';
 import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
 
-import { TranslateModule, TranslateLoader }   from '@ngx-translate/core';
-import { TranslateHttpLoader }                from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader }    from '@ngx-translate/core';
+import { TranslateHttpLoader }                 from '@ngx-translate/http-loader';
 
-import { AngularFireModule }                  from '@angular/fire/compat';
-import { AngularFireAuthModule }              from '@angular/fire/compat/auth';
-import { AngularFirestoreModule }             from '@angular/fire/compat/firestore';
+import { AngularFireModule }                   from '@angular/fire/compat';
+import { AngularFireAuthModule }               from '@angular/fire/compat/auth';
+import { AngularFirestoreModule }              from '@angular/fire/compat/firestore';
+import { provideStorage, getStorage }          from '@angular/fire/storage';
 
-import { AppComponent }                       from './app/app.component';
-import { environment }                        from './environments/environment';
-import { routes } from './app/app.routes';
+import { AppComponent }                        from './app/app.component';
+import { environment }                         from './environments/environment';
+import { routes }                              from './app/app.routes';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -28,9 +30,13 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes),                      // ← aquí
+    provideRouter(routes),
+
+    // este provider le dice a Angular cómo inyectar 'Storage'
+    provideStorage(() => getStorage()),
+
     importProvidersFrom(
-      BrowserAnimationsModule,                  // ← Material necesita animaciones
+      BrowserAnimationsModule,
       HttpClientModule,
       TranslateModule.forRoot({
         loader: {
@@ -41,11 +47,119 @@ bootstrapApplication(AppComponent, {
       }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireAuthModule,
-      AngularFirestoreModule
+      AngularFirestoreModule,
+      AngularFireStorageModule      // ← aquí
+
     )
   ]
 })
 .catch(err => console.error(err));
+
+
+
+// // src/main.ts
+// import { enableProdMode, importProvidersFrom } from '@angular/core';
+// import { bootstrapApplication }                from '@angular/platform-browser';
+// import { provideRouter }                       from '@angular/router';
+// import { HttpClientModule, HttpClient }        from '@angular/common/http';
+// import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
+
+// import { TranslateModule, TranslateLoader }    from '@ngx-translate/core';
+// import { TranslateHttpLoader }                 from '@ngx-translate/http-loader';
+
+// import { AngularFireModule }                   from '@angular/fire/compat';
+// import { AngularFireAuthModule }               from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }              from '@angular/fire/compat/firestore';
+// import { provideStorage, getStorage }          from '@angular/fire/storage';
+
+// import { AppComponent }                        from './app/app.component';
+// import { environment }                         from './environments/environment';
+// import { routes }                              from './app/app.routes';
+
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
+
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideRouter(routes),
+
+//     // este provider le dice a Angular cómo inyectar 'Storage'
+//     provideStorage(() => getStorage()),
+
+//     importProvidersFrom(
+//       BrowserAnimationsModule,
+//       HttpClientModule,
+//       TranslateModule.forRoot({
+//         loader: {
+//           provide: TranslateLoader,
+//           useFactory: HttpLoaderFactory,
+//           deps: [HttpClient]
+//         }
+//       }),
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
+
+
+
+
+
+
+// // main.ts
+// import { enableProdMode, importProvidersFrom } from '@angular/core';
+// import { bootstrapApplication }                from '@angular/platform-browser';
+// import { provideRouter, RouterModule }         from '@angular/router';
+// import { HttpClientModule, HttpClient }       from '@angular/common/http';
+// import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
+
+// import { TranslateModule, TranslateLoader }   from '@ngx-translate/core';
+// import { TranslateHttpLoader }                from '@ngx-translate/http-loader';
+
+// import { AngularFireModule }                  from '@angular/fire/compat';
+// import { AngularFireAuthModule }              from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }             from '@angular/fire/compat/firestore';
+
+// import { AppComponent }                       from './app/app.component';
+// import { environment }                        from './environments/environment';
+// import { routes } from './app/app.routes';
+
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
+
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideRouter(routes),                      // ← aquí
+//     importProvidersFrom(
+//       BrowserAnimationsModule,                  // ← Material necesita animaciones
+//       HttpClientModule,
+//       TranslateModule.forRoot({
+//         loader: {
+//           provide: TranslateLoader,
+//           useFactory: HttpLoaderFactory,
+//           deps: [HttpClient]
+//         }
+//       }),
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
 
 
 

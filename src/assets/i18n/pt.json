@@ -85,5 +85,31 @@
             "EMAIL_FORMAT": "Formato de e-mail inválido.",
             "PASSWORD_REQUIRED": "A senha é obrigatória."
         }
+    },
+    "REGISTER_SPECIALIST": {
+        "TITLE": "Cadastro de Especialista",
+        "FIRST_NAME": "Nome",
+        "LAST_NAME": "Sobrenome",
+        "AGE": "Idade",
+        "DNI": "Número de Identidade",
+        "SPECIALTY": "Especialidade",
+        "OTHER": "Outro",
+        "EMAIL": "E-mail",
+        "PASSWORD": "Senha",
+        "SELECT_IMAGE": "Selecionar Imagem de Perfil",
+        "SUBMIT": "Cadastrar",
+        "ERROR": {
+            "FIRST_NAME_REQUIRED": "O nome é obrigatório.",
+            "LAST_NAME_REQUIRED": "O sobrenome é obrigatório.",
+            "AGE_REQUIRED": "A idade é obrigatória.",
+            "AGE_MIN": "A idade deve ser ≥ 0.",
+            "DNI_REQUIRED": "O número de identidade é obrigatório.",
+            "SPECIALTY_REQUIRED": "A especialidade é obrigatória.",
+            "OTHER_REQUIRED": "Você deve indicar a especialidade.",
+            "EMAIL_REQUIRED": "O e-mail é obrigatório.",
+            "EMAIL_FORMAT": "Formato inválido.",
+            "PASSWORD_REQUIRED": "A senha é obrigatória.",
+            "IMAGE_REQUIRED": "A imagem de perfil é obrigatória."
+        }
     }
 }

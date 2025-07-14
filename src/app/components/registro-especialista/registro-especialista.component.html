@@ -1,8 +1,142 @@
+<!-- Selección idioma -->
+<div class="language-switch" style="text-align:right; margin-bottom:1rem;">
+  <button mat-button (click)="switchLang('es')">ES</button>
+  <button mat-button (click)="switchLang('en')">EN</button>
+  <button mat-button (click)="switchLang('pt')">PT</button>
+</div>
+
 <mat-card class="registro-container">
+  <mat-card-title>
+    {{ 'REGISTER_SPECIALIST.TITLE' | translate }}
+  </mat-card-title>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.FIRST_NAME' | translate }}</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="registroForm.get('nombre')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.FIRST_NAME_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Apellido -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.LAST_NAME' | translate }}</mat-label>
+      <input matInput formControlName="apellido" />
+      <mat-error *ngIf="registroForm.get('apellido')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.LAST_NAME_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Edad -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.AGE' | translate }}</mat-label>
+      <input matInput type="number" formControlName="edad" />
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.AGE_REQUIRED' | translate }}
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('edad')?.hasError('min')">
+        {{ 'REGISTER_SPECIALIST.ERROR.AGE_MIN' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- DNI -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.DNI' | translate }}</mat-label>
+      <input matInput formControlName="dni" />
+      <mat-error *ngIf="registroForm.get('dni')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.DNI_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Especialidad -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.SPECIALTY' | translate }}</mat-label>
+      <mat-select formControlName="especialidadNombre">
+        <mat-option *ngFor="let esp of especialidades" [value]="esp">
+          {{ ('SPECIALTIES.' + esp) | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="registroForm.get('especialidadNombre')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.SPECIALTY_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Otro -->
+    <mat-form-field
+      *ngIf="registroForm.get('especialidadNombre')?.value === 'other'"
+      appearance="outline"
+      class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.OTHER' | translate }}</mat-label>
+      <input matInput formControlName="otraEspecialidad" />
+      <mat-error *ngIf="registroForm.get('otraEspecialidad')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.OTHER_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- E-mail -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.EMAIL' | translate }}</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="registroForm.get('email')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.EMAIL_REQUIRED' | translate }}
+      </mat-error>
+      <mat-error *ngIf="registroForm.get('email')?.hasError('email')">
+        {{ 'REGISTER_SPECIALIST.ERROR.EMAIL_FORMAT' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Contraseña -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REGISTER_SPECIALIST.PASSWORD' | translate }}</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="registroForm.get('password')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.PASSWORD_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Imagen de perfil -->
+    <div class="full-width file-group">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="fileInput.click()">
+        {{ 'REGISTER_SPECIALIST.SELECT_IMAGE' | translate }}
+      </button>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="onFileChange($event)"
+        accept="image/*" />
+      <div class="preview" *ngIf="imagenPrevia">
+        <img [src]="imagenPrevia" alt="Previsualización perfil" />
+      </div>
+      <mat-error *ngIf="registroForm.get('imagenPerfil')?.hasError('required')">
+        {{ 'REGISTER_SPECIALIST.ERROR.IMAGE_REQUIRED' | translate }}
+      </mat-error>
+    </div>
+
+    <!-- Botón -->
+    <button
+      mat-raised-button
+      color="accent"
+      class="full-width"
+      [disabled]="registroForm.invalid || loading"
+      type="submit">
+      {{ 'REGISTER_SPECIALIST.SUBMIT' | translate }}
+    </button>
+  </form>
+</mat-card>
+
+
+
+<!-- <mat-card class="registro-container">
   <mat-card-title>Registro de Especialista</mat-card-title>
 
   <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-    <!-- Nombre / Apellido / Edad / DNI -->
+    Nombre / Apellido / Edad / DNI
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" />
@@ -38,7 +172,7 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Especialidad con “Otro” dinámico -->
+    Especialidad con “Otro” dinámico 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Especialidad</mat-label>
       <mat-select formControlName="especialidad">
@@ -60,7 +194,7 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Mail / Contraseña -->
+    Mail / Contraseña
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Correo Electrónico</mat-label>
       <input matInput type="email" formControlName="email" />
@@ -80,7 +214,7 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Imagen de perfil -->
+    Imagen de perfil 
     <div class="full-width file-group">
       <button mat-raised-button type="button" (click)="fileInput.click()">
         Seleccionar Imagen de Perfil
@@ -108,4 +242,4 @@
       Registrarse
     </button>
   </form>
-</mat-card>
+</mat-card> -->
