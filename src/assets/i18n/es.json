@@ -1,0 +1,32 @@
+{
+    "USERS": {
+        "TITLE": "Gestión de Usuarios (Administrador)",
+        "FILTER": "Filtrar por nombre, apellido o e-mail",
+        "ID": "ID",
+        "ROLE": "Perfil",
+        "FIRST_NAME": "Nombre",
+        "LAST_NAME": "Apellido",
+        "EMAIL": "E-mail",
+        "ACTIVE": "Activo",
+        "ACTIONS": "Acciones",
+        "ENABLE": "Habilitar",
+        "DISABLE": "Deshabilitar"
+    },
+    "TURNOS": {
+        "TITLE": "Gestión de Turnos (Administrador)",
+        "FILTER": "Filtrar por especialidad o especialista",
+        "DATE": "Fecha",
+        "TIME": "Hora",
+        "SPECIALTY": "Especialidad",
+        "SPECIALIST": "Especialista",
+        "PATIENT": "Paciente",
+        "STATUS": "Estado",
+        "ACTIONS": "Acciones",
+        "CANCEL": "Cancelar"
+    },
+    "NAV": {
+        "USERS": "Usuarios",
+        "SHIFTS": "Turnos",
+        "REPORTS": "Reportes"
+    }
+}

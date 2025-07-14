@@ -1,68 +1,115 @@
-<p>turnos-admin works!</p>
 
+<!-- Opcional: selector de idioma -->
+<div class="language-switch" style="text-align: right; margin-bottom: 1rem;">
+  <button mat-button (click)="switchLang('es')">ES</button>
+  <button mat-button (click)="switchLang('en')">EN</button>
+</div>
 
 <mat-card class="turnos-admin-container">
-  <mat-card-title>Gestión de Turnos (Administrador)</mat-card-title>
+  <!-- Título traducido -->
+  <mat-card-title>{{ 'TURNOS.TITLE' | translate }}</mat-card-title>
 
+  <!-- Filtro -->
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Filtrar por especialidad o especialista</mat-label>
-    <input matInput [formControl]="filtroCtrl" placeholder="Escribe para buscar..." />
-    <button mat-icon-button matSuffix *ngIf="filtroCtrl.value" (click)="filtroCtrl.setValue('')">
+    <mat-label>{{ 'TURNOS.FILTER' | translate }}</mat-label>
+    <input
+      matInput
+      [formControl]="filtroCtrl"
+      placeholder="{{ 'TURNOS.FILTER' | translate }}"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      *ngIf="filtroCtrl.value"
+      (click)="filtroCtrl.setValue('')"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 
+  <!-- Tabla de turnos -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-
     <!-- Fecha -->
     <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef> Fecha </th>
-      <td mat-cell *matCellDef="let t"> {{ t.fecha | date:'dd/MM/yyyy' }} </td>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.DATE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.fecha | date: 'dd/MM/yyyy' }}
+      </td>
     </ng-container>
 
     <!-- Hora -->
     <ng-container matColumnDef="hora">
-      <th mat-header-cell *matHeaderCellDef> Hora </th>
-      <td mat-cell *matCellDef="let t"> {{ t.hora }} </td>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.TIME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.hora }}
+      </td>
     </ng-container>
 
     <!-- Especialidad -->
-    <ng-container matColumnDef="especialidad">
-      <th mat-header-cell *matHeaderCellDef> Especialidad </th>
-      <td mat-cell *matCellDef="let t"> {{ t.especialidad }} </td>
+    <ng-container matColumnDef="especialidadNombre">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.SPECIALTY' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.especialidadNombre }}
+      </td>
     </ng-container>
 
     <!-- Especialista -->
-    <ng-container matColumnDef="especialista">
-      <th mat-header-cell *matHeaderCellDef> Especialista </th>
-      <td mat-cell *matCellDef="let t"> {{ t.especialista }} </td>
+    <ng-container matColumnDef="especialistaNombreApell">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.SPECIALIST' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.especialistaNombreApell }}
+      </td>
     </ng-container>
 
     <!-- Paciente -->
-    <ng-container matColumnDef="paciente">
-      <th mat-header-cell *matHeaderCellDef> Paciente </th>
-      <td mat-cell *matCellDef="let t"> {{ t.paciente }} </td>
+    <ng-container matColumnDef="pacienteId">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.PATIENT' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.pacienteId }}
+      </td>
     </ng-container>
 
     <!-- Estado -->
     <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef> Estado </th>
-      <td mat-cell *matCellDef="let t"> {{ t.estado }} </td>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.STATUS' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let t">
+        {{ t.estado }}
+      </td>
     </ng-container>
 
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'TURNOS.ACTIONS' | translate }}
+      </th>
       <td mat-cell *matCellDef="let t">
-        <button mat-button color="warn"
-                *ngIf="canCancel(t)"
-                (click)="cancelarTurno(t)">
-          Cancelar
+        <button
+          mat-button
+          color="warn"
+          *ngIf="canCancel(t)"
+          (click)="cancelarTurno(t)"
+        >
+          {{ 'TURNOS.CANCEL' | translate }}
         </button>
       </td>
     </ng-container>
 
+    <!-- Filas -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row        *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </mat-card>
+
+

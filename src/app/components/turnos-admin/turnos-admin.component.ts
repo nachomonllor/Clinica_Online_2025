@@ -3,18 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { MatCardModule }  from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule }     from '@angular/material/input';
-import { MatButtonModule }    from '@angular/material/button';
-import { MatIconModule }      from '@angular/material/icon';
-import { MatDialogModule }    from '@angular/material/dialog';
-import { MatDialog }          from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { TurnoService } from '../../services/turno.service';
-import { Turno, TurnoEstado }        from '../../models/turno.model';
+import { Turno, TurnoEstado } from '../../models/turno.model';
 import { ComentarioDialogComponent } from '../comentario-dialog/comentario-dialog.component';
+
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
@@ -29,45 +31,86 @@ import { ComentarioDialogComponent } from '../comentario-dialog/comentario-dialo
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule,
   ],
   templateUrl: './turnos-admin.component.html',
   styleUrls: ['./turnos-admin.component.scss']  // <<-- Corrección aquí
 })
 export class TurnosAdminComponent implements OnInit {
 
-  // turnos-admin.component.ts
-// displayedColumns = [
-//   'fecha',
-//   'hora',
-//   'especialidadNombre',
-//   'especialistaNombreApell',
-//   'pacienteId',
-//   'estado',
-//   'acciones'
-// ];
+  //displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
 
-  displayedColumns = ['fecha','hora','especialidad','especialista','paciente','estado','acciones'];
+  // turnos-admin.component.ts
+  displayedColumns = [
+    'fecha',   // no cambia: es el campo del modelo
+    'hora',
+    'especialidadNombre',
+    'especialistaNombreApell',
+    'pacienteId',
+    'estado',
+    'acciones'
+  ];
+
+
   dataSource = new MatTableDataSource<Turno>([]);
   filtroCtrl = new FormControl('');
 
   constructor(
+    private translate: TranslateService,
     private turnoService: TurnoService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    // Inicializamos el idioma
+    const lang = this.translate.getBrowserLang() ?? 'es';
+    this.translate.use(['es', 'en'].includes(lang) ? lang : 'es');
+
+    // Carga de datos…
     this.turnoService.getTurnos().subscribe(turnos => {
       this.dataSource.data = turnos;
       this.setupFilter();
     });
   }
 
+  /** Llamado desde los botones de idioma */
+  switchLang(lang: string) {
+    this.translate.use(lang);
+  }
+
+
+  // ----------------------------------------------
+
+  // displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
+  // dataSource = new MatTableDataSource<Turno>([]);
+  // filtroCtrl = new FormControl('');
+
+  // constructor(private turnoService: TurnoService,
+  //   private dialog: MatDialog,
+  //   private translate: TranslateService) {
+  //   translate.addLangs(['es', 'en']);
+  //   translate.setDefaultLang('es');
+  //   // podrías detectar el navegador:
+  //   // const browserLang = translate.getBrowserLang();
+  //   // translate.use(browserLang.match(/en|es/) ? browserLang : 'es');
+  //   const lang = this.translate.getBrowserLang() ?? 'es';
+  //   this.translate.use(['en', 'es'].includes(lang) ? lang : 'es');
+  // }
+
+  // ngOnInit(): void {
+  //   this.turnoService.getTurnos().subscribe(turnos => {
+  //     this.dataSource.data = turnos;
+  //     this.setupFilter();
+  //   });
+
+  // }
+
   private setupFilter() {
     this.dataSource.filterPredicate = (t: Turno, filtro: string) => {
       const term = filtro.trim().toLowerCase();
       return t.especialidadNombre.toLowerCase().includes(term)
-          || t.especialistaNombreApell.toLowerCase().includes(term);
+        || t.especialistaNombreApell.toLowerCase().includes(term);
     };
     this.filtroCtrl.valueChanges.subscribe(texto => {
       this.dataSource.filter = texto ?? '';
@@ -75,7 +118,7 @@ export class TurnosAdminComponent implements OnInit {
   }
 
   canCancel(turno: Turno): boolean {
-    return !['aceptado','realizado','rechazado'].includes(turno.estado);
+    return !['aceptado', 'realizado', 'rechazado'].includes(turno.estado);
   }
 
   cancelarTurno(turno: Turno) {
@@ -152,8 +195,8 @@ export class TurnosAdminComponent implements OnInit {
 //     });
 //   }
 
-//   /** 
-//    * Decide si se muestra el botón "Cancelar" según el estado actual 
+//   /**
+//    * Decide si se muestra el botón "Cancelar" según el estado actual
 //    * (solo si NO es Aceptado, Realizado ni Rechazado)
 //    */
 //   canCancel(turno: Turno): boolean {

@@ -1,38 +1,141 @@
 
 
+// main.ts
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { bootstrapApplication }                from '@angular/platform-browser';
+import { provideRouter, RouterModule }         from '@angular/router';
+import { HttpClientModule, HttpClient }       from '@angular/common/http';
+import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { TranslateModule, TranslateLoader }   from '@ngx-translate/core';
+import { TranslateHttpLoader }                from '@ngx-translate/http-loader';
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { AppComponent } from './app/app.component';
-import { environment } from './environments/environment';
+import { AngularFireModule }                  from '@angular/fire/compat';
+import { AngularFireAuthModule }              from '@angular/fire/compat/auth';
+import { AngularFirestoreModule }             from '@angular/fire/compat/firestore';
+
+import { AppComponent }                       from './app/app.component';
+import { environment }                        from './environments/environment';
 import { routes } from './app/app.routes';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
 
- //import { provideTranslate } from '@ngx-translate/core';
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
+// // Define aquí tus rutas
+// const routes = [
+//   { path: 'usuarios', component: UsuariosAdminComponent },
+//   // ... otras rutas ...
+//   { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
+//   { path: '**', redirectTo: 'usuarios' }
+// ];
 
+if (environment.production) {
+  enableProdMode();
+}
 
 bootstrapApplication(AppComponent, {
   providers: [
-    
-    provideRouter(routes),
-    provideAnimations(),
-    provideHttpClient(withInterceptorsFromDi()),
-   // provideTranslate(), // <-- PARA IDIOMAS
+    provideRouter(routes),                      // ← aquí
     importProvidersFrom(
+      BrowserAnimationsModule,                  // ← Material necesita animaciones
+      HttpClientModule,
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      }),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireAuthModule,
       AngularFirestoreModule
     )
   ]
-});
+})
+.catch(err => console.error(err));
 
+
+
+
+
+// // src/main.ts
+// import { enableProdMode, importProvidersFrom } from '@angular/core';
+// import { bootstrapApplication }                from '@angular/platform-browser';
+// import { HttpClientModule, HttpClient }       from '@angular/common/http';
+// import { TranslateModule, TranslateLoader }   from '@ngx-translate/core';
+// import { TranslateHttpLoader }                from '@ngx-translate/http-loader';
+// import { AngularFireModule }                  from '@angular/fire/compat';
+// import { AngularFireAuthModule }              from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule }             from '@angular/fire/compat/firestore';
+
+// import { AppComponent }                       from './app/app.component';
+// import { environment }                        from './environments/environment';
+ 
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
+
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     importProvidersFrom(
+//       // HTTP & translate
+//       HttpClientModule,
+//       TranslateModule.forRoot({
+//         loader: {
+//           provide: TranslateLoader,
+//           useFactory: HttpLoaderFactory,
+//           deps: [HttpClient]
+//         }
+//       }),
+//       // Firebase
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule,
+//       // aquí podrías añadir otros módulos (RouterModule, Material, etc.)
+//     )
+//   ]
+// })
+// .catch(err => console.error(err));
+
+
+
+
+
+
+
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+// import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+// import { provideRouter } from '@angular/router';
+// import { provideAnimations } from '@angular/platform-browser/animations';
+// import { AppComponent } from './app/app.component';
+// import { environment } from './environments/environment';
+// import { routes } from './app/app.routes';
+// import { bootstrapApplication } from '@angular/platform-browser';
+// import { importProvidersFrom } from '@angular/core';
+
+//  //import { provideTranslate } from '@ngx-translate/core';
+// bootstrapApplication(AppComponent, {
+//   providers: [
+    
+//     provideRouter(routes),
+//     provideAnimations(),
+//     provideHttpClient(withInterceptorsFromDi()),
+//    // provideTranslate(), // <-- PARA IDIOMAS
+//     importProvidersFrom(
+//       AngularFireModule.initializeApp(environment.firebase),
+//       AngularFireAuthModule,
+//       AngularFirestoreModule
+//     )
+//   ]
+// });
 
 
 
