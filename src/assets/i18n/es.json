@@ -54,5 +54,36 @@
             "NOT_REGISTERED": "No estás registrado como paciente",
             "UNEXPECTED": "Error inesperado"
         }
+    },
+    "REGISTER": {
+        "TITLE": "Registro de Paciente",
+        "FIRST_NAME": "Nombre",
+        "FIRST_NAME_PLACEHOLDER": "Ingresa tu nombre",
+        "LAST_NAME": "Apellido",
+        "LAST_NAME_PLACEHOLDER": "Ingresa tu apellido",
+        "AGE": "Edad",
+        "AGE_PLACEHOLDER": "Ingresa tu edad",
+        "DNI": "DNI",
+        "DNI_PLACEHOLDER": "Ingresa tu DNI",
+        "INSURANCE": "Obra Social",
+        "INSURANCE_PLACEHOLDER": "Ingresa tu obra social",
+        "EMAIL": "Correo Electrónico",
+        "EMAIL_PLACEHOLDER": "Ingresa tu correo",
+        "PASSWORD": "Contraseña",
+        "PASSWORD_PLACEHOLDER": "Ingresa tu contraseña",
+        "SELECT_IMAGE1": "Seleccionar Imagen 1",
+        "SELECT_IMAGE2": "Seleccionar Imagen 2",
+        "SUBMIT": "Registrarse",
+        "ERROR": {
+            "FIRST_NAME_REQUIRED": "El nombre es obligatorio.",
+            "LAST_NAME_REQUIRED": "El apellido es obligatorio.",
+            "AGE_REQUIRED": "La edad es obligatoria.",
+            "AGE_MIN": "La edad debe ser ≥ 0.",
+            "DNI_REQUIRED": "El DNI es obligatorio.",
+            "INSURANCE_REQUIRED": "La obra social es obligatoria.",
+            "EMAIL_REQUIRED": "El correo es obligatorio.",
+            "EMAIL_FORMAT": "Formato inválido.",
+            "PASSWORD_REQUIRED": "La contraseña es obligatoria."
+        }
     }
 }

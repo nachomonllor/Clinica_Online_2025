@@ -32,6 +32,40 @@ export class FirestoreService {
   updatePaciente(id: string, updateData: any): Promise<void> {
     return this.pacientesCollection.doc(id).update(updateData);
   }
+
+   /**
+   * Crea o reemplaza un documento en la colección indicada.
+   * @param data  El objeto a guardar.
+   * @param path  Nombre de la colección (p.ej. 'pacientes').
+   * @param id    ID del documento.
+   */
+  createDocument<T>(data: T, path: string, id: string): Promise<void> {
+    return this.afs
+      .collection<T>(path)
+      .doc(id)
+      .set(data);
+  }
+
+  /**
+   * Opcional: método para actualizar campos parciales de un documento.
+   */
+  updateDocument<T>(data: Partial<T>, path: string, id: string): Promise<void> {
+    return this.afs
+      .collection<T>(path)
+      .doc(id)
+      .update(data);
+  }
+
+  /**
+   * Opcional: método para borrar un documento.
+   */
+  deleteDocument(path: string, id: string): Promise<void> {
+    return this.afs
+      .collection(path)
+      .doc(id)
+      .delete();
+  }
+
 }
 
 
