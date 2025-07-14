@@ -1,32 +1,44 @@
 {
-  "USERS": {
-    "TITLE": "User Management (Admin)",
-    "FILTER": "Filter by name, surname or email",
-    "ID": "ID",
-    "ROLE": "Role",
-    "FIRST_NAME": "First Name",
-    "LAST_NAME": "Last Name",
-    "EMAIL": "E-mail",
-    "ACTIVE": "Active",
-    "ACTIONS": "Actions",
-    "ENABLE": "Enable",
-    "DISABLE": "Disable"
-  },
-  "TURNOS": {
-    "TITLE": "Turn Management (Admin)",
-    "FILTER": "Filter by specialty or specialist",
-    "DATE": "Date",
-    "TIME": "Time",
-    "SPECIALTY": "Specialty",
-    "SPECIALIST": "Specialist",
-    "PATIENT": "Patient",
-    "STATUS": "Status",
-    "ACTIONS": "Actions",
-    "CANCEL": "Cancel"
-  },
-  "NAV": {
-    "USERS": "Users",
-    "SHIFTS": "Shifts",
-    "REPORTS": "Reports"
-  }
+    "USERS": {
+        "TITLE": "User Management (Admin)",
+        "FILTER": "Filter by name, surname or email",
+        "ID": "ID",
+        "ROLE": "Role",
+        "FIRST_NAME": "First Name",
+        "LAST_NAME": "Last Name",
+        "EMAIL": "E-mail",
+        "ACTIVE": "Active",
+        "ACTIONS": "Actions",
+        "ENABLE": "Enable",
+        "DISABLE": "Disable"
+    },
+    "TURNOS": {
+        "TITLE": "Turn Management (Admin)",
+        "FILTER": "Filter by specialty or specialist",
+        "DATE": "Date",
+        "TIME": "Time",
+        "SPECIALTY": "Specialty",
+        "SPECIALIST": "Specialist",
+        "PATIENT": "Patient",
+        "STATUS": "Status",
+        "ACTIONS": "Actions",
+        "CANCEL": "Cancel"
+    },
+    "NAV": {
+        "USERS": "Users",
+        "SHIFTS": "Shifts",
+        "REPORTS": "Reports"
+    },
+    "SPECIALTIES": {
+        "cardiology": "Cardiology",
+        "dermatology": "Dermatology",
+        "neurology": "Neurology"
+    },
+    "STATUSES": {
+        "pendiente": "Pending",
+        "aceptado": "Accepted",
+        "realizado": "Completed",
+        "rechazado": "Rejected",
+        "cancelado": "Canceled"
+    }
 }

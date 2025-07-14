@@ -1,0 +1,44 @@
+{
+    "USERS": {
+        "TITLE": "Gerenciamento de Usuários (Administrador)",
+        "FILTER": "Filtrar por nome, sobrenome ou e-mail",
+        "ID": "ID",
+        "ROLE": "Perfil",
+        "FIRST_NAME": "Nome",
+        "LAST_NAME": "Sobrenome",
+        "EMAIL": "E-mail",
+        "ACTIVE": "Ativo",
+        "ACTIONS": "Ações",
+        "ENABLE": "Habilitar",
+        "DISABLE": "Desabilitar"
+    },
+    "TURNOS": {
+        "TITLE": "Gerenciamento de Turnos (Administrador)",
+        "FILTER": "Filtrar por especialidade ou especialista",
+        "DATE": "Data",
+        "TIME": "Hora",
+        "SPECIALTY": "Especialidade",
+        "SPECIALIST": "Especialista",
+        "PATIENT": "Paciente",
+        "STATUS": "Estado",
+        "ACTIONS": "Ações",
+        "CANCEL": "Cancelar"
+    },
+    "NAV": {
+        "USERS": "Usuários",
+        "SHIFTS": "Turnos",
+        "REPORTS": "Relatórios"
+    },
+    "SPECIALTIES": {
+        "cardiology": "Cardiologia",
+        "dermatology": "Dermatologia",
+        "neurology": "Neurologia"
+    },
+    "STATUSES": {
+        "pendiente": "Pendente",
+        "aceptado": "Aceito",
+        "realizado": "Realizado",
+        "rechazado": "Rejeitado",
+        "cancelado": "Cancelado"
+    }
+}

@@ -28,5 +28,17 @@
         "USERS": "Usuarios",
         "SHIFTS": "Turnos",
         "REPORTS": "Reportes"
+    },
+    "SPECIALTIES": {
+        "cardiology": "Cardiología",
+        "dermatology": "Dermatología",
+        "neurology": "Neurología"
+    },
+    "STATUSES": {
+        "pendiente": "Pendiente",
+        "aceptado": "Aceptado",
+        "realizado": "Realizado",
+        "rechazado": "Rechazado",
+        "cancelado": "Cancelado"
     }
 }

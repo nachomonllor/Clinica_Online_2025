@@ -39,8 +39,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class TurnosAdminComponent implements OnInit {
 
-  //displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
-
   // turnos-admin.component.ts
   displayedColumns = [
     'fecha',   // no cambia: es el campo del modelo
@@ -52,7 +50,6 @@ export class TurnosAdminComponent implements OnInit {
     'acciones'
   ];
 
-
   dataSource = new MatTableDataSource<Turno>([]);
   filtroCtrl = new FormControl('');
 
@@ -63,11 +60,14 @@ export class TurnosAdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Inicializamos el idioma
-    const lang = this.translate.getBrowserLang() ?? 'es';
-    this.translate.use(['es', 'en'].includes(lang) ? lang : 'es');
+    // 3) elige idioma inicial: usa el del navegador si está soportado, sino español
+    const browserLang = this.translate.getBrowserLang() ?? 'es';
+    const langToUse   = ['es', 'en', 'pt'].includes(browserLang)
+                        ? browserLang
+                        : 'es';
+    this.translate.use(langToUse);
 
-    // Carga de datos…
+    // resto de tu carga de datos…
     this.turnoService.getTurnos().subscribe(turnos => {
       this.dataSource.data = turnos;
       this.setupFilter();
@@ -78,33 +78,6 @@ export class TurnosAdminComponent implements OnInit {
   switchLang(lang: string) {
     this.translate.use(lang);
   }
-
-
-  // ----------------------------------------------
-
-  // displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
-  // dataSource = new MatTableDataSource<Turno>([]);
-  // filtroCtrl = new FormControl('');
-
-  // constructor(private turnoService: TurnoService,
-  //   private dialog: MatDialog,
-  //   private translate: TranslateService) {
-  //   translate.addLangs(['es', 'en']);
-  //   translate.setDefaultLang('es');
-  //   // podrías detectar el navegador:
-  //   // const browserLang = translate.getBrowserLang();
-  //   // translate.use(browserLang.match(/en|es/) ? browserLang : 'es');
-  //   const lang = this.translate.getBrowserLang() ?? 'es';
-  //   this.translate.use(['en', 'es'].includes(lang) ? lang : 'es');
-  // }
-
-  // ngOnInit(): void {
-  //   this.turnoService.getTurnos().subscribe(turnos => {
-  //     this.dataSource.data = turnos;
-  //     this.setupFilter();
-  //   });
-
-  // }
 
   private setupFilter() {
     this.dataSource.filterPredicate = (t: Turno, filtro: string) => {
@@ -139,6 +112,35 @@ export class TurnosAdminComponent implements OnInit {
   }
 
 }
+
+
+  // ------------------------------------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------------------------------------
+
+  // displayedColumns = ['fecha', 'hora', 'especialidad', 'especialista', 'paciente', 'estado', 'acciones'];
+  // dataSource = new MatTableDataSource<Turno>([]);
+  // filtroCtrl = new FormControl('');
+
+  // constructor(private turnoService: TurnoService,
+  //   private dialog: MatDialog,
+  //   private translate: TranslateService) {
+  //   translate.addLangs(['es', 'en']);
+  //   translate.setDefaultLang('es');
+  //   // podrías detectar el navegador:
+  //   // const browserLang = translate.getBrowserLang();
+  //   // translate.use(browserLang.match(/en|es/) ? browserLang : 'es');
+  //   const lang = this.translate.getBrowserLang() ?? 'es';
+  //   this.translate.use(['en', 'es'].includes(lang) ? lang : 'es');
+  // }
+
+  // ngOnInit(): void {
+  //   this.turnoService.getTurnos().subscribe(turnos => {
+  //     this.dataSource.data = turnos;
+  //     this.setupFilter();
+  //   });
+
+  // }
 
 
 

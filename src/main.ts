@@ -22,14 +22,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-// // Define aquí tus rutas
-// const routes = [
-//   { path: 'usuarios', component: UsuariosAdminComponent },
-//   // ... otras rutas ...
-//   { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
-//   { path: '**', redirectTo: 'usuarios' }
-// ];
-
 if (environment.production) {
   enableProdMode();
 }
