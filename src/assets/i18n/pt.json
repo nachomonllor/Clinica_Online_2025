@@ -54,5 +54,36 @@
             "NOT_REGISTERED": "Você não está registrado como paciente",
             "UNEXPECTED": "Erro inesperado"
         }
+    },
+    "REGISTER": {
+        "TITLE": "Cadastro de Paciente",
+        "FIRST_NAME": "Nome",
+        "FIRST_NAME_PLACEHOLDER": "Digite seu nome",
+        "LAST_NAME": "Sobrenome",
+        "LAST_NAME_PLACEHOLDER": "Digite seu sobrenome",
+        "AGE": "Idade",
+        "AGE_PLACEHOLDER": "Digite sua idade",
+        "DNI": "Número de Identidade",
+        "DNI_PLACEHOLDER": "Digite seu número de identidade",
+        "INSURANCE": "Plano de Saúde",
+        "INSURANCE_PLACEHOLDER": "Digite seu plano de saúde",
+        "EMAIL": "E-mail",
+        "EMAIL_PLACEHOLDER": "Digite seu e-mail",
+        "PASSWORD": "Senha",
+        "PASSWORD_PLACEHOLDER": "Digite sua senha",
+        "SELECT_IMAGE1": "Selecionar Imagem 1",
+        "SELECT_IMAGE2": "Selecionar Imagem 2",
+        "SUBMIT": "Cadastrar",
+        "ERROR": {
+            "FIRST_NAME_REQUIRED": "O nome é obrigatório.",
+            "LAST_NAME_REQUIRED": "O sobrenome é obrigatório.",
+            "AGE_REQUIRED": "A idade é obrigatória.",
+            "AGE_MIN": "A idade deve ser ≥ 0.",
+            "DNI_REQUIRED": "O número de identidade é obrigatório.",
+            "INSURANCE_REQUIRED": "O plano de saúde é obrigatório.",
+            "EMAIL_REQUIRED": "O e-mail é obrigatório.",
+            "EMAIL_FORMAT": "Formato de e-mail inválido.",
+            "PASSWORD_REQUIRED": "A senha é obrigatória."
+        }
     }
 }

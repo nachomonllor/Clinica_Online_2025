@@ -54,5 +54,36 @@
             "NOT_REGISTERED": "You are not registered as a patient",
             "UNEXPECTED": "Unexpected error"
         }
+    },
+    "REGISTER": {
+        "TITLE": "Patient Registration",
+        "FIRST_NAME": "First Name",
+        "FIRST_NAME_PLACEHOLDER": "Enter your first name",
+        "LAST_NAME": "Last Name",
+        "LAST_NAME_PLACEHOLDER": "Enter your last name",
+        "AGE": "Age",
+        "AGE_PLACEHOLDER": "Enter your age",
+        "DNI": "ID Number",
+        "DNI_PLACEHOLDER": "Enter your ID number",
+        "INSURANCE": "Health Insurance",
+        "INSURANCE_PLACEHOLDER": "Enter your insurance",
+        "EMAIL": "E-mail",
+        "EMAIL_PLACEHOLDER": "Enter your e-mail",
+        "PASSWORD": "Password",
+        "PASSWORD_PLACEHOLDER": "Enter your password",
+        "SELECT_IMAGE1": "Select Image 1",
+        "SELECT_IMAGE2": "Select Image 2",
+        "SUBMIT": "Register",
+        "ERROR": {
+            "FIRST_NAME_REQUIRED": "First name is required.",
+            "LAST_NAME_REQUIRED": "Last name is required.",
+            "AGE_REQUIRED": "Age is required.",
+            "AGE_MIN": "Age must be ≥ 0.",
+            "DNI_REQUIRED": "ID number is required.",
+            "INSURANCE_REQUIRED": "Insurance is required.",
+            "EMAIL_REQUIRED": "E-mail is required.",
+            "EMAIL_FORMAT": "Invalid e-mail format.",
+            "PASSWORD_REQUIRED": "Password is required."
+        }
     }
 }
