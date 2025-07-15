@@ -53,17 +53,17 @@ export class MisTurnosComponent implements OnInit {
 
    ngOnInit(): void {
     // primero obtengo al usuario (firebase.User) y su uid
-    this.auth.user$.subscribe(user => {
-      if (!user) return;               // si no hay usuario logueado, nada
-      const pacienteId = user.uid;     // uid como id de paciente
+    // this.auth.user$.subscribe(user => {
+    //   if (!user) return;               // si no hay usuario logueado, nada
+    //   const pacienteId = user.uid;     // uid como id de paciente
 
-      // luego llamo al service con ese id
-      this.turnosSvc.getTurnosPorPaciente(pacienteId)
-        .subscribe(ts => {
-          this.dataSource.data = ts;
-          this.setupFilter();
-        });
-    });
+    //   // luego llamo al service con ese id
+    //   this.turnosSvc.getTurnosPorPaciente(pacienteId)
+    //     .subscribe(ts => {
+    //       this.dataSource.data = ts;
+    //       this.setupFilter();
+    //     });
+    // });
   }
 
   private setupFilter() {

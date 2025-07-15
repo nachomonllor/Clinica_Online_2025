@@ -86,7 +86,8 @@
             "INSURANCE_REQUIRED": "La obra social es obligatoria.",
             "EMAIL_REQUIRED": "El correo es obligatorio.",
             "EMAIL_FORMAT": "Formato inválido.",
-            "PASSWORD_REQUIRED": "La contraseña es obligatoria."
+            "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
+            "EMAIL_IN_USE": "Ese correo ya está registrado."
         }
     },
     "LOGIN_SPECIALIST": {
@@ -126,7 +127,8 @@
             "EMAIL_REQUIRED": "El correo es obligatorio.",
             "EMAIL_FORMAT": "Formato inválido.",
             "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
-            "IMAGE_REQUIRED": "La imagen de perfil es obligatoria."
+            "IMAGE_REQUIRED": "La imagen de perfil es obligatoria.",
+            "EMAIL_IN_USE": "Ese correo ya está registrado."
         }
     },
     "MIS_SHIFTS": {

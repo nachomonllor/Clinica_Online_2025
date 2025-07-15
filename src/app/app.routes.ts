@@ -17,7 +17,6 @@ import { SolicitarTurnoComponent } from './components/solicitar-turno/solicitar-
 import { TurnosEspecialidadComponent } from './components/turnos-especialidad/turnos-especialidad.component';
 import { TurnosEspecialistaComponent } from './components/turnos-especialista/turnos-especialista.component';
 import { UsuariosAdminComponent } from './components/usuarios-admin/usuarios-admin.component';
-import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { ReseniaComponent } from './components/resenia/resenia.component';
 import { EncuestaAtencionComponent } from './components/encuesta-atencion/encuesta-atencion.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
@@ -30,15 +29,14 @@ export const routes: Routes = [
 
   { path: '', component: WelcomeComponent },
   { path: 'welcome', component: WelcomeComponent },
-
-
   { path: '', redirectTo: 'logs', pathMatch: 'full' },
 
-  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login-paciente', component: LoginPacienteComponent },
+
+  // { path: 'login-paciente', component: LoginPacienteComponent },
 
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'registro-especialista', component: RegistroEspecialistaComponent },
+
   { path: 'mi-perfil', component: MiPerfilComponent },
   { path: 'mis-turnos', component: MisTurnosComponent },
 
@@ -50,9 +48,7 @@ export const routes: Routes = [
   { path: 'usuario-admin', component: UsuariosAdminComponent },
   { path: 'turno', component: MisTurnosComponent },
 
-
   { path: 'turno-especialista', component: TurnosEspecialistaComponent },
-
   { path: 'turnos-especialidad', component: TurnosEspecialidadComponent },
 
   {
@@ -61,13 +57,31 @@ export const routes: Routes = [
   },
 
   //turnos asignados al paciente
-  { path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
+  //{ path: 'mis-turnos-paciente', component: MisTurnosPacienteComponent },
+  {
+    path: '',
+    redirectTo: 'login-paciente',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login-paciente',
+    loadComponent: () =>
+      import('./components/login-paciente/login-paciente.component')
+        .then(m => m.LoginPacienteComponent)
+  },
+  {
+    path: 'mis-turnos-paciente',
+    loadComponent: () =>
+      import('./components/mis-turnos-paciente/mis-turnos-paciente.component')
+        .then(m => m.MisTurnosPacienteComponent)
+  },
+
   { path: 'resenia/:id', component: ReseniaComponent },
 
   //turnos asignados al especialista
   { path: 'mis-turnos-especialista', component: MisTurnosEspecialistaComponent },
 
-   // reseña
+  // reseña
   { path: 'resena-especialista/:id', component: ReseniaEspecialistaComponent },
 
   // solicitar turno  
@@ -83,7 +97,7 @@ export const routes: Routes = [
   { path: 'log-table', component: LogTableComponent },
 
   // estadisticas
-  {path: 'estadisticas', component: EstadisticasComponent},
+  { path: 'estadisticas', component: EstadisticasComponent },
 
   // Login específicos
   { path: 'login-paciente', component: LoginPacienteComponent },
@@ -97,7 +111,7 @@ export const routes: Routes = [
 
   { path: 'reporte-visitas-paciente', component: ReporteVisitasPacienteComponent },
 
-  { path:'turnos-admin', component: TurnosAdminComponent},
+  { path: 'turnos-admin', component: TurnosAdminComponent },
 
 
   { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas

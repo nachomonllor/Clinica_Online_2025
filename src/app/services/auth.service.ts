@@ -1,85 +1,53 @@
-// auth.service.ts
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import firebase from 'firebase/compat/app';
+// src/app/services/auth.service.ts
+import { Injectable, EnvironmentInjector, runInInjectionContext } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, signOut }       from '@angular/fire/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user$: Observable<firebase.User | null>;
+  constructor(
+    private auth: Auth,
+    private injector: EnvironmentInjector
+  ) {}
 
-  userId$: Observable<string>;
-
-  constructor(private afAuth: AngularFireAuth) {
-    // Primera inicialización
-    this.user$ = this.afAuth.authState;
-
-    // Ahora userId$ después de que afAuth ya está disponible
-    this.userId$ = this.afAuth.authState.pipe(
-      map(u => u?.uid ?? ''),
-      shareReplay(1)
+  login(email: string, password: string) {
+    return runInInjectionContext(this.injector, () =>
+      signInWithEmailAndPassword(this.auth, email, password)
     );
   }
 
+  logout() {
+    return runInInjectionContext(this.injector, () =>
+      signOut(this.auth)
+    );
+  }
 }
 
 
 
-// // src/app/services/auth.service.ts
+
+
+
 // import { Injectable } from '@angular/core';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import firebase from 'firebase/compat/app';        // <— IMPORT
 // import { Observable } from 'rxjs';
+// import firebase from 'firebase/compat/app';
 
 // @Injectable({ providedIn: 'root' })
 // export class AuthService {
-//   // declara user$ como firebase.User en lugar de @firebase/auth User
-//  // user$: Observable<firebase.User | null>;
+//   // DECLARAS la propiedad...
+//   user$: Observable<firebase.User | null>;
 
-//   // constructor(private afAuth: AngularFireAuth) {
-//   //   this.user$ = this.afAuth.authState;
-//   // }
-
-//     user$: Observable<firebase.User | null>;
-
-//   // exposición de sólo el UID como Observable<string>
-//   userId$ = this.afAuth.authState.pipe(
-//     map(u => u?.uid ?? ''),
-//     shareReplay(1)
-//   );
-
+//   // ...y la inicializas en el constructor, donde `afAuth` ya existe.
 //   constructor(private afAuth: AngularFireAuth) {
 //     this.user$ = this.afAuth.authState;
 //   }
 
-// }
-
-
-
-// // src/app/services/auth.service.ts
-// import { Injectable } from '@angular/core';
-
-// @Injectable({ providedIn: 'root' })
-// export class AuthService {
-//   // Simula el usuario logueado; en producción vendrá de tu backend o Firebase Auth
-//   get currentUser() {
-//     return { uid: 'abc123-especialista' };
+//   // Métodos limpios sin usar `inject()`
+//   login(email: string, password: string) {
+//     return this.afAuth.signInWithEmailAndPassword(email, password);
 //   }
-// }
 
-
-// // src/app/services/auth.service.ts
-// import { Injectable } from '@angular/core';
-// import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import { Observable } from 'rxjs';
-// import { User } from '@firebase/auth';
-
-// @Injectable({ providedIn: 'root' })
-// export class AuthService {
-//   user$: Observable<User | null>;
-
-//   constructor(private afAuth: AngularFireAuth) {
-//     this.user$ = this.afAuth.authState;  // emite null o el usuario cuando cambia
+//   logout() {
+//     return this.afAuth.signOut();
 //   }
 // }

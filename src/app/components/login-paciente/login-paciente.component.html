@@ -1,5 +1,6 @@
 
-<!-- Selector de idioma -->
+
+<!--  Selector de idioma  -->
 <div class="language-switch" style="text-align:right; margin-bottom:1rem;">
   <button mat-button (click)="switchLang('es')">ES</button>
   <button mat-button (click)="switchLang('en')">EN</button>
@@ -7,13 +8,13 @@
 </div>
 
 <mat-card class="login-card">
-  <!-- Título -->
-  <mat-card-title>{{ 'LOGIN.TITLE' | translate }}</mat-card-title>  
+  <!-- Título  -->
+  <mat-card-title>{{ 'LOGIN.TITLE' | translate }}</mat-card-title>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div *ngIf="error" class="login-error">{{ error }}</div>
 
-    <!-- Email -->
+    <!--  Email  -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'LOGIN.EMAIL_LABEL' | translate }}</mat-label>
       <input matInput type="email" formControlName="email" />
@@ -21,11 +22,11 @@
         {{ 'LOGIN.ERROR.EMAIL_REQUIRED' | translate }}
       </mat-error>
       <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-        {{ 'LOGIN.ERROR.EMAIL_FORMAT'   | translate }}
+        {{ 'LOGIN.ERROR.EMAIL_FORMAT' | translate }}
       </mat-error>
     </mat-form-field>
 
-    <!-- Password -->
+    <!--  Password  -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'LOGIN.PASSWORD_LABEL' | translate }}</mat-label>
       <input matInput type="password" formControlName="password" />
@@ -37,14 +38,9 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Botón Enviar -->
-    <button
-      mat-raised-button
-      color="primary"
-      class="full-width"
-      type="submit"
-      [disabled]="loginForm.invalid || loading"
-    >
+    <!-- Botón Enviar  -->
+    <button mat-raised-button color="primary" class="full-width" type="submit"
+      [disabled]="loginForm.invalid || loading">
       <ng-container *ngIf="!loading; else spinner">
         {{ 'LOGIN.SUBMIT' | translate }}
       </ng-container>
@@ -56,7 +52,15 @@
 </mat-card>
 
 
+<!-- <form [formGroup]="form" (ngSubmit)="submit()">
 
+  <label>Email<input formControlName="email" /></label>
+  <label>Password<input type="password" formControlName="password" /></label>
+  <button type="submit" [disabled]="form.invalid">Ingresar</button>
+  <p *ngIf="error" style="color:red">{{ error }}</p>
+
+</form>
+ -->
 
 
 

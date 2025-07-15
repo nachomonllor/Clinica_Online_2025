@@ -27,9 +27,9 @@ export class ListarPacientesComponent implements OnInit {
   constructor(private fsService: FirestoreService) {}
 
   ngOnInit() {
-    this.fsService.getPacientes().subscribe((data: Paciente[]) => {
-      this.pacientes = data;
-    });
+    // this.fsService.getPacientes().subscribe((data: Paciente[]) => {
+    //   this.pacientes = data;
+    // });
   }
 }
 

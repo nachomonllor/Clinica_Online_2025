@@ -63,12 +63,12 @@ export class MisTurnosEspecialistaComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.auth.user$
-      .pipe(
-        filter((u): u is firebase.User => u !== null),
-        switchMap(u => this.turnoService.getMockTurnosEspecialista(u.uid))
-      )
-      .subscribe(turnos => this.turnos = turnos);
+    // this.auth.user$
+    //   .pipe(
+    //     filter((u): u is firebase.User => u !== null),
+    //     switchMap(u => this.turnoService.getMockTurnosEspecialista(u.uid))
+    //   )
+    //   .subscribe(turnos => this.turnos = turnos);
   }
 
   /** Rechazar turno: abre diálogo y deja comentario */

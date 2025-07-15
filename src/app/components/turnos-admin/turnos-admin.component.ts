@@ -14,7 +14,6 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { TurnoService } from '../../services/turno.service';
 import { Turno, TurnoEstado } from '../../models/turno.model';
-import { ComentarioDialogComponent } from '../comentario-dialog/comentario-dialog.component';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -95,20 +94,20 @@ export class TurnosAdminComponent implements OnInit {
   }
 
   cancelarTurno(turno: Turno) {
-    const ref = this.dialog.open(ComentarioDialogComponent, {
-      width: '400px',
-      data: { motivo: '' }
-    });
-    ref.afterClosed().subscribe(resultado => {
-      if (resultado?.motivo) {
-        this.turnoService.cancelarTurno(turno.idTurno, resultado.motivo)
-          .subscribe(() => {
-            turno.estado = 'cancelado' as TurnoEstado;
-            turno.resenaPaciente = resultado.motivo;
-            this.dataSource._updateChangeSubscription();
-          });
-      }
-    });
+    // const ref = this.dialog.open(ComentarioDialogComponent, {
+    //   width: '400px',
+    //   data: { motivo: '' }
+    // });
+    // ref.afterClosed().subscribe(resultado => {
+    //   if (resultado?.motivo) {
+    //     this.turnoService.cancelarTurno(turno.idTurno, resultado.motivo)
+    //       .subscribe(() => {
+    //         turno.estado = 'cancelado' as TurnoEstado;
+    //         turno.resenaPaciente = resultado.motivo;
+    //         this.dataSource._updateChangeSubscription();
+    //       });
+    //   }
+    // });
   }
 
 }

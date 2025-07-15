@@ -100,7 +100,8 @@
             "INSURANCE_REQUIRED": "Insurance is required.",
             "EMAIL_REQUIRED": "E-mail is required.",
             "EMAIL_FORMAT": "Invalid e-mail format.",
-            "PASSWORD_REQUIRED": "Password is required."
+            "PASSWORD_REQUIRED": "Password is required.",
+            "EMAIL_IN_USE": "That email is already registered."
         }
     },
     "REGISTER_SPECIALIST": {
@@ -126,7 +127,8 @@
             "EMAIL_REQUIRED": "E-mail is required.",
             "EMAIL_FORMAT": "Invalid format.",
             "PASSWORD_REQUIRED": "Password is required.",
-            "IMAGE_REQUIRED": "Profile image is required."
+            "IMAGE_REQUIRED": "Profile image is required.",
+            "EMAIL_IN_USE": "That email is already registered."
         }
     }
 }

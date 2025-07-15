@@ -15,11 +15,7 @@
     <!-- Nombre -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.FIRST_NAME' | translate }}</mat-label>
-      <input
-        matInput
-        formControlName="nombre"
-        [placeholder]="'REGISTER.FIRST_NAME_PLACEHOLDER' | translate"
-      />
+      <input matInput formControlName="nombre" [placeholder]="'REGISTER.FIRST_NAME_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('nombre')?.hasError('required')">
         {{ 'REGISTER.ERROR.FIRST_NAME_REQUIRED' | translate }}
       </mat-error>
@@ -28,11 +24,7 @@
     <!-- Apellido -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.LAST_NAME' | translate }}</mat-label>
-      <input
-        matInput
-        formControlName="apellido"
-        [placeholder]="'REGISTER.LAST_NAME_PLACEHOLDER' | translate"
-      />
+      <input matInput formControlName="apellido" [placeholder]="'REGISTER.LAST_NAME_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('apellido')?.hasError('required')">
         {{ 'REGISTER.ERROR.LAST_NAME_REQUIRED' | translate }}
       </mat-error>
@@ -41,11 +33,7 @@
     <!-- Edad -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.AGE' | translate }}</mat-label>
-      <input
-        matInput type="number"
-        formControlName="edad"
-        [placeholder]="'REGISTER.AGE_PLACEHOLDER' | translate"
-      />
+      <input matInput type="number" formControlName="edad" [placeholder]="'REGISTER.AGE_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('edad')?.hasError('required')">
         {{ 'REGISTER.ERROR.AGE_REQUIRED' | translate }}
       </mat-error>
@@ -57,11 +45,7 @@
     <!-- DNI -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.DNI' | translate }}</mat-label>
-      <input
-        matInput
-        formControlName="dni"
-        [placeholder]="'REGISTER.DNI_PLACEHOLDER' | translate"
-      />
+      <input matInput formControlName="dni" [placeholder]="'REGISTER.DNI_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('dni')?.hasError('required')">
         {{ 'REGISTER.ERROR.DNI_REQUIRED' | translate }}
       </mat-error>
@@ -70,11 +54,7 @@
     <!-- Obra Social -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.INSURANCE' | translate }}</mat-label>
-      <input
-        matInput
-        formControlName="obraSocial"
-        [placeholder]="'REGISTER.INSURANCE_PLACEHOLDER' | translate"
-      />
+      <input matInput formControlName="obraSocial" [placeholder]="'REGISTER.INSURANCE_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('obraSocial')?.hasError('required')">
         {{ 'REGISTER.ERROR.INSURANCE_REQUIRED' | translate }}
       </mat-error>
@@ -83,11 +63,7 @@
     <!-- Correo -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.EMAIL' | translate }}</mat-label>
-      <input
-        matInput type="email"
-        formControlName="email"
-        [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
-      />
+      <input matInput type="email" formControlName="email" [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('email')?.hasError('required')">
         {{ 'REGISTER.ERROR.EMAIL_REQUIRED' | translate }}
       </mat-error>
@@ -99,11 +75,8 @@
     <!-- Contraseña -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'REGISTER.PASSWORD' | translate }}</mat-label>
-      <input
-        matInput type="password"
-        formControlName="password"
-        [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
-      />
+      <input matInput type="password" formControlName="password"
+        [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" />
       <mat-error *ngIf="registroPacienteForm.get('password')?.hasError('required')">
         {{ 'REGISTER.ERROR.PASSWORD_REQUIRED' | translate }}
       </mat-error>
@@ -120,7 +93,8 @@
       </div>
     </div>
 
-    <div class="full-width file-group">
+    <!-- ahora sin required -->
+   <div class="full-width file-group">
       <button mat-raised-button color="primary" type="button" (click)="fileInput2.click()">
         {{ 'REGISTER.SELECT_IMAGE2' | translate }}
       </button>
@@ -128,16 +102,10 @@
       <div class="preview" *ngIf="imagenPrevia2">
         <img [src]="imagenPrevia2" alt="Previsualización 2" />
       </div>
-    </div>
+    </div> 
 
     <!-- Botón Registrar -->
-    <button
-      mat-raised-button
-      color="accent"
-      class="full-width"
-      [disabled]="registroPacienteForm.invalid"
-      type="submit"
-    >
+    <button mat-raised-button color="accent" class="full-width" [disabled]="registroPacienteForm.invalid" type="submit">
       {{ 'REGISTER.SUBMIT' | translate }}
     </button>
 
@@ -240,8 +208,3 @@
     </button>
   </form>
 </mat-card> -->
-
-
-
-
-

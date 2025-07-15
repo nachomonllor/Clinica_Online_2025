@@ -8,10 +8,10 @@ import { Especialista } from '../models/especialista.model';
 /**
  * Estructura para devolver conteos agrupados
  */
-export interface CountByKey {
-  key: string;
-  count: number;
-}
+// export interface CountByKey {
+//   key: string;
+//   count: number;
+// }
 
 // turnos.service.ts
 @Injectable({ providedIn: 'root' })

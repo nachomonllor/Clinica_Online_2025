@@ -100,7 +100,8 @@
             "INSURANCE_REQUIRED": "O plano de saúde é obrigatório.",
             "EMAIL_REQUIRED": "O e-mail é obrigatório.",
             "EMAIL_FORMAT": "Formato de e-mail inválido.",
-            "PASSWORD_REQUIRED": "A senha é obrigatória."
+            "PASSWORD_REQUIRED": "A senha é obrigatória.",
+            "EMAIL_IN_USE": "Esse e-mail já está cadastrado."
         }
     },
     "REGISTER_SPECIALIST": {
