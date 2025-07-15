@@ -1,25 +1,23 @@
 // src/main.ts
-import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { bootstrapApplication }                from '@angular/platform-browser';
-import { provideRouter }                       from '@angular/router';
-import { provideAnimations }                   from '@angular/platform-browser/animations';
+import { enableProdMode, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app/app.component';
-import { routes }       from './app/app.routes';
-import { environment }  from './environments/environment';
+import { routes } from './app/app.routes';
+import { environment } from './environments/environment';
 
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth }              from '@angular/fire/auth';
-import { provideFirestore, getFirestore }    from '@angular/fire/firestore';
-import { provideStorage, getStorage }        from '@angular/fire/storage';
-import { setLogLevel, LogLevel }             from '@angular/fire';
-
-// Silenciar warnings de AngularFire zonales
-setLogLevel(LogLevel.SILENT);
+// factory para cargar JSON
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 if (environment.production) {
   enableProdMode();
@@ -33,16 +31,78 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       HttpClientModule,
       ReactiveFormsModule,
-      TranslateModule.forRoot({ /* … */ })
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      })
     ),
-
-    // Firebase modular (sin compat)
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())       // ← aquí
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [TranslateService],
+      useFactory: (translate: TranslateService) => () => {
+        translate.addLangs(['es','en','pt']);
+        translate.setDefaultLang('es');
+        const browserLang = translate.getBrowserLang() ?? 'es';
+        translate.use(
+          ['es','en','pt'].includes(browserLang) ? browserLang : 'es'
+        );
+      }
+    },
+    // …tus providers de Firebase, etc.
   ]
 }).catch(err => console.error(err));
+
+
+
+// // src/main.ts
+// import { enableProdMode, importProvidersFrom } from '@angular/core';
+// import { bootstrapApplication }                from '@angular/platform-browser';
+// import { provideRouter }                       from '@angular/router';
+// import { provideAnimations }                   from '@angular/platform-browser/animations';
+// import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+// import { HttpClientModule, HttpClient } from '@angular/common/http';
+// import { ReactiveFormsModule } from '@angular/forms';
+// import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+// import { AppComponent } from './app/app.component';
+// import { routes }       from './app/app.routes';
+// import { environment }  from './environments/environment';
+
+// import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+// import { provideAuth, getAuth }              from '@angular/fire/auth';
+// import { provideFirestore, getFirestore }    from '@angular/fire/firestore';
+// import { provideStorage, getStorage }        from '@angular/fire/storage';
+// import { setLogLevel, LogLevel }             from '@angular/fire';
+
+// // Silenciar warnings de AngularFire zonales
+// setLogLevel(LogLevel.SILENT);
+
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideAnimations(),
+//     provideRouter(routes),
+//     provideHttpClient(withInterceptorsFromDi()),
+//     importProvidersFrom(
+//       HttpClientModule,
+//       ReactiveFormsModule,
+//       TranslateModule.forRoot({ /* … */ })
+//     ),
+
+//     // Firebase modular (sin compat)
+//     provideFirebaseApp(() => initializeApp(environment.firebase)),
+//     provideAuth(() => getAuth()),
+//     provideFirestore(() => getFirestore()),
+//     provideStorage(() => getStorage())       // ← aquí
+//   ]
+// }).catch(err => console.error(err));
 
 
 
