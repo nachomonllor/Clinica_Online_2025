@@ -24,12 +24,17 @@ import { ReseniaEspecialistaComponent } from './components/resenia-especialista/
 import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
 import { ReporteVisitasPacienteComponent } from './components/reporte-visitas-paciente/reporte-visitas-paciente.component';
 import { TurnosAdminComponent } from './components/turnos-admin/turnos-admin.component';
+import { HomeClinicaComponent } from './components/home-clinica/home-clinica.component';
 
 export const routes: Routes = [
 
-  { path: '', component: WelcomeComponent },
-  { path: 'welcome', component: WelcomeComponent },
-  { path: '', redirectTo: 'logs', pathMatch: 'full' },
+  { path: '', component: HomeClinicaComponent},
+  { path: 'home-clinica', component: HomeClinicaComponent, pathMatch: 'full' },
+
+  //   { path: '', component: WelcomeComponent },
+  // { path: 'welcome', component: WelcomeComponent },
+  // { path: '', redirectTo: 'logs', pathMatch: 'full' },
+
 
 
   // { path: 'login-paciente', component: LoginPacienteComponent },
@@ -114,7 +119,9 @@ export const routes: Routes = [
   { path: 'turnos-admin', component: TurnosAdminComponent },
 
 
-  { path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
+
+
+  //{ path: '**', redirectTo: 'welcome' } // Ruta comodín para redirigir a login en rutas no definidas
 
 ];
 

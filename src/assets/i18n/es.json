@@ -146,5 +146,24 @@
             "RATE_TOOLTIP": "Calificar atención",
             "NO_DATA": "No se encontraron turnos."
         }
+    },
+    "survey": {
+        "title": "Encuesta de Atención",
+        "commentLabel": "Comentario",
+        "commentPlaceholder": "Escribe tu comentario",
+        "commentRequired": "El comentario es obligatorio",
+        "ratingLabel": "Tu calificación:",
+        "ratingRequired": "Selecciona una calificación",
+        "recommendLabel": "¿Recomiendas al profesional?",
+        "yes": "Sí",
+        "no": "No",
+        "optionRequired": "Elige una opción",
+        "aspectsLabel": "¿Qué aspectos destacas?",
+        "punctuality": "Puntualidad",
+        "kindness": "Amabilidad",
+        "cleanliness": "Limpieza",
+        "explanation": "Explicación",
+        "rangeLabel": "Califica del 1 al 10:",
+        "submit": "Enviar"
     }
 }

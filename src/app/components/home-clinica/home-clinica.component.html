@@ -1,0 +1,84 @@
+<p>home-clinica works!</p>
+
+  <mat-toolbar color="primary">
+      <span>Dashboard Clínica</span>
+    </mat-toolbar>
+
+    <mat-grid-list cols="3" rowHeight="100px" gutterSize="16px" class="home-grid">
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/registro-paciente">
+          <mat-icon>person_add</mat-icon>
+          &nbsp; Registro Paciente
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/registro-especialista">
+          <mat-icon>person_add_alt_1</mat-icon>
+          &nbsp; Registro Especialista
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/login-paciente">
+          <mat-icon>login</mat-icon>
+          &nbsp; Login Paciente
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/login-especialista">
+          <mat-icon>login</mat-icon>
+          &nbsp; Login Especialista
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/mi-perfil">
+          <mat-icon>person</mat-icon>
+          &nbsp; Mi Perfil
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/mis-turnos">
+          <mat-icon>calendar_today</mat-icon>
+          &nbsp; Mis Turnos
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/pacientes">
+          <mat-icon>people</mat-icon>
+          &nbsp; Pacientes
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/listar-pacientes">
+          <mat-icon>format_list_bulleted</mat-icon>
+          &nbsp; Listar Pacientes
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/turnos-admin">
+          <mat-icon>admin_panel_settings</mat-icon>
+          &nbsp; Turnos Admin
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button mat-raised-button color="accent" routerLink="/estadisticas">
+          <mat-icon>bar_chart</mat-icon>
+          &nbsp; Estadísticas
+        </button>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="3">
+        <button mat-raised-button color="warn" routerLink="/solicitar-turno">
+          <mat-icon>event_available</mat-icon>
+          &nbsp; Solicitar Turno
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>

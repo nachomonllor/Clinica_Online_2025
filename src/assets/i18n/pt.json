@@ -129,5 +129,24 @@
             "PASSWORD_REQUIRED": "A senha é obrigatória.",
             "IMAGE_REQUIRED": "A imagem de perfil é obrigatória."
         }
+    },
+    "survey": {
+        "title": "Pesquisa de Atendimento",
+        "commentLabel": "Comentário",
+        "commentPlaceholder": "Escreva seu comentário",
+        "commentRequired": "Comentário é obrigatório",
+        "ratingLabel": "Sua avaliação:",
+        "ratingRequired": "Selecione uma avaliação",
+        "recommendLabel": "Você recomenda o profissional?",
+        "yes": "Sim",
+        "no": "Não",
+        "optionRequired": "Escolha uma opção",
+        "aspectsLabel": "Quais aspectos você destaca?",
+        "punctuality": "Pontualidade",
+        "kindness": "Gentileza",
+        "cleanliness": "Limpeza",
+        "explanation": "Explicação",
+        "rangeLabel": "Avalie de 1 a 10:",
+        "submit": "Enviar"
     }
 }
