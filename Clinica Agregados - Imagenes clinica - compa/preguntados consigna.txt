@@ -1,0 +1,21 @@
+
+Preguntados consigna:
+
+* Preguntar algo sobre una imagen
+* Por ejemplo, una imagen de un personaje de los simpson, 
+  se pregunta algo de eso, por ejemplo que personaje es
+
+*Por ejemplo, de lo que hicimos con el tema 'surrealismo' una imagen de una pintura surrealista y hacer preguntas sobre eso.
+
+*Puede ir con vidas por ejemplo (algunos alumnos lo hicieron)
+
+* Traer la opcion correcta y las incorrectas y mostrarlas.
+* Tiene que obtener las imágenes de una api.
+* Realizar el llamado a la api desde un Service.
+* Dar al jugador opciones de elección. No se puede ingresar datos por teclado.
+
+
+- ------- En el listado debe decir que Juego es --------------
+
+Agregar una columna "Juego"
+En la columna 'jugada' no deben ir todas juntas
